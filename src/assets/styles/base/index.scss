@@ -1,0 +1,48 @@
+@forward "variables";  // Globale Variablen (Farben, Fonts etc.)
+@forward "mixins";     // Wiederverwendbare SCSS-Funktionen
+@forward "reset";      // CSS-Reset (z. B. Normalize.css)
+@forward "typography"; // Schriftarten & Text-Styling
+
+:root {
+  --background-color: #7f7f7f;
+  --text-color: #2c2c2c;
+  --text-color-dark: #ffffff;
+}
+
+body {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom, #7f7f7f, #9f9f9f);
+  color: var(--text-color) !important;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  margin: 0;
+}
+
+body.dark-mode {
+  background: linear-gradient(to top, #080808, #303030);
+  --text-color: #ffffff !important;
+}
+
+.cart-button, .menu-button {
+  color: var(--text-color) !important;
+}
+
+body.dark-mode .cart-button, 
+body.dark-mode .menu-button {
+  color: var(--text-color-dark) !important;
+}
+
+main {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  margin: 100px auto;
+}

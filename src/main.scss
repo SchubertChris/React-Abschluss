@@ -1,0 +1,20 @@
+// Base Styles (aus `base/index.scss`)
+@use "./assets/styles/base/index";
+
+// Layout Styles (Header, Footer, Grid, Wrapper)
+@use "./assets/layout/styles/grid";
+@use "./assets/layout/styles/header";
+@use "./assets/layout/styles/footer";
+@use "./assets/layout/styles/Wrapper";
+
+// Komponenten-Styles (Buttons, Cards, Forms)
+@use "./assets/components/buttons";
+@use "./assets/components/cards";
+@use "./assets/components/forms";
+
+// Seiten-Styles
+
+
+// Themes (Dark & Light Mode)
+@use "./assets/themes/dark";
+@use "./assets/themes/light";

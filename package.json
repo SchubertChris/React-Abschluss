@@ -1,0 +1,31 @@
+{
+  "name": "abschlussprojekt-react",
+  "version": "1.0.0",
+  "description": "",
+  "main": "eslint.config.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "sass": "^1.84.0",
+    "sass-embedded": "^1.83.4",
+    "vite": "^6.1.0"
+  },
+  "dependencies": {
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
+    "install": "^0.13.0",
+    "npm": "^11.1.0",
+    "react": "^19.0.0",
+    "react-calendar": "^5.1.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.4.0",
+    "react-router-dom": "^7.1.5"
+  }
+}
