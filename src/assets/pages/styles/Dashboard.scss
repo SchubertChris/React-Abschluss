@@ -9,6 +9,19 @@
   background-color: rgba(0, 0, 0, 0.5); // Add a dark overlay
   background-blend-mode: darken; // Blend the overlay with the background image
   padding: 3rem;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    filter: blur(30px); // Adjust the blur radius as needed
+    z-index: -1;
+  }
 }
 
 
@@ -19,6 +32,9 @@
   box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
   flex-shrink: 0;
   border-radius: 0 20px 20px 0; // Rounded border
+  opacity: 0;
+  animation: PlopinFFromMiddle 0.3s ease 0.5s forwards;
+
 
   .sidebar-content {
     padding: 1.5rem;
@@ -172,7 +188,9 @@
   background: linear-gradient(to bottom, #9ad3ffba, #f5f3f6);
   border-radius: 0.75rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  animation: PlopinFFromMiddle 0.7s ease 0.5s forwards;
   transition: box-shadow 0.2s;
+  opacity: 0;
 
   &:hover {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -201,7 +219,9 @@
   background-color: white;
   border-radius: 0.75rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  animation: PlopinFFromMiddle 0.5s ease 0.5s forwards;
   transition: box-shadow 0.2s;
+  opacity: 0;
 
   &:hover {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -336,6 +356,8 @@
   border-radius: 0.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   overflow-y: scroll;
+  animation: PlopinFFromMiddle 0.5s ease 0.2s forwards;
+  opacity: 0;
 
   h3 {
     font-size: 1.125rem;
@@ -552,7 +574,7 @@
 }
 
 // Responsive Styles für kleinere Bildschirme
-@media (max-width: 1024px) {
+@media (max-width: 1312px) {
   .dashboard-container {
     flex-direction: column;
     align-items: center;
@@ -592,5 +614,17 @@
       width: 100%;
       max-width: 600px;
     }
+  }
+}
+
+
+@keyframes PlopinFFromMiddle {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
 }

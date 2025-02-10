@@ -1,0 +1,173 @@
+.Image-Container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 830px;
+  width: 100vw;
+  margin: 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 2rem;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    height: auto;
+    padding: 1rem;
+  }
+}
+
+.Kontakt-Form-Text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  padding: 2rem;
+  color: white;
+  text-align: center;
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.2rem;
+    }
+  }
+
+  button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+
+    @media (max-width: 768px) {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+  }
+}
+
+.Login-Container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  width: 600px;
+  margin-left: 0;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 20px;
+  }
+}
+
+.Kontakt-Form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.Kontakt-Form h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+  font-size: 24px;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+}
+
+.Kontakt-Form input {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+.Kontakt-Form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.Kontakt-Form button {
+  padding: 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+.Kontakt-Form button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.Inner-Container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.Inner-Container > div {
+  width: 48%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}

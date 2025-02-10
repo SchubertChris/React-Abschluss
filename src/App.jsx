@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Wrapper from "./assets/layout/Wrapper";
 import "./main.scss";
 import Header from "./assets/layout/Header";
 import Home from "./assets/pages/JSX/Home";
@@ -18,7 +17,6 @@ import ShippingReturns from "./assets/pages/JSX/ShippingReturns";
 function App() {
   return (
     <Router>
-      <Wrapper>
         <Header />
         <main>
           <Routes>
@@ -36,7 +34,6 @@ function App() {
             <Route path="/shipping-returns" element={<ShippingReturns />} />
           </Routes>
         </main>
-      </Wrapper>
     </Router>
   );
 }

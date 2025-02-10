@@ -8,12 +8,13 @@ $gradient: linear-gradient(45deg, $secondary-color, #b8e994);
 $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2), -3px -3px 10px rgba(255, 255, 255, 0.2);
 
 .header {
-  width: 100%;
+  max-width: 1280px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 30px;
   z-index: 2000;
+  margin: 0 auto;
 
   .header-content {
     display: flex;
