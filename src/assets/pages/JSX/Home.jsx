@@ -53,58 +53,48 @@ const Home = () => {
           </div>
         </div>
         <div className="Text-Container">
-          <div className="text1">
-            <h2>Über uns</h2>
-            <p>
-              Wir sind ein kreatives Team, das sich auf die Erstellung von
-              beeindruckenden Bildern spezialisiert hat.
-            </p>
-            <p>
-              Unsere Mission ist es, die Schönheit der Welt durch unsere Linse
-              einzufangen.
-            </p>
-            <p>Jedes Bild erzählt eine einzigartige Geschichte.</p>
-            <hr />
-          </div>
-          <div className="text2">
-            <h2>Unsere Vision</h2>
-            <p>
-              Wir streben danach, die Kunst der Fotografie auf die nächste Stufe
-              zu heben.
-            </p>
-            <p>
-              Unsere Vision ist es, durch unsere Arbeit Emotionen zu wecken und
-              Menschen zu inspirieren.
-            </p>
-            <p>Wir glauben an die Kraft der Bilder, die Welt zu verändern.</p>
-            <hr />
-          </div>
-          <div className="text3">
-            <h2>Unsere Werte</h2>
-            <p>
-              Kreativität, Innovation und Leidenschaft sind die Kernwerte, die
-              uns antreiben.
-            </p>
-            <p>
-              Wir legen großen Wert auf Qualität und Detailgenauigkeit in jedem
-              unserer Projekte.
-            </p>
-            <p>
-              Unser Ziel ist es, stets die Erwartungen unserer Kunden zu
-              übertreffen.
-            </p>
-            <hr />
-          </div>
-          <div className="text4">
-            <h2>Kontakt</h2>
-            <p>Haben Sie Fragen oder möchten Sie mit uns zusammenarbeiten?</p>
-            <p>
-              Kontaktieren Sie uns unter info@unserefirma.com oder
-               123-456-7890.
-            </p>
-            <p>Wir freuen uns darauf, von Ihnen zu hören!</p>
-            <hr />
-          </div>
+          {[
+            {
+              title: "Über uns",
+              content: [
+                "Wir sind ein kreatives Team, das sich auf die Erstellung von beeindruckenden Bildern spezialisiert hat.",
+                "Unsere Mission ist es, die Schönheit der Welt durch unsere Linse einzufangen.",
+                "Jedes Bild erzählt eine einzigartige Geschichte.",
+              ],
+            },
+            {
+              title: "Unsere Vision",
+              content: [
+                "Wir streben danach, die Kunst der Fotografie auf die nächste Stufe zu heben.",
+                "Unsere Vision ist es, durch unsere Arbeit Emotionen zu wecken und Menschen zu inspirieren.",
+                "Wir glauben an die Kraft der Bilder, die Welt zu verändern.",
+              ],
+            },
+            {
+              title: "Unsere Werte",
+              content: [
+                "Kreativität, Innovation und Leidenschaft sind die Kernwerte, die uns antreiben.",
+                "Wir legen großen Wert auf Qualität und Detailgenauigkeit in jedem unserer Projekte.",
+                "Unser Ziel ist es, stets die Erwartungen unserer Kunden zu übertreffen.",
+              ],
+            },
+            {
+              title: "Kontakt",
+              content: [
+                "Haben Sie Fragen oder möchten Sie mit uns zusammenarbeiten?",
+                "Kontaktieren Sie uns unter info@unserefirma.com oder 123-456-7890.",
+                "Wir freuen uns darauf, von Ihnen zu hören!",
+              ],
+            },
+          ].map((section, index) => (
+            <div key={index} className={`text${index + 1}`}>
+              <h2>{section.title}</h2>
+              {section.content.map((paragraph, i) => (
+                <p key={i}>{paragraph}</p>
+              ))}
+              <hr />
+            </div>
+          ))}
         </div>
       </div>
     </div>

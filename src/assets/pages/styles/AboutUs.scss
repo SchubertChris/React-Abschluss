@@ -1,5 +1,3 @@
-
-
 .parallax-wrapper {
   perspective: 1px;
   height: 100vh;
@@ -20,11 +18,13 @@
   text-align: center;
   color: white;
   background: #555;
+  background: rgba(0, 0, 0, 0.5); /* Hinzugefügt */
 }
 
 /* Titel-Bereich */
 .parallax-section-title {
   background: #222;
+  background: rgba(0, 0, 0, 0.5); /* Hinzugefügt */
 }
 
 /* Inhalt */
@@ -38,10 +38,12 @@
 /* Alternierende Farben für die Abschnitte */
 .parallax-section:nth-child(odd) {
   background: #444;
+  background: rgba(0, 0, 0, 0.5); /* Hinzugefügt */
 }
 
 .parallax-section:nth-child(even) {
   background: #666;
+  background: rgba(0, 0, 0, 0.5); /* Hinzugefügt */
 }
 
 /* Bilder */
@@ -56,5 +58,5 @@
 /* Footer */
 .parallax-footer {
   background: #111;
+  background: rgba(0, 0, 0, 0.5); /* Hinzugefügt */
 }
-
