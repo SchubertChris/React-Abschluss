@@ -8,15 +8,15 @@ const WEATHER_API_KEY = "08348b60c39f4fe7a593f787efa8f843"; // The Weather API K
 const NEWS_API_KEY = "UMSE3crsBtDGk45XaX8FRetRM6zmkbNsSUOao332"; // The News API Key
 
 const Dashboard = () => {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date()); // 📅 Kalender-Zustand auf heutiges Datum [(new Date())]
   const [weather, setWeather] = useState(null);
-  const [news, setNews] = useState([]);
-  const [loadingNews, setLoadingNews] = useState(true);
-  const [notes, setNotes] = useState(""); // 📝 Notizblock-Zustand
+  const [news, setNews] = useState([]); // 📰 News-Zustand - Leeres Array als Start
+  const [loadingNews, setLoadingNews] = useState(true); // Ladezustand für News [API]
+  const [notes, setNotes] = useState(""); // 📝 Notizblock-Zustand - Start Leer
   const [savedNotes, setSavedNotes] = useState([]); // Zustand für gespeicherte Notizen
   const [activeMenuItem, setActiveMenuItem] = useState("Übersicht");
-  const [city, setCity] = useState("Berlin");
-  const [inputCity, setInputCity] = useState("");
+  const [city, setCity] = useState("Berlin"); // Start-Stadt für WetterAnzeige
+  const [inputCity, setInputCity] = useState(""); // Eingabe-Stadt für WetterAnzeige um später zu aktualisieren als User
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -36,15 +36,15 @@ const Dashboard = () => {
       console.log("Fetching News...");
       setLoadingNews(true);
       try {
-        const response = await fetch(
-          `https://api.thenewsapi.com/v1/news/top?api_token=${NEWS_API_KEY}&locale=de&limit=10`
+        const response = await fetch( // Abrufen der News-API
+          `https://api.thenewsapi.com/v1/news/top?api_token=${NEWS_API_KEY}&locale=de&limit=10` 
         );
         
-        if (!response.ok) {
+        if (!response.ok) { // Fehlerbehandlung, wenn die API nicht erreichbar ist
           throw new Error(`HTTP-Fehler! Status: ${response.status}`);
         }
 
-        const data = await response.json();
+        const data = await response.json(); // Antwort in JSON umwandeln
         console.log("News API Response:", data);
 
         if (data.data && Array.isArray(data.data)) {
@@ -53,20 +53,22 @@ const Dashboard = () => {
           console.error("Keine News gefunden.");
           setNews([]);
         }
-      } catch (error) {
+      } catch (error) { // Fehlerbehandlung, wenn die API nicht erreichbar ist, wird der Fehler in der Konsole ausgegeben und kann weiter untersucht werden
         console.error("Fehler beim Laden der News:", error);
         setNews([]);
-      } finally {
+      } finally { // Wenn die API-Anfrage abgeschlossen ist, wird der Ladezustand auf "false" gesetzt, damit der Benutzer weiß, dass die News geladen wurden und Sie sehen kann 
         setLoadingNews(false);
       }
     };
 
-    fetchWeather();
+    fetchWeather(); // Funktionen aufrufen
     fetchNews();
-  }, [city]);
+  }, [city]); // Wenn sich die Stadt ändert, wird die Wetter-API erneut aufgerufen übergeben als parameter
 
+
+  // Hier wird die Funktion handleSaveNote definiert, die die Notizen speichert, wenn der Benutzer auf die Schaltfläche "Merken" klickt und Sie werden gespeichert
   const handleSaveNote = () => {
-    if (notes.trim()) {
+    if (notes.trim()) { // Werden Sie hier getrennt? Wenn ja, wird die Notiz gespeichert und der Notizblock wird geleert mit setNotes("")
       setSavedNotes([...savedNotes, notes]);
       setNotes("");
     }
