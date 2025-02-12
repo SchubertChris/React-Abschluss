@@ -3,15 +3,15 @@
 @forward "typography"; // Schriftarten & Text-Styling
 
 :root {
-  --background-color: #8b8b8b;
+  --background-color: #ffffff;
   --text-color: #000000;
   --text-color-dark: #ffffff;
 }
 
 body.dark-mode {
-  --background-color: #000000;
-  --text-color: #ffffff;
-  --text-color-dark: #ffffff;
+  --background-color: #000000 !important;
+  --text-color: #ffffff !important;
+  --text-color-dark: #ffffff !important;
 }
 
 body {
@@ -23,8 +23,8 @@ body {
   transition: background 0.3s, color 0.3s;
   overflow-x: hidden;
   margin: 0;
-  background-color: var(--background-color);
-  color: var(--text-color);
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
 }
 
 
@@ -44,6 +44,6 @@ main {
   justify-content: center;
   align-items: center;
   flex-grow: 1;
-  margin: 100px auto;
+  margin: 50px auto;
 }
 

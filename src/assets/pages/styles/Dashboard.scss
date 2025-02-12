@@ -3,30 +3,18 @@
   display: flex;
   margin: 0 auto;
   min-width: 100vw;
-  background-color: #4b5563;
+  background-color: #ffffff;
   padding: 3rem;
   position: relative;
   color: var(--text-color);
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: inherit;
-    filter: blur(30px); // Adjust the blur radius as needed
-    z-index: -1;
-  }
   body.dark-mode & {
-    background: linear-gradient(to bottom, #21242e, #0b2750);
+    background-color: #000000;
   }
 }
 
 // Sidebar Styles
 .sidebar {
-  width: 280px;
+  width: 380px;
   background: linear-gradient(to bottom, #9ad3ffba, #f5f3f6);
   box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
   flex-shrink: 0;
@@ -380,30 +368,55 @@
 
   .card-content {
     margin-bottom: 1rem;
-  }
 
-  .notes-textarea {
-    width: 100%; // Allow the textarea to take full width
-    min-height: 150px;
-    padding: 0.75rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 0.5rem;
-    resize: none;
-    color: var(--text-color);
-    background-color: #f9fafb;
-    transition: border-color 0.2s;
-    font-family: "Courier New", Courier, monospace; // Monospace font for a notepad feel
-    line-height: 1.5;
-    color: black !important;
+    .notes-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
 
-    &:focus {
-      outline: none;
-      border-color: #3b82f6;
-      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
-    }
+      .notes-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+        color: black !important;
+        background-color: #f9fafb;
+        transition: border-color 0.2s;
 
-    &::placeholder {
-      color: #9ca3af;
+        &:focus {
+          outline: none;
+          border-color: #3b82f6;
+          box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+        }
+
+        &::placeholder {
+          color: #9ca3af;
+        }
+      }
+
+      .notes-textarea {
+        width: 100%; // Allow the textarea to take full width
+        min-height: 150px;
+        padding: 0.75rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+        resize: none;
+        color: black !important;
+        background-color: #f9fafb;
+        transition: border-color 0.2s;
+        font-family: "Courier New", Courier, monospace; // Monospace font for a notepad feel
+        line-height: 1.5;
+
+        &:focus {
+          outline: none;
+          border-color: #3b82f6;
+          box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+        }
+
+        &::placeholder {
+          color: #9ca3af;
+        }
+      }
     }
   }
 
@@ -430,14 +443,29 @@
   }
 
   .saved-notes {
+    h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 1rem;
+    }
+
     .note-item {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
+      gap: 0.5rem;
       padding: 0.75rem;
       background-color: #f9fafb;
       border-radius: 0.5rem;
       margin-bottom: 0.5rem;
+
+      h5 {
+        color: #000000 !important;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-color);
+        margin: 0;
+      }
 
       p {
         color: black !important;
@@ -551,7 +579,19 @@
 // Wichtige Daten Tabelle
 .Wichtige {
   margin-bottom: 2rem;
+  button{
+    background-color: #3b82f6;
+    color: var(--text-color-dark);
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
 
+    &:hover {
+      background-color: #2563eb;
+    }
+  }
   h3 {
     font-size: 1.125rem;
     font-weight: 600;
@@ -592,11 +632,16 @@
 
 // Responsive Styles für kleinere Bildschirme
 @media (max-width: 1312px) {
+  .main-content {
+  display: flex;
+
+  }
   .dashboard-container {
     flex-direction: column;
     align-items: center;
     justify-content: center;
     max-width: 90vw;
+    padding: 0;
     margin: 0 auto;
   }
 
@@ -630,6 +675,9 @@
     .news-card {
       width: 100%;
       max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
     }
   }
 }
@@ -642,5 +690,49 @@
   100% {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 1rem;
+    padding: 0;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+
+    .sidebar-content {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      position: static;
+      text-align: center;
+    }
+  }
+
+  .content-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    gap: 1.5rem;
+
+    .notes-card,
+    .weather-card,
+    .news-card {
+      width: 100%;
+      max-width: 400px !important;
+      margin: 0 auto !important;
+      display: flex;
+      justify-content: center;
+    }
   }
 }

@@ -1,78 +1,126 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "../styles/AboutUs.scss";
+import { FaArrowUp } from "react-icons/fa";
 
 function getRandomImage() {
-  const width = 1920; // You can adjust the width and height as needed
+  const width = 1920;
   const height = 1080;
-  return `https://picsum.photos/${width}/${height}?random=${Math.floor(Math.random() * 1000)}`;
+  return `https://picsum.photos/${width}/${height}?random=${Math.floor(
+    Math.random() * 1000
+  )}`;
 }
 
+const scrollToTop = () => {
+  const topElement = document.getElementById("TOP");
+  if (topElement) {
+    topElement.scrollIntoView({ behavior: "smooth" });
+  }
+};
+
 export default function AboutUs() {
+  const leftImageRef = useRef(null);
+  const rightImageRef = useRef(null);
+
+  useEffect(() => {
+    const options = {
+      root: null, // Beobachtet den Viewport
+      threshold: 0.2, // 20% des Bildes müssen sichtbar sein, bevor die Animation startet
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    }, options);
+
+    if (leftImageRef.current) observer.observe(leftImageRef.current);
+    if (rightImageRef.current) observer.observe(rightImageRef.current);
+
+    return () => {
+      if (leftImageRef.current) observer.unobserve(leftImageRef.current);
+      if (rightImageRef.current) observer.unobserve(rightImageRef.current);
+    };
+  }, []);
+
   return (
     <>
       <div className="parallax-wrapper">
+        <p id="TOP"></p>
+        
         {/* Titel */}
-        <div className="parallax-section parallax-section-title" style={{ backgroundImage: `url(${getRandomImage()})` }}>
-          <h1>Pure CSS Parallax</h1>
-          <p>Experience the beauty of parallax scrolling with stunning images and smooth transitions.</p>
+        <div
+          className="parallax-section parallax-section-title"
+          style={{ backgroundImage: `url(${getRandomImage()})` }}
+        >
+          <div className="parallax-content">
+            <h1>Real CSS Parallax</h1>
+            <p>
+              Erleben Sie die Schönheit des Parallax-Scrollings mit atemberaubenden Bildern
+              und sanften Übergängen.
+            </p>
+          </div>
         </div>
 
         {/* Slide 1 */}
-        <div className="parallax-section" style={{ backgroundImage: `url(${getRandomImage()})` }}>
+        <div
+          className="parallax-section"
+          style={{ backgroundImage: `url(${getRandomImage()})` }}
+        >
           <div className="parallax-content">
-            <h1>Slide 1</h1>
+            <h1>So Funktionierts</h1>
             <p>
-              Lorem ipsum dolor sit amet, in velit iudico mandamus sit, persius
-              dolorum in per, postulant mnesarchum cu nam.
-            </p>
-            <p>
-              Discover the elegance of seamless scrolling and captivating visuals that draw you in.
+              Parallax-Effekte sind ein visuelles Erlebnis, das durch das
+              Scrollen von Bildern und Texten erzeugt wird.
             </p>
           </div>
         </div>
 
-        {/* Slide 2 mit Bildern */}
-        <div className="parallax-section" style={{ backgroundImage: `url(${getRandomImage()})` }}>
-          <div className="parallax-content">
-            <h1>Slide 2</h1>
+        {/* Slide 2 mit animierten Bildern */}
+        <div
+          className="parallax-section"
+          style={{ backgroundImage: `url(${getRandomImage()})` }}
+        >
+          <div className="parallax-content slide2-content">
+            <h1>Das Erlebnis</h1>
             <p>
-              Lorem ipsum dolor sit amet, in velit iudico mandamus sit, persius
-              dolorum in per, postulant mnesarchum cu nam.
+              User Experience ist das A und O. Wir wollen, dass Sie sich wohlfühlen.
             </p>
             <p>
-              Each slide tells a story, with images that complement the text and enhance the experience.
+              Jede Folie erzählt eine Geschichte, mit Bildern, die den Text ergänzen und
+              das Erlebnis verbessern.
             </p>
           </div>
           <img
-            className="parallax-image"
+            ref={leftImageRef}
+            className="parallax-image parallax-image-left"
             src="https://picsum.photos/980/600"
-            alt="Random"
+            alt="Zufällig"
           />
           <img
-            className="parallax-image"
+            ref={rightImageRef}
+            className="parallax-image parallax-image-right"
             src="https://picsum.photos/960/600"
-            alt="Random"
+            alt="Zufällig"
           />
-        </div>
-
-        {/* Slide 3 */}
-        <div className="parallax-section" style={{ backgroundImage: `url(${getRandomImage()})` }}>
-          <div className="parallax-content">
-            <h1>Slide 3</h1>
-            <p>
-              Lorem ipsum dolor sit amet, in velit iudico mandamus sit, persius
-              dolorum in per, postulant mnesarchum cu nam.
-            </p>
-            <p>
-              The journey continues with more breathtaking views and engaging content.
-            </p>
-          </div>
         </div>
 
         {/* Abschluss */}
-        <div className="parallax-section parallax-footer" style={{ backgroundImage: `url(${getRandomImage()})` }}>
-          <h1>The End</h1>
-          <p>Thank you for scrolling through. We hope you enjoyed the visual experience.</p>
+        <div
+          className="parallax-section parallax-footer"
+          style={{ backgroundImage: `url(${getRandomImage()})` }}
+        >
+          <div className="parallax-content">
+            <h1>Das Ende</h1>
+            <p>
+              Vielen Dank fürs Scrollen. Wir hoffen, Ihnen hat das visuelle
+              Erlebnis gefallen.
+            </p>
+          </div>
+          <button className="btn-toTop" onClick={scrollToTop}>
+            <FaArrowUp /> Nochmal
+          </button>
         </div>
       </div>
     </>

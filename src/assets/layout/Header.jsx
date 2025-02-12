@@ -22,7 +22,7 @@ const Header = () => {
   const OpenMenu = () => {
     const navMenu = document.querySelector(".nav-menu");
     navMenu.classList.toggle("open");
-  }
+  };
 
   return (
     <header className="header">
@@ -71,8 +71,16 @@ const Header = () => {
         <input type="text" placeholder="Suche..." className="search-input" />
         <button className="search-button">🔍</button>
       </div>
-      <div className="Cart">
-        
+      <div className="WerbeBanner">
+        <h1>Willkommen bei meinem Abschluss Projekt in React</h1>
+        <p>Öffne einfach die Navigation und Fange am besten beim Dashboard an</p>
+        <Link to="/account-dashboard">
+          <button>Dashboard</button>
+        </Link>
+        <img
+          src="https://cdn.pixabay.com/photo/2018/05/20/21/01/sunset-3416768_960_720.jpg"
+          alt="Natur"
+        />
       </div>
     </header>
   );

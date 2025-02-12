@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Calendar } from "react-calendar";
-import {
-  FaChartBar,
-  FaTasks,
-  FaUsers,
-  FaCog,
-  FaCloudSun,
-  FaNewspaper,
-} from "react-icons/fa";
+import { FaChartBar, FaTasks, FaUsers, FaCog, FaCloudSun, FaNewspaper } from "react-icons/fa";
 import "react-calendar/dist/Calendar.css";
 import "../styles/Dashboard.scss";
 
@@ -15,84 +8,113 @@ const WEATHER_API_KEY = "08348b60c39f4fe7a593f787efa8f843"; // The Weather API K
 const NEWS_API_KEY = "UMSE3crsBtDGk45XaX8FRetRM6zmkbNsSUOao332"; // The News API Key
 
 const Dashboard = () => {
-  const [date, setDate] = useState(new Date()); // 📅 Kalender-Zustand auf heutiges Datum [(new Date())]
+  const [date, setDate] = useState(new Date());
   const [weather, setWeather] = useState(null);
-  const [news, setNews] = useState([]); // 📰 News-Zustand - Leeres Array als Start
-  const [loadingNews, setLoadingNews] = useState(true); // Ladezustand für News [API]
-  const [notes, setNotes] = useState(""); // 📝 Notizblock-Zustand - Start Leer
-  const [savedNotes, setSavedNotes] = useState([]); // Zustand für gespeicherte Notizen
+  const [news, setNews] = useState([]);
+  const [loadingNews, setLoadingNews] = useState(true);
   const [activeMenuItem, setActiveMenuItem] = useState("Übersicht");
-  const [city, setCity] = useState("Berlin"); // Start-Stadt für WetterAnzeige
-  const [inputCity, setInputCity] = useState(""); // Eingabe-Stadt für WetterAnzeige um später zu aktualisieren als User
+  const [city, setCity] = useState("Berlin");
+  const [inputCity, setInputCity] = useState("");
+  
+  // Updated note states
+  const [noteInput, setNoteInput] = useState({
+    name: "",
+    date: "",
+    time: "",
+    content: "",
+    id: null // Add id to track editing
+  });
+  const [savedNotes, setSavedNotes] = useState([]);
+  const [importantDates, setImportantDates] = useState([]);
 
-  useEffect(() => {
-    const fetchWeather = async () => {
-      try {
-        const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${WEATHER_API_KEY}`
-        );
-        const data = await response.json();
-        console.log("Wetterdaten:", data); // Debugging
-        setWeather(data);
-      } catch (error) {
-        console.error("Fehler beim Laden der Wetterdaten:", error);
-      }
-    };
-
-    const fetchNews = async () => {
-      console.log("Fetching News...");
-      setLoadingNews(true);
-      try {
-        const response = await fetch(
-          // Abrufen der News-API
-          `https://api.thenewsapi.com/v1/news/top?api_token=${NEWS_API_KEY}&locale=de&limit=10`
-        );
-
-        if (!response.ok) {
-          // Fehlerbehandlung, wenn die API nicht erreichbar ist
-          throw new Error(`HTTP-Fehler! Status: ${response.status}`);
-        }
-
-        const data = await response.json(); // Antwort in JSON umwandeln
-        console.log("News API Response:", data);
-
-        if (data.data && Array.isArray(data.data)) {
-          setNews(data.data);
-        } else {
-          console.error("Keine News gefunden.");
-          setNews([]);
-        }
-      } catch (error) {
-        // Fehlerbehandlung, wenn die API nicht erreichbar ist, wird der Fehler in der Konsole ausgegeben und kann weiter untersucht werden
-        console.error("Fehler beim Laden der News:", error);
-        setNews([]);
-      } finally {
-        // Wenn die API-Anfrage abgeschlossen ist, wird der Ladezustand auf "false" gesetzt, damit der Benutzer weiß, dass die News geladen wurden und Sie sehen kann
-        setLoadingNews(false);
-      }
-    };
-
-    fetchWeather(); // Funktionen aufrufen
-    fetchNews();
-  }, [city]); // Wenn sich die Stadt ändert, wird die Wetter-API erneut aufgerufen übergeben als parameter
-
-  // Hier wird die Funktion handleSaveNote definiert, die die Notizen speichert, wenn der Benutzer auf die Schaltfläche "Merken" klickt und Sie werden gespeichert
-  const handleSaveNote = () => {
-    if (notes.trim()) {
-      // Werden Sie hier getrennt? Wenn ja, wird die Notiz gespeichert und der Notizblock wird geleert mit setNotes("")
-      setSavedNotes([...savedNotes, notes]);
-      setNotes("");
+  const fetchWeather = async (city) => {
+    try {
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${WEATHER_API_KEY}`
+      );
+      const data = await response.json();
+      console.log("Wetterdaten:", data);
+      setWeather(data);
+    } catch (error) {
+      console.error("Fehler beim Laden der Wetterdaten:", error);
     }
   };
 
-  const handleDeleteNote = (index) => {
-    const newNotes = savedNotes.filter((_, i) => i !== index);
-    setSavedNotes(newNotes);
+  const fetchNews = async () => {
+    console.log("Fetching News...");
+    setLoadingNews(true);
+    try {
+      const response = await fetch(
+        `https://api.thenewsapi.com/v1/news/top?api_token=${NEWS_API_KEY}&locale=de&limit=10`
+      );
+      
+      if (!response.ok) {
+        throw new Error(`HTTP-Fehler! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("News API Response:", data);
+
+      if (data.data && Array.isArray(data.data)) {
+        setNews(data.data);
+      } else {
+        console.error("Keine News gefunden.");
+        setNews([]);
+      }
+    } catch (error) {
+      console.error("Fehler beim Laden der News:", error);
+      setNews([]);
+    } finally {
+      setLoadingNews(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchWeather(city);
+    fetchNews();
+  }, []);
+
+  const handleSaveNote = () => {
+    if (noteInput.name && noteInput.date && noteInput.time && noteInput.content) {
+      if (noteInput.id) {
+        // Edit existing note
+        setSavedNotes(prev => prev.map(note => note.id === noteInput.id ? noteInput : note));
+        setImportantDates(prev => prev.map(note => note.id === noteInput.id ? noteInput : note));
+      } else {
+        // Add new note
+        const newNote = {
+          ...noteInput,
+          timestamp: new Date(),
+          id: Date.now()
+        };
+
+        // Add to important dates
+        setImportantDates(prev => [...prev, newNote]);
+
+        // Add to saved notes
+        setSavedNotes(prev => [...prev, newNote]);
+      }
+
+      // Reset input fields
+      setNoteInput({
+        name: "",
+        date: "",
+        time: "",
+        content: "",
+        id: null
+      });
+    }
+  };
+
+  const handleDeleteNote = (id) => {
+    setSavedNotes(prev => prev.filter(note => note.id !== id));
+    setImportantDates(prev => prev.filter(note => note.id !== id));
   };
 
   const handleCityChange = () => {
     if (inputCity.trim()) {
       setCity(inputCity);
+      fetchWeather(inputCity);
       setInputCity("");
     }
   };
@@ -101,8 +123,18 @@ const Dashboard = () => {
     { icon: <FaChartBar />, label: "Übersicht" },
     { icon: <FaTasks />, label: "Aufgaben" },
     { icon: <FaUsers />, label: "Benutzer" },
-    { icon: <FaCog />, label: "Einstellungen" },
+    { icon: <FaCog />, label: "Einstellungen" }
   ];
+
+  // Filter notes for the selected date
+  const selectedDateNotes = savedNotes.filter(note => {
+    const noteDate = new Date(note.date);
+    return (
+      noteDate.getDate() === date.getDate() &&
+      noteDate.getMonth() === date.getMonth() &&
+      noteDate.getFullYear() === date.getFullYear()
+    );
+  });
 
   return (
     <div className="dashboard-container">
@@ -114,9 +146,7 @@ const Dashboard = () => {
             {menuItems.map((item, index) => (
               <button
                 key={index}
-                className={`nav-item ${
-                  activeMenuItem === item.label ? "active" : ""
-                }`}
+                className={`nav-item ${activeMenuItem === item.label ? "active" : ""}`}
                 onClick={() => setActiveMenuItem(item.label)}
               >
                 {item.icon}
@@ -135,21 +165,19 @@ const Dashboard = () => {
                 <tr>
                   <th>Name</th>
                   <th>Datum & Uhrzeit</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Meeting mit Team</td>
-                  <td>12.10.2023, 10:00 Uhr</td>
-                </tr>
-                <tr>
-                  <td>Projekt-Abgabe</td>
-                  <td>15.10.2023, 15:00 Uhr</td>
-                </tr>
-                <tr>
-                  <td>Wartung</td>
-                  <td>20.10.2023, 08:00 Uhr</td>
-                </tr>
+                {importantDates.map((note) => (
+                  <tr key={note.id} onClick={() => setNoteInput(note)}>
+                    <td>{note.name}</td>
+                    <td>{new Date(note.date).toLocaleDateString('de-DE')}, {note.time} Uhr</td>
+                    <td>
+                      <button onClick={() => handleDeleteNote(note.id)}>Löschen</button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -161,9 +189,7 @@ const Dashboard = () => {
         <div className="content-grid">
           {/* Weather Card */}
           <div className="card weather-card">
-            <h3>
-              <FaCloudSun className="card-icon" /> Wetter in {city}
-            </h3>
+            <h3><FaCloudSun className="card-icon" /> Wetter in {city}</h3>
             <div className="card-content">
               {weather ? (
                 <div className="weather-info">
@@ -171,7 +197,7 @@ const Dashboard = () => {
                     <div className="temperature">
                       {Math.round(weather.main.temp)}°C
                     </div>
-                    <img
+                    <img 
                       src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
                       alt={weather.weather[0].description}
                       className="weather-icon"
@@ -197,9 +223,7 @@ const Dashboard = () => {
                         onChange={(e) => setInputCity(e.target.value)}
                       />
                     </div>
-                    <button className="submit-city" onClick={handleCityChange}>
-                      Aktualisieren
-                    </button>
+                    <button className="submit-city" onClick={handleCityChange}>Aktualisieren</button>
                   </div>
                 </div>
               ) : (
@@ -208,38 +232,62 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Notes Card (Notizblock) */}
+          {/* Notes Card */}
           <div className="card notes-card">
-            <h3>Notizen</h3>
+            <h3>Termine</h3>
             <div className="card-content">
-              <textarea
-                placeholder="Schreibe deine Notizen hier..."
-                className="notes-textarea"
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-              />
+              <div className="notes-form">
+                <input
+                  type="text"
+                  placeholder="Name des Termins"
+                  value={noteInput.name}
+                  onChange={(e) => setNoteInput(prev => ({...prev, name: e.target.value}))}
+                  className="notes-input"
+                />
+                <input
+                  type="date"
+                  value={noteInput.date}
+                  onChange={(e) => setNoteInput(prev => ({...prev, date: e.target.value}))}
+                  className="notes-input"
+                />
+                <input
+                  type="time"
+                  value={noteInput.time}
+                  onChange={(e) => setNoteInput(prev => ({...prev, time: e.target.value}))}
+                  className="notes-input"
+                />
+                <textarea
+                  placeholder="Beschreibung..."
+                  value={noteInput.content}
+                  onChange={(e) => setNoteInput(prev => ({...prev, content: e.target.value}))}
+                  className="notes-textarea"
+                />
+              </div>
             </div>
             <div className="saveTodo">
               <button onClick={handleSaveNote}>Merken</button>
               <hr />
             </div>
             <div className="saved-notes">
-              {savedNotes.map((note, index) => (
-                <div key={index} className="note-item">
-                  <p>{note}</p>
-                  <button onClick={() => handleDeleteNote(index)}>
-                    Löschen
-                  </button>
-                </div>
-              ))}
+              <h4> Datum {date.toLocaleDateString('de-DE')}</h4>
+              {selectedDateNotes.length > 0 ? (
+                selectedDateNotes.map((note) => (
+                  <div key={note.id} className="note-item">
+                    <h5>{note.name}</h5>
+                    <p>{new Date(note.date).toLocaleDateString('de-DE')}, {note.time} Uhr</p>
+                    <p>{note.content}</p>
+                    <button onClick={() => handleDeleteNote(note.id)}>Löschen</button>
+                  </div>
+                ))
+              ) : (
+                <p>Keine Termine für diesen Tag.</p>
+              )}
             </div>
           </div>
 
           {/* News Card */}
           <div className="card news-card">
-            <h3>
-              <FaNewspaper className="card-icon" /> Aktuelle News
-            </h3>
+            <h3><FaNewspaper className="card-icon" /> Aktuelle News</h3>
             <div className="card-content">
               <div className="news-list">
                 {loadingNews ? (
@@ -253,24 +301,18 @@ const Dashboard = () => {
                       rel="noopener noreferrer"
                       className="news-item"
                     >
-                      {article.image_url && ( // Falls ein Bild existiert, wird es angezeigt
-                        <img
-                          src={article.image_url}
-                          alt={article.title}
-                          className="news-image"
-                        />
+                      {article.image_url && (
+                        <img src={article.image_url} alt={article.title} className="news-image" />
                       )}
                       <h4>{article.title}</h4>
                       {article.description && <p>{article.description}</p>}
                       <span className="news-source">
-                        {article.source || "Unbekannte Quelle"}
+                        {article.source || 'Unbekannte Quelle'}
                       </span>
                     </a>
                   ))
                 ) : (
-                  <div className="no-content">
-                    Keine aktuellen News verfügbar.
-                  </div>
+                  <div className="no-content">Keine aktuellen News verfügbar.</div>
                 )}
               </div>
             </div>

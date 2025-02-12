@@ -1,62 +1,177 @@
 .parallax-wrapper {
-  perspective: 1px;
   height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
   scroll-behavior: smooth;
   width: 100vw;
+  perspective: 1px;
 }
 
-/* Allgemeine Sektionen */
+/* Allgemeine Abschnitte */
 .parallax-section {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 120vh;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   color: white;
-  background: #555;
-  background: rgba(0, 0, 0, 0.5); /* Hinzugefügt */
+  background-size: cover;
+  background-position: center;
+  animation: visibleSlow 2.8s ease-in-out forwards;
 }
 
-/* Titel-Bereich */
-.parallax-section-title {
-  background: #222;
-  background: rgba(0, 0, 0, 0.5); /* Hinzugefügt */
+@keyframes visibleSlow {
+  0% {
+    opacity: 0;
+    transform: translate(-50px, -50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
 }
 
-/* Inhalt */
-.parallax-content {
-  max-width: 600px;
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
-}
-
-/* Alternierende Farben für die Abschnitte */
+/* Parallax-Animation für verschiedene Slides */
 .parallax-section:nth-child(odd) {
-  background: #444;
-  background: rgba(0, 0, 0, 0.5); /* Hinzugefügt */
+  background-attachment: fixed;
 }
 
 .parallax-section:nth-child(even) {
-  background: #666;
-  background: rgba(0, 0, 0, 0.5); /* Hinzugefügt */
+  background-size: 110%;
+  transition: background-size 1s ease-in-out;
 }
 
-/* Bilder */
+.parallax-section:nth-child(even):hover {
+  background-size: 100%;
+}
+
+/* Inhalte */
+.parallax-content {
+  max-width: 600px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  transition: transform 0.5s ease-in-out;
+  z-index: 100;
+}
+
+.slide2-content {
+  position: absolute;
+}
+
+/* Image Styles */
 .parallax-image {
   max-width: 90%;
   height: auto;
   margin-top: 20px;
   border-radius: 10px;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: translateX(0); /* Startposition neutral */
 }
 
-/* Footer */
-.parallax-footer {
-  background: #111;
-  background: rgba(0, 0, 0, 0.5); /* Hinzugefügt */
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .parallax-section {
+    height: 50vh;
+  }
+
+  .parallax-content {
+    max-width: 90%;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .parallax-section {
+    height: 40vh;
+  }
+
+  .parallax-content {
+    max-width: 100%;
+    padding: 5px;
+  }
+}
+
+/* Keyframes für die Animation */
+@keyframes SlideInLeft {
+  0% {
+    transform: translateX(-100%) scale(0.9);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(10%) scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes SlideInRight {
+  0% {
+    transform: translateX(100%) scale(0.9);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(-10%) scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Standardzustand: Bilder unsichtbar */
+.parallax-image-left,
+.parallax-image-right {
+  opacity: 0;
+}
+
+/* Wenn sichtbar, Animation aktivieren */
+.parallax-image-left.visible {
+  animation: SlideInLeft 1.5s ease-in-out forwards;
+}
+
+.parallax-image-right.visible {
+  animation: SlideInRight 1.5s ease-in-out forwards;
+}
+
+.btn-toTop {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: #131414;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  padding: 1rem;
+  outline: 1px solid wheat;
+  border: 1px solid rgb(0, 0, 0);
+
+  &:hover {
+    background-color: #0056b3;
+    transform: translateY(-5px);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 }

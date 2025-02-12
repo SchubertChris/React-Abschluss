@@ -1,21 +1,12 @@
 @use "../../styles/base/index.scss" as *;
 
-$padding-large: 1rem 2rem 3rem 2rem;
-$padding-medium: 15px;
-$padding-small: 10px;
-$font-size-large: 26px;
-$font-size-medium: 22px;
-$font-size-small: 20px;
-$font-size-xsmall: 16px;
-$font-size-xxsmall: 14px;
-$color-background: #00000000;
-$color-border: #ffffff;
-$color-active: linear-gradient(90deg, #0000FF, #00FF00);
-$color-shadow: rgba(0, 0, 0, 0.3);
-$color-shadow-hover: rgba(0, 0, 0, 0.5);
+.Home{
+  background: linear-gradient(135deg, #775f3a 0%, #fad0c4 100%);
+  width: 100vw;
+}
 
 .Carousel-Container {
-  padding: $padding-large;
+  padding: 1rem 2rem 3rem 2rem;
   width: 90%;
   max-height: 700px;
   display: flex;
@@ -26,14 +17,16 @@ $color-shadow-hover: rgba(0, 0, 0, 0.5);
   perspective: 1000px;
   margin: 0 auto;
   animation: OpacityHero 1.2s ease;
-  background-color: $color-background;
+  background-color: #00000000;
+  margin-top: 3rem;
 
+  
   .description {
     text-align: center;
     margin-bottom: 20px;
 
     h2 {
-      font-size: $font-size-large;
+      font-size: 26px;
       margin-bottom: 10px;
     }
 
@@ -57,12 +50,12 @@ $color-shadow-hover: rgba(0, 0, 0, 0.5);
       aspect-ratio: 16/9;
       object-fit: cover;
       border-radius: 10px;
-      box-shadow: 0 6px 12px $color-shadow;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
 
       &:hover {
         transform: translateZ(20px);
-        box-shadow: 0 12px 24px $color-shadow-hover;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
       }
     }
   }
@@ -76,34 +69,34 @@ $color-shadow-hover: rgba(0, 0, 0, 0.5);
       width: 30px;
       height: 15px;
       border-radius: 0;
-      border: 2px solid $color-border;
+      border: 2px solid #ffffff;
       background-color: #bbb;
       transition: background-color 0.3s ease;
       margin-top: 20px;
       transform: skewX(-20deg);
 
       &.active {
-        background-color: $color-active;
+        background-color: linear-gradient(90deg, #0000FF, #00FF00);
         border: 1px solid #ffffff;
       }
     }
   }
 
   @media (max-width: 768px) {
-    padding: $padding-medium;
+    padding: 15px;
 
     .description {
       h2 {
-        font-size: $font-size-medium;
+        font-size: 22px;
       }
 
       p {
-        font-size: $font-size-xsmall;
+        font-size: 16px;
       }
     }
 
     .images-carousel {
-      gap: $padding-small;
+      gap: 10px;
 
       img {
         max-width: 100%;
@@ -128,11 +121,12 @@ $color-shadow-hover: rgba(0, 0, 0, 0.5);
   @media (max-width: 480px) {
     .description {
       h2 {
-        font-size: $font-size-small;
+        font-size: 20px;
       }
 
       p {
-        font-size: $font-size-xxsmall;
+        font-size: 14px;
+
       }
     }
 
@@ -160,3 +154,44 @@ $color-shadow-hover: rgba(0, 0, 0, 0.5);
   }
 }
 
+.Text-Container {
+  max-width: 2000px;
+  margin: auto;
+  padding: 2rem;
+
+  .text1, .text2, .text3, .text4 {
+    background-color: #0000008a;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    position: relative;
+
+    &:nth-child(1)::before,
+    &:nth-child(3)::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &:nth-child(2)::before,
+    &:nth-child(4)::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border: 1px solid rgb(0, 0, 0);
+      outline: 1ßx solid gold;
+      border-radius: 50%;
+      transform: translate(50%, 50%);
+    }
+  }
+}
