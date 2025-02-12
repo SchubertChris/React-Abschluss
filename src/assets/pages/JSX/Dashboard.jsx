@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Calendar } from "react-calendar";
-import { FaChartBar, FaTasks, FaUsers, FaCog, FaCloudSun, FaNewspaper } from "react-icons/fa";
+import { FaChartBar, FaTasks, FaUsers, FaCog, FaCloudSun, FaNewspaper, FaShoppingCart } from "react-icons/fa";
 import "react-calendar/dist/Calendar.css";
 import "../styles/Dashboard.scss";
 
@@ -121,9 +121,9 @@ const Dashboard = () => {
 
   const menuItems = [
     { icon: <FaChartBar />, label: "Übersicht" },
-    { icon: <FaTasks />, label: "Aufgaben" },
-    { icon: <FaUsers />, label: "Benutzer" },
-    { icon: <FaCog />, label: "Einstellungen" }
+    { icon: <FaTasks />, label: "Termine" },
+    { icon: <FaShoppingCart />, label: "Warenkorb" },
+    { icon: <FaNewspaper />, label: "Nachrichten" }
   ];
 
   // Filter notes for the selected date

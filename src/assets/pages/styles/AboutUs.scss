@@ -1,10 +1,12 @@
 .parallax-wrapper {
-  height: 100vh;
+  min-height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
   scroll-behavior: smooth;
   width: 100vw;
   perspective: 1px;
+  position: absolute;
+  top: 200px;
 }
 
 /* Allgemeine Abschnitte */

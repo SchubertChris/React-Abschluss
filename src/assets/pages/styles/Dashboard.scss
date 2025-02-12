@@ -7,6 +7,7 @@
   padding: 3rem;
   position: relative;
   color: var(--text-color);
+  border-radius: 0px;
   body.dark-mode & {
     background-color: #000000;
   }
@@ -59,7 +60,9 @@
         width: 100%;
         text-align: left;
         border-radius: 20px 20px 20px 0; // Rounded border
-        cursor: pointer;
+          border: 1px solid #00ffff;
+          cursor: pointer;
+          outline: 0.5px solid black;
 
         svg {
           width: 1.25rem;
@@ -67,15 +70,20 @@
         }
 
         &:hover {
-          background-color: #e0e0e0; // Light hover background color
-          color: black; // Change text color to black on hover
-          border-radius: 20px 20px 20px 0; // Rounded border
+          background-color: #d0d0d080; // Light active background color
+          color: rgb(0, 0, 0);
+          font-weight: 500;
+          box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.9);
         }
 
         &.active {
-          background-color: #d0d0d0; // Light active background color
+          background-color: #d0d0d080; // Light active background color
           color: rgb(0, 0, 0);
           font-weight: 500;
+          border: 1px solid #00ffff;
+          box-shadow: inset 0 0 10px rgba(120, 246, 255, 0.9);
+          outline: 1px solid rgb(0, 0, 0);
+          box-shadow: #000000 0px 0px 10px 0px;
         }
       }
     }
@@ -123,10 +131,15 @@
 
       button {
         color: var(--text-color);
+          outline: 1px solid rgba(0, 0, 0, 0);
+          border: 1px solid #00000000;
 
         &:hover {
-          background-color: #e0e0e0; // Light hover background color
+          border: 1px solid #3b82f6;
+          background-color: #e0e0e081; // Light hover background color
           color: black; // Change text color to black on hover
+          box-shadow: inset 0 0 10px rgba(120, 246, 255, 0.9);
+          outline: 1px solid rgb(0, 0, 0);
         }
 
         &:disabled {
@@ -346,13 +359,13 @@
 
 // Notizkarten Styles
 .notes-card {
+  padding: .5rem;
   display: flex;
   flex-direction: column;
   width: 100%; // Make the notes card take full width
   min-width: 300px;
   height: 700px;
   background-color: var(--background-color);
-  border: 1px solid #e5e7eb;
   border-radius: 0.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   overflow-y: scroll;
@@ -650,7 +663,7 @@
     height: auto;
     display: flex;
     justify-content: center;
-
+    border-radius: 0px;
     .sidebar-content {
       width: 100%;
       max-width: 400px;

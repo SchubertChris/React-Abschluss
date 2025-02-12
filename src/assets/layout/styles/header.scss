@@ -86,11 +86,12 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2), -3px -3px 10px rgba(255, 255, 255,
     z-index: 1000;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.8s ease, opacity 0.8s ease;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
     opacity: 0;
 
     ul {
       width: 100%;
+      height: 10rem;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -98,24 +99,26 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2), -3px -3px 10px rgba(255, 255, 255,
       list-style: none;
       padding: 0;
       margin: 0;
-      transition: all 0.8s;
+      transition: all 0.5s;
       z-index: 1000;
+      background-color: #000000b7;
     }
 
     li {
-      background-color: rgb(39, 39, 39);
+      background-color: rgba(36, 36, 36, 0.87);
       flex: 1 1 100px;
-      height: 80px;
+      height: 70px;
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 5px;
-      border-radius: 5px;
+      border-radius: 10px;
       transition: background-color 0.3s, transform 0.3s;
       transform-style: preserve-3d;
       perspective: 1000px;
-      box-shadow: $box-shadow;
       cursor: pointer;
+      text-transform: uppercase;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif, cursive;
 
       a {
         width: 100%;
@@ -126,18 +129,16 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2), -3px -3px 10px rgba(255, 255, 255,
         text-align: center;
         text-decoration: none;
         color: #fff;
-        font-size: 1.3rem;
+        font-size: 1.1rem;
         padding: 10px;
         transition: color 0.3s, background-color 0.3s;
         border: 1px solid $primary-color;
-        border-radius: 5px;
+        border-radius: 10px;
 
         &:hover,
         &:active {
-          color: $highlight-color;
-          border: 1px solid $highlight-color;
-          transform: scale(1.05);
-          transition: all 0.3s;
+          color: $primary-color;
+          border: 1px solid $primary-color;
         }
       }
     }
@@ -157,19 +158,24 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2), -3px -3px 10px rgba(255, 255, 255,
         transform: scale(0.5);
         border: $highlight-color 1px solid;
         opacity: 0;
+        rotate: 40deg;
       }
       60% {
         transform: scale(1.2);
         border: 1px solid $primary-color;
         opacity: 1;
+        rotate: 10deg;
+
       }
       80% {
         border: $highlight-color 1px solid;
         transform: scale(0.9);
+        rotate: 20deg;
       }
       100% {
         border: 1px solid $primary-color;
         transform: scale(1);
+        rotate: 0deg;
       }
     }
 
@@ -404,6 +410,7 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2), -3px -3px 10px rgba(255, 255, 255,
       }
     }
   }
+
 
   @media (max-width: 768px) {
     padding: 15px;
@@ -642,6 +649,146 @@ hr {
     button {
       padding: 6px 12px;
       font-size: 0.7rem;
+    }
+  }
+
+}
+
+
+
+.Footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #00000000;
+  color: white;
+  padding: 35px 0;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+      font-size: 1.6rem;
+      opacity: 0;
+
+  .Social, .Datenschutz, .FeedBack {
+    margin: 10px;
+    flex: 1;
+    min-width: 150px;
+  }
+
+  .Social {
+    a {
+      font-size: 1.5rem;
+      color: white;
+      margin: 0 10px;
+      transition: color 0.3s;
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+
+  .Datenschutz, .FeedBack {
+    a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+
+    }
+  }
+
+  .FeedBack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .FeedbackSpan {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid $primary-color;
+      width: 100%;
+      height: 1rem;
+      max-width: 300px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      background-color: #0f302f1a;
+      color: gold;
+      border: 1px solid $primary-color;
+      border-radius: 15px;
+      caret-color: $highlight-color; // Makes the cursor more visible
+
+      &:focus {
+      border-color: $highlight-color;
+      outline: none;
+      box-shadow: 0 0 5px $highlight-color;
+      transform: scale(1.1);
+      }
+    }
+  }
+}
+
+
+
+
+.Footer-btn {
+  color: rgba(255, 255, 255, 0.678);
+  position: absolute;
+  bottom: 5px;
+  right: 20px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.733);
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  z-index: 1000;
+  
+
+  &:hover, :active {
+    border: 1px solid $primary-color;
+    color: white;
+  }
+}
+
+.visibleFooter {
+  height: max-content !important;
+  position: fixed;
+  bottom: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0; // Entfernt die Abstände zwischen den inneren Elementen
+}
+
+.visible2{
+  opacity: 1;
+      background-color: #000000b7;
+      position: relative;
+  div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3.8rem;
+      border-radius: 15px !important;
+      background-color: #000000b7;
+      padding: .4rem;
+      border: 2px solid $primary-color;
+  }
+  @media (max-width: 900px) {
+    div{
+      max-width: 200px;
+      font-size: 1rem;
+    }
+    .FeedBack{
+      display: none;
     }
   }
 }
