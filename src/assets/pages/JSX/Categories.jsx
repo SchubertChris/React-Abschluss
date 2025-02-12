@@ -62,7 +62,7 @@ export default function Categories() {
       <Link to="/shop/support" className="support">
         <div className="blur-bg"></div>
         <span className="shop">Shop</span>
-        <span>Support</span>
+        <span>1 to 1 Coaching</span>
         <div className="overlay"></div>
       </Link>
     </div>

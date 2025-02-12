@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "name": "Markt Analysen",
+    "price": 19.99,
+    "image": "/images/product1.jpg",
+    "description": "Profitieren Sie von detaillierten Marktanalysen, die Ihre Handelsentscheidungen auf das nächste Level heben.",
+    "articleNumber": "MA-001"
+  },
+  {
+    "id": 2,
+    "name": "Trading Bots",
+    "price": 29.99,
+    "image": "/images/product2.jpg",
+    "description": "Nutzen Sie unsere automatisierten Trading Bots und handeln Sie rund um die Uhr erfolgreich.",
+    "articleNumber": "TB-002"
+  },
+  {
+    "id": 3,
+    "name": "Portfolio Management",
+    "price": 39.99,
+    "image": "/images/product3.jpg",
+    "description": "Optimieren Sie Ihr Portfolio effizient mit unseren leistungsstarken Management-Tools.",
+    "articleNumber": "PM-003"
+  },
+  {
+    "id": 4,
+    "name": "Backtesting",
+    "price": 49.99,
+    "image": "/images/product4.jpg",
+    "description": "Testen Sie Ihre Handelsstrategien mit historischen Daten und maximieren Sie Ihre Gewinne.",
+    "articleNumber": "BT-004"
+  },
+  {
+    "id": 5,
+    "name": "Strategie Entwicklung",
+    "price": 39.99,
+    "image": "/images/product5.jpg",
+    "description": "Entwickeln Sie Ihre eigenen erfolgreichen Handelsstrategien mit unserer professionellen Unterstützung.",
+    "articleNumber": "SE-005"
+  },
+  {
+    "id": 6,
+    "name": "Markt Update Plus",
+    "price": 49.99,
+    "image": "/images/product6.jpg",
+    "description": "Erhalten Sie erweiterte Marktupdates und Analysen, um immer einen Schritt voraus zu sein.",
+    "articleNumber": "MU-006"
+  },
+  {
+    "id": 7,
+    "name": "Signale",
+    "price": 39.99,
+    "image": "/images/product7.jpg",
+    "description": "Erhalten Sie präzise Handelssignale und treffen Sie bessere Entscheidungen für Ihren Erfolg.",
+    "articleNumber": "SI-007"
+  },
+  {
+    "id": 8,
+    "name": "Risk Management",
+    "price": 49.99,
+    "image": "/images/product8.jpg",
+    "description": "Nutzen Sie unsere Tools und Strategien für ein effektives Risikomanagement und schützen Sie Ihr Kapital.",
+    "articleNumber": "RM-008"
+  },
+  {
+    "id": 9,
+    "name": "Eins zu Eins Coaching",
+    "price": 49.99,
+    "image": "/images/product9.jpg",
+    "description": "Profitieren Sie von persönlichem Coaching und bringen Sie Ihre Handelskarriere auf das nächste Level.",
+    "articleNumber": "EC-009"
+  },
+  {
+    "id": 10,
+    "name": "Trading Ausbildung",
+    "price": 39.99,
+    "image": "/images/product10.jpg",
+    "description": "Erhalten Sie eine umfassende Ausbildung und werden Sie ein erfolgreicher Trader.",
+    "articleNumber": "TA-010"
+  },
+  {
+    "id": 11,
+    "name": "Trading Seminare",
+    "price": 49.99,
+    "image": "/images/product11.jpg",
+    "description": "Nehmen Sie an unseren exklusiven Trading-Seminaren teil und erweitern Sie Ihr Wissen.",
+    "articleNumber": "TS-011"
+  }
+]
