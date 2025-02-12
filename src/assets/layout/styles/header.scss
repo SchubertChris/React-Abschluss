@@ -14,7 +14,7 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
   flex-direction: column;
   align-items: center;
   padding: 10px;
-  z-index: 2000;
+  z-index: 3000;
   margin: 0 auto;
 
   .header-content {
@@ -27,6 +27,7 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
     .logo-container {
       display: flex;
       align-items: center;
+      z-index: 2000;
 
       .logo {
         width: 100px;
@@ -52,7 +53,7 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
         position: relative;
         background: $gradient;
         border: none;
-        border-radius: 50%;
+        border-radius: 25px 15px 0 25px;
         width: 40px;
         height: 40px;
         display: flex;
@@ -62,24 +63,7 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
         cursor: pointer;
         transition: all 0.3s ease;
         box-shadow: $box-shadow;
-      }
-
-      .cart-button:after {
-        content: "0";
-        position: absolute;
-        top: -5px;
-        right: -5px;
-        width: 20px;
-        height: 20px;
-        background-color: $primary-color;
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.8rem;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2),
-          -2px -2px 5px rgba(255, 255, 255, 0.2);
+        font-size: 1rem;
       }
     }
   }
@@ -106,7 +90,7 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
       padding: 0;
       margin: 0;
       transition: all 0.5s;
-      z-index: 2000;
+      z-index: 3000;
       background-color: #000000b7;
     }
 
@@ -140,7 +124,8 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
         padding: 10px;
         transition: color 0.3s, background-color 0.3s;
         border: 1px solid $primary-color;
-        border-radius: 10px;
+      z-index: 3000;
+      border-radius: 10px;
 
         &:hover,
         &:active {
@@ -701,7 +686,8 @@ hr {
   align-items: center;
   flex-wrap: wrap;
   font-size: 1.6rem;
-  display: none;
+      z-index: 3000;
+      display: none;
 
   .Social,
   .Datenschutz,
@@ -769,7 +755,7 @@ hr {
 
 .Footer-btn {
   color: rgba(255, 255, 255, 0.678);
-  position: absolute;
+  position: fixed;
   bottom: 5px;
   right: 20px;
   padding: 10px 20px;
@@ -778,7 +764,7 @@ hr {
   background-color: rgba(0, 0, 0, 0.733);
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
-  z-index: 1000;
+  z-index: 2000;
 
   &:hover,
   :active {
@@ -802,8 +788,16 @@ hr {
     cursive;
   display: flex;
   background-color: #000000b7;
-  position: relative;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  justify-content: center;
+  padding: 10px 0;
+  height: 9.4rem;
+  z-index: 2000;
+
   div {
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -814,6 +808,7 @@ hr {
     padding: 0.4rem;
     border: 2px solid $primary-color;
   }
+
   @media (max-width: 900px) {
     div {
       max-width: 200px;
@@ -823,6 +818,7 @@ hr {
       display: none;
     }
   }
+
   @media (max-width: 505px) {
     div {
       font-size: 1rem;
@@ -832,6 +828,7 @@ hr {
       display: none;
     }
   }
+
   @media (max-width: 505px) {
     div {
       font-size: 1rem;
@@ -842,3 +839,105 @@ hr {
     }
   }
 }
+
+.Cart-Sidebar {
+  overflow-y: auto;
+  position: fixed;
+  display: none;
+  top: -20px;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.531);
+  padding: 1rem;
+  width: 400px;
+  height: 100vh;
+  max-width: 100%;
+  box-shadow: $box-shadow;
+  color: white;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif, cursive;
+  margin: 20px auto;
+  z-index: 9000;
+button{margin-top: 7rem !important;
+}
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    margin-top: 10rem !important;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  }
+
+  .cart-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: rgba(36, 36, 36, 0.87);
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    span {
+      margin-top: 2rem;
+      font-size: 1rem;
+    }
+
+    &:hover {
+      background-color: rgba(36, 36, 36, 0.95);
+    }
+  }
+
+  p {
+    text-align: center;
+    font-size: 1rem;
+    color: #fff;
+  }
+  button{
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    background-color: $primary-color;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: $box-shadow;
+
+    &:hover, &:active {
+      background-color: $highlight-color;
+      transform: scale(1.05);
+    }
+  }
+}
+
+@media (max-width: 1400px) {
+  .Cart-Sidebar {
+    top: 200px;
+    width: 100vw;
+  }
+}
+
+.Cart-Sidebar.OpenCart {
+  display: block;
+  animation: DropInFromTop 2s ease forwards;
+}
+// Schließen-Button
+.close-cart {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+@keyframes DropInFromTop {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }}

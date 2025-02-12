@@ -145,9 +145,9 @@
 
 .btn-toTop {
   position: absolute;
-  bottom: 20px;
-  right: 20px;
-  background-color: #131414;
+  bottom: 100px;
+  right: 100px;
+  background: linear-gradient(45deg, #0fc1f2, #e84ee3, #9dff00);
   color: white;
   border: none;
   border-radius: 50%;
@@ -159,13 +159,19 @@
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
-  padding: 1rem;
+  padding: 5rem;
   outline: 1px solid wheat;
-  border: 1px solid rgb(0, 0, 0);
+    transition: all 1s;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 100px 1px 100px 1px;
+
 
   &:hover {
-    background-color: #0056b3;
+    background: linear-gradient(45deg, #bbff00, #ffc400, #8400ff);
     transform: translateY(-5px);
+    color: black;
+    transition: all 1s;
+    border-radius: 1px 100px 1px 100px;
   }
 
   &:focus {

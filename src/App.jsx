@@ -1,5 +1,3 @@
-/* Wichtige Imports der Komponenten */
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./main.scss";
 import Header from "./assets/layout/Header";
@@ -16,10 +14,14 @@ import Popular from "./assets/pages/JSX/Popular";
 import Cart from "./assets/pages/JSX/Cart";
 import ShippingReturns from "./assets/pages/JSX/ShippingReturns";
 
-/* Rendern der Koponenten und setzen von Layout */
+// Importiere den Context Provider
+import AppProvider from "./assets/layout/ContextAPI";
+
+/* Rendern der Komponenten und setzen von Layout */
 function App() {
   return (
-    <Router>
+    <AppProvider>
+      <Router>
         <Header />
         <main>
           <Routes>
@@ -37,7 +39,8 @@ function App() {
             <Route path="/shipping-returns" element={<ShippingReturns />} />
           </Routes>
         </main>
-    </Router>
+      </Router>
+    </AppProvider>
   );
 }
 

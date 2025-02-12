@@ -1,31 +1,93 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-
+import React, { useContext, useState, useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AppContext } from "../layout/ContextAPI";
+import DiamondSVG from "../layout/PlaceholderSVG";
 import logo from "../../assets/images/Logo/CandleScopeLogo.png";
 import "../../assets/layout/styles/header.scss";
-import { FaBars, FaShoppingCart, FaMoon, FaSun, FaArrowDown, FaArrowUp, FaGithub, FaInstagram, FaFacebook } from "react-icons/fa";
+import {
+  FaBars,
+  FaShoppingCart,
+  FaMoon,
+  FaSun,
+  FaArrowDown,
+  FaArrowUp,
+  FaGithub,
+  FaInstagram,
+  FaFacebook,
+  FaTrash,
+} from "react-icons/fa";
 
 const Header = () => {
-  const [darkMode, setDarkMode] = useState(localStorage.getItem("theme") === "dark");
+  const { darkMode, setDarkMode, cartItems, setCartItems } = useContext(AppContext);
   const [footerVisible, setFooterVisible] = useState(false);
+  const [cartVisible, setCartVisible] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
+  
+  const menuRef = useRef(null);
+  const menuButtonRef = useRef(null);
+  const cartRef = useRef(null);
+  const cartButtonRef = useRef(null);
 
+  // Load cart items from localStorage on mount
   useEffect(() => {
-    if (darkMode) {
-      document.body.classList.add("dark-mode");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.body.classList.remove("dark-mode");
-      localStorage.setItem("theme", "light");
+    const savedCartItems = localStorage.getItem('cartItems');
+    if (savedCartItems) {
+      try {
+        setCartItems(JSON.parse(savedCartItems));
+      } catch (error) {
+        console.error('Error loading cart items:', error);
+      }
     }
-  }, [darkMode]);
+  }, []);
+
+  // Save cart items to localStorage when they change
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  // Handle outside clicks
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // For navigation menu
+      if (menuRef.current && 
+          !menuRef.current.contains(event.target) && 
+          !menuButtonRef.current.contains(event.target)) {
+        setMenuOpen(false);
+        document.querySelector(".nav-menu").classList.remove("open");
+      }
+
+      // For cart
+      if (cartRef.current && 
+          !cartRef.current.contains(event.target) && 
+          !cartButtonRef.current.contains(event.target)) {
+        setCartVisible(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const OpenMenu = () => {
+    setMenuOpen(!menuOpen);
     document.querySelector(".nav-menu").classList.toggle("open");
   };
 
   const toggleFooter = () => {
     setFooterVisible(!footerVisible);
     document.querySelector(".Footer").classList.toggle("visible2");
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+    document.querySelector(".nav-menu").classList.remove("open");
+  };
+
+  const handleSearch = () => {
+    if (!searchTerm.trim()) return;
+    navigate(`/shop?search=${searchTerm}`);
   };
 
   return (
@@ -38,11 +100,22 @@ const Header = () => {
         </div>
 
         <div className="button-group">
-          <button onClick={OpenMenu} className="icon-button menu-button">
+          <button 
+            ref={menuButtonRef}
+            onClick={OpenMenu} 
+            className="icon-button menu-button"
+          >
             <FaBars />
           </button>
-          <button className="icon-button cart-button">
+          <button 
+            ref={cartButtonRef}
+            className={`icon-button cart-button ${cartItems.length > 0 ? "has-items" : ""}`} 
+            onClick={() => setCartVisible(!cartVisible)}
+          >
             <FaShoppingCart />
+            {cartItems.length > 0 && (
+              <span className="cart-count">{cartItems.length}</span>
+            )}
           </button>
           <button
             className="btn-toggle"
@@ -55,58 +128,63 @@ const Header = () => {
         </div>
       </div>
 
-      <nav className="nav-menu">
+      <nav ref={menuRef} className="nav-menu">
         <ul className={footerVisible ? "visibleFooter" : ""}>
-          <li><Link to="/account-dashboard">Dashboard</Link></li>
-          <li><Link to="/login-register">Login</Link></li>
-          <li><Link to="/about-us">About Us</Link></li>
-          <li><Link to="/blog">Blog</Link></li>
-          <li><Link to="/shop">Shop</Link></li>
-          <li><Link to="/categories">Kategorien</Link></li>
-          <li><Link to="/new">Neu</Link></li>
-          <li><Link to="/offers">Angebote</Link></li>
-          <li><Link to="/popular">Beliebt</Link></li>
-          <li><Link to="/cart">Warenkorb</Link></li>
-          <li><Link to="/shipping-returns">Rückgabe</Link></li>
+          <li>
+            <Link to="/account-dashboard" onClick={closeMenu}>Dashboard</Link>
+          </li>
+          <li>
+            <Link to="/login-register" onClick={closeMenu}>Login</Link>
+          </li>
+          <li>
+            <Link to="/about-us" onClick={closeMenu}>About Us</Link>
+          </li>
+          <li>
+            <Link to="/blog" onClick={closeMenu}>Blog</Link>
+          </li>
+          <li>
+            <Link to="/shop" onClick={closeMenu}>Shop</Link>
+          </li>
+          <li>
+            <Link to="/categories" onClick={closeMenu}>Kategorien</Link>
+          </li>
+          <li>
+            <Link to="/new" onClick={closeMenu}>Neu</Link>
+          </li>
+          <li>
+            <Link to="/offers" onClick={closeMenu}>Angebote</Link>
+          </li>
+          <li>
+            <Link to="/popular" onClick={closeMenu}>Beliebt</Link>
+          </li>
+          <li>
+            <Link to="/cart" onClick={closeMenu}>Warenkorb</Link>
+          </li>
+          <li>
+            <Link to="/shipping-returns" onClick={closeMenu}>Rückgabe</Link>
+          </li>
         </ul>
-        <div className="Footer">
-          <div className="Social">
-            <a href="https://github.com/your-profile" target="_blank" rel="noopener noreferrer">
-              <FaGithub />
-            </a>
-            <a href="https://www.instagram.com/your-profile" target="_blank" rel="noopener noreferrer">
-              <FaInstagram />
-            </a>
-            <a href="https://www.facebook.com/your-profile" target="_blank" rel="noopener noreferrer">
-              <FaFacebook />
-            </a>
-          </div>
-          <div className="Datenschutz">
-            <span>Datenschutz</span>
-          </div>
-          <div className="Cockies-Impressum">
-            <span className="Cockies">Cockies </span>
-            <span className="Impressum">| Impressum</span>
-          </div>
-          <div className="FeedBack">
-            <span className="FeedbackSpan">Gebe dein Feddback</span>
-            <input type="text" id="feedback" />
-          </div>
-        </div>
-
-        <button className="Footer-btn" onClick={toggleFooter}>
-          {footerVisible ? <FaArrowUp /> : <FaArrowDown />} Informationen
-        </button>
       </nav>
 
       <div className="search-container">
-        <input type="text" placeholder="Suche..." className="search-input" />
-        <button className="search-button">🔍</button>
+        <input
+          type="text"
+          placeholder="Suche nach Produkten..."
+          className="search-input"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+        />
+        <button className="search-button" onClick={handleSearch}>
+          🔍
+        </button>
       </div>
 
       <div className="WerbeBanner">
         <h1>Willkommen bei meinem Abschlussprojekt in React</h1>
-        <p>Öffne einfach die Navigation und fange am besten beim Dashboard an</p>
+        <p>
+          Öffne einfach die Navigation und fange am besten beim Dashboard an
+        </p>
         <Link to="/account-dashboard">
           <button>Dashboard</button>
         </Link>
@@ -115,6 +193,66 @@ const Header = () => {
           alt="Natur"
         />
       </div>
+
+      <div ref={cartRef} className={`Cart-Sidebar ${cartVisible ? "OpenCart" : ""}`}>
+        <h2>Warenkorb</h2>
+        {cartItems.length > 0 ? (
+          cartItems.map((item) => (
+            <div key={item.id} className="cart-item">
+              <DiamondSVG />
+              <span>{item.name}</span>
+              <span>Preis: €{item.price.toFixed(2)}</span>
+              <button
+                onClick={() =>
+                  setCartItems(cartItems.filter((p) => p.id !== item.id))
+                }
+                className="remove-button"
+              >
+                <FaTrash />
+              </button>
+            </div>
+          ))
+        ) : (
+          <p>Der Warenkorb ist leer</p>
+        )}
+      </div>
+
+      <div className="Footer">
+        <div className="Social">
+          <a
+            href="https://github.com/your-profile"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaGithub />
+          </a>
+          <a
+            href="https://www.instagram.com/your-profile"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaInstagram />
+          </a>
+          <a
+            href="https://www.facebook.com/your-profile"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaFacebook />
+          </a>
+        </div>
+        <div className="Datenschutz">
+          <span>Datenschutz</span>
+        </div>
+        <div className="Cockies-Impressum">
+          <span className="Cockies">Cockies </span>
+          <span className="Impressum">| Impressum</span>
+        </div>
+      </div>
+
+      <button className="Footer-btn" onClick={toggleFooter}>
+        {footerVisible ? <FaArrowUp /> : <FaArrowDown />} Informationen
+      </button>
     </header>
   );
 };

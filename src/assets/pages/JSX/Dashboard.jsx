@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Calendar } from "react-calendar";
-import { FaChartBar, FaTasks, FaUsers, FaCog, FaCloudSun, FaNewspaper, FaShoppingCart } from "react-icons/fa";
+import { FaChartBar, FaTasks, FaUsers, FaCog, FaCloudSun, FaNewspaper, FaShoppingCart, FaCheckCircle } from "react-icons/fa";
 import "react-calendar/dist/Calendar.css";
 import "../styles/Dashboard.scss";
 
-const WEATHER_API_KEY = "08348b60c39f4fe7a593f787efa8f843"; // The Weather API Key
-const NEWS_API_KEY = "UMSE3crsBtDGk45XaX8FRetRM6zmkbNsSUOao332"; // The News API Key
+const WEATHER_API_KEY = "08348b60c39f4fe7a593f787efa8f843";
+const NEWS_API_KEY = "UMSE3crsBtDGk45XaX8FRetRM6zmkbNsSUOao332";
 
 const Dashboard = () => {
   const [date, setDate] = useState(new Date());
@@ -15,17 +15,31 @@ const Dashboard = () => {
   const [activeMenuItem, setActiveMenuItem] = useState("Übersicht");
   const [city, setCity] = useState("Berlin");
   const [inputCity, setInputCity] = useState("");
+  const [successMessage, setSuccessMessage] = useState(""); // New state for success message
   
-  // Updated note states
   const [noteInput, setNoteInput] = useState({
     name: "",
     date: "",
     time: "",
     content: "",
-    id: null // Add id to track editing
+    id: null,
+    isImportant: false
   });
-  const [savedNotes, setSavedNotes] = useState([]);
-  const [importantDates, setImportantDates] = useState([]);
+
+  const [savedNotes, setSavedNotes] = useState(() => {
+    const saved = localStorage.getItem('savedNotes');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const [importantDates, setImportantDates] = useState(() => {
+    const saved = localStorage.getItem('importantDates');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('savedNotes', JSON.stringify(savedNotes));
+    localStorage.setItem('importantDates', JSON.stringify(importantDates));
+  }, [savedNotes, importantDates]);
 
   const fetchWeather = async (city) => {
     try {
@@ -33,7 +47,6 @@ const Dashboard = () => {
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${WEATHER_API_KEY}`
       );
       const data = await response.json();
-      console.log("Wetterdaten:", data);
       setWeather(data);
     } catch (error) {
       console.error("Fehler beim Laden der Wetterdaten:", error);
@@ -41,7 +54,6 @@ const Dashboard = () => {
   };
 
   const fetchNews = async () => {
-    console.log("Fetching News...");
     setLoadingNews(true);
     try {
       const response = await fetch(
@@ -53,12 +65,10 @@ const Dashboard = () => {
       }
 
       const data = await response.json();
-      console.log("News API Response:", data);
 
       if (data.data && Array.isArray(data.data)) {
         setNews(data.data);
       } else {
-        console.error("Keine News gefunden.");
         setNews([]);
       }
     } catch (error) {
@@ -72,37 +82,42 @@ const Dashboard = () => {
   useEffect(() => {
     fetchWeather(city);
     fetchNews();
-  }, []);
+  }, [city]);
 
   const handleSaveNote = () => {
     if (noteInput.name && noteInput.date && noteInput.time && noteInput.content) {
+      const newNote = {
+        ...noteInput,
+        timestamp: new Date(),
+        id: noteInput.id || Date.now()
+      };
+
       if (noteInput.id) {
-        // Edit existing note
-        setSavedNotes(prev => prev.map(note => note.id === noteInput.id ? noteInput : note));
-        setImportantDates(prev => prev.map(note => note.id === noteInput.id ? noteInput : note));
+        setSavedNotes(prev => prev.map(note => note.id === noteInput.id ? newNote : note));
+        if (newNote.isImportant) {
+          setImportantDates(prev => prev.map(note => note.id === noteInput.id ? newNote : note));
+        }
       } else {
-        // Add new note
-        const newNote = {
-          ...noteInput,
-          timestamp: new Date(),
-          id: Date.now()
-        };
-
-        // Add to important dates
-        setImportantDates(prev => [...prev, newNote]);
-
-        // Add to saved notes
         setSavedNotes(prev => [...prev, newNote]);
+        if (newNote.isImportant) {
+          setImportantDates(prev => [...prev, newNote]);
+        }
       }
 
-      // Reset input fields
       setNoteInput({
         name: "",
         date: "",
         time: "",
         content: "",
-        id: null
+        id: null,
+        isImportant: false
       });
+
+      setSuccessMessage("Termin erfolgreich gespeichert!"); // Set success message
+
+      setTimeout(() => {
+        setSuccessMessage(""); // Clear success message after 3 seconds
+      }, 3000);
     }
   };
 
@@ -114,7 +129,6 @@ const Dashboard = () => {
   const handleCityChange = () => {
     if (inputCity.trim()) {
       setCity(inputCity);
-      fetchWeather(inputCity);
       setInputCity("");
     }
   };
@@ -126,7 +140,6 @@ const Dashboard = () => {
     { icon: <FaNewspaper />, label: "Nachrichten" }
   ];
 
-  // Filter notes for the selected date
   const selectedDateNotes = savedNotes.filter(note => {
     const noteDate = new Date(note.date);
     return (
@@ -136,9 +149,18 @@ const Dashboard = () => {
     );
   });
 
+  const todayImportantDates = importantDates.filter(note => {
+    const noteDate = new Date(note.date);
+    const today = new Date();
+    return (
+      noteDate.getDate() === today.getDate() &&
+      noteDate.getMonth() === today.getMonth() &&
+      noteDate.getFullYear() === today.getFullYear()
+    );
+  });
+
   return (
     <div className="dashboard-container">
-      {/* Sidebar */}
       <aside className="sidebar">
         <div className="sidebar-content">
           <h2>Dashboard</h2>
@@ -159,35 +181,41 @@ const Dashboard = () => {
             <Calendar onChange={setDate} value={date} />
           </div>
           <div className="Wichtige">
-            <h3>Wichtige Termine</h3>
+            <h3>Wichtige Termine Heute</h3>
             <table className="important-dates-table">
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Datum & Uhrzeit</th>
+                  <th>Uhrzeit</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-                {importantDates.map((note) => (
+                {todayImportantDates.map((note) => (
                   <tr key={note.id} onClick={() => setNoteInput(note)}>
                     <td>{note.name}</td>
-                    <td>{new Date(note.date).toLocaleDateString('de-DE')}, {note.time} Uhr</td>
+                    <td>{note.time} Uhr</td>
                     <td>
-                      <button onClick={() => handleDeleteNote(note.id)}>Löschen</button>
+                      <button onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteNote(note.id);
+                      }}>Löschen</button>
                     </td>
                   </tr>
                 ))}
+                {todayImportantDates.length === 0 && (
+                  <tr>
+                    <td colSpan="3">Keine wichtigen Termine heute</td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
         </div>
       </aside>
 
-      {/* Main Content */}
       <main className="main-content">
         <div className="content-grid">
-          {/* Weather Card */}
           <div className="card weather-card">
             <h3><FaCloudSun className="card-icon" /> Wetter in {city}</h3>
             <div className="card-content">
@@ -232,9 +260,8 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Notes Card */}
           <div className="card notes-card">
-            <h3>Termine</h3>
+            <h3>Termine für {date.toLocaleDateString('de-DE')}</h3>
             <div className="card-content">
               <div className="notes-form">
                 <input
@@ -262,21 +289,40 @@ const Dashboard = () => {
                   onChange={(e) => setNoteInput(prev => ({...prev, content: e.target.value}))}
                   className="notes-textarea"
                 />
+                <div className="important-checkbox">
+                  <input
+                    type="checkbox"
+                    id="isImportant"
+                    checked={noteInput.isImportant}
+                    onChange={(e) => setNoteInput(prev => ({...prev, isImportant: e.target.checked}))}
+                  />
+                  <label htmlFor="isImportant">Wichtiger Termin</label>
+                </div>
               </div>
             </div>
             <div className="saveTodo">
-              <button onClick={handleSaveNote}>Merken</button>
+              <button onClick={handleSaveNote}>
+                {noteInput.id ? 'Aktualisieren' : 'Merken'}
+              </button>
               <hr />
             </div>
+            {successMessage && (
+              <div className="success-message">
+                <FaCheckCircle className="success-icon" /> {successMessage}
+              </div>
+            )}
             <div className="saved-notes">
-              <h4> Datum {date.toLocaleDateString('de-DE')}</h4>
               {selectedDateNotes.length > 0 ? (
                 selectedDateNotes.map((note) => (
                   <div key={note.id} className="note-item">
-                    <h5>{note.name}</h5>
-                    <p>{new Date(note.date).toLocaleDateString('de-DE')}, {note.time} Uhr</p>
+                    <h5>{note.name} {note.isImportant && '⭐'}</h5>
+                    <p>{note.time} Uhr</p>
                     <p>{note.content}</p>
-                    <button onClick={() => handleDeleteNote(note.id)}>Löschen</button>
+                    <div className="note-actions">
+                      <button onClick={() => setNoteInput(note)}>Bearbeiten</button>
+                      <br />
+                      <button onClick={() => handleDeleteNote(note.id)}>Löschen</button>
+                    </div>
                   </div>
                 ))
               ) : (
@@ -285,7 +331,6 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* News Card */}
           <div className="card news-card">
             <h3><FaNewspaper className="card-icon" /> Aktuelle News</h3>
             <div className="card-content">
