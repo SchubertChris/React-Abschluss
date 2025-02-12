@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// Automatische Base-URL je nach Umgebung setzen
-export default defineConfig(({ mode }) => ({
+// Base-URL für GitHub Pages setzen
+export default defineConfig({
   plugins: [react()],
-  base: '/' // 👈 Nur für Produktion setzen
-}));
+  base: "/React-Abschluss/", // Stelle sicher, dass dies mit deinem Repository-Namen übereinstimmt!
+});
