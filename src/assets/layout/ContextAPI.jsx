@@ -18,12 +18,31 @@ export const AppProvider = ({ children }) => {
   const [importantDates, setImportantDates] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null); // Benutzerzustand hinzufügen
   const navigate = useNavigate();
 
   const dummyUser = {
     name: "Chris Schubert",
     email: "chris@schubert.com",
     password: "123456",
+  };
+
+  // Dummy-Login-Funktion
+  const login = (email, password) => {
+    if (email === dummyUser.email && password === dummyUser.password) {
+      setIsAuthenticated(true);
+      setUser(dummyUser); // Benutzer setzen
+      navigate("/account-dashboard");
+    } else {
+      alert("Falsche Login-Daten");
+    }
+  };
+
+  // Logout-Funktion
+  const logout = () => {
+    setIsAuthenticated(false);
+    setUser(null); // Benutzer entfernen
+    navigate("/login-register");
   };
 
   // Wetter API abrufen
@@ -58,26 +77,10 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  // Dummy-Login-Funktion
-  const login = (email, password) => {
-    if (email === dummyUser.email && password === dummyUser.password) {
-      setIsAuthenticated(true);
-      navigate("/account-dashboard"); // Nach Login direkt weiterleiten
-    } else {
-      alert("Falsche Login-Daten");
-    }
-  };
-
-  // Logout-Funktion
-  const logout = () => {
-    setIsAuthenticated(false);
-    navigate("/login-register"); // Button erstellen
-  };
-
   useEffect(() => {
     fetchWeather(city);
     fetchNews();
-  }, []);
+  }, [city]);
 
   useEffect(() => {
     if (darkMode) {
@@ -92,21 +95,22 @@ export const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
-        darkMode, // Dark Mode aktiviert oder nicht
-        setDarkMode, // Funktion zum Setzen des Dark Mode
-        weather, // Wetterdaten
-        city, // Stadt für die Wetterdaten
-        setCity, // Funktion zum Setzen der Stadt
-        news, // News
-        savedNotes, // Gespeichert Notizen
-        setSavedNotes, // Funktion zum Setzen der gespeicherten Notizen
-        importantDates, // Wichtige Termine importieren
-        setImportantDates, // Funktion zum Setzen der wichtigen Termine
-        cartItems, // Artikel im Warenkorb
-        setCartItems, // Funktion zum Setzen der Artikel im Warenkorb
-        isAuthenticated, // Ist der Benutzer eingeloggt?
-        login, // Funktion zum Einloggen
-        logout, // Funktion zum Ausloggen - MUSS NOCH UMGESETZT werden bzw erweitert werden
+        darkMode,
+        setDarkMode,
+        weather,
+        city,
+        setCity,
+        news,
+        savedNotes,
+        setSavedNotes,
+        importantDates,
+        setImportantDates,
+        cartItems,
+        setCartItems,
+        isAuthenticated,
+        login,
+        logout,
+        user, // Benutzer hier bereitstellen!
       }}
     >
       {children}

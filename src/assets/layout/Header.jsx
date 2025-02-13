@@ -4,6 +4,7 @@ import { AppContext } from "../layout/ContextAPI";
 import DiamondSVG from "../layout/PlaceholderSVG";
 import logo from "../../assets/images/Logo/CandleScopeLogo.png";
 import "../../assets/layout/styles/header.scss";
+import { FaArrowRightFromBracket } from "react-icons/fa6";
 import {
   FaBars,
   FaShoppingCart,
@@ -16,10 +17,11 @@ import {
   FaFacebook,
   FaTrash,
   FaUserCircle,
+  FaSignInAlt,
 } from "react-icons/fa";
 
 const Header = () => {
-  const { darkMode, setDarkMode, cartItems, setCartItems } =
+  const { darkMode, setDarkMode, cartItems, setCartItems, user, logout } =
     useContext(AppContext);
   const [footerVisible, setFooterVisible] = useState(false);
   const [cartVisible, setCartVisible] = useState(false);
@@ -111,6 +113,9 @@ const Header = () => {
     navigate(`/shop?search=${searchTerm}`);
   };
 
+  const [UserSee, setUserSee] = useState(false);
+
+/*  ------------------------------------------------------*/
   return (
     <header className="header">
       <div className="header-content">
@@ -119,19 +124,27 @@ const Header = () => {
             <img src={logo} alt="CandleScope Logo" className="logo" />
           </Link>
         </div>
+        <div className={`User-Status-Profil ${UserSee ? "visible" : ""}`}>
+        {user ? ( // Falls ein Benutzer eingeloggt ist
+          <>
+            <p className="User">
+              {user.name} <span>{user.email}</span>
+            </p>
+            <button className="Logout" onClick={logout}>
+              <FaArrowRightFromBracket /> Logout
+            </button>
+          </>
+        ) : (
+          <Link to="/login-register" className="login-link">
+            <FaSignInAlt className="Login" /> Login
+          </Link>
+        )}
+      </div>
 
-        <div className="button-group">
-          {/* ------------------------------------------------------ */}
-          {/* User-Profil - Logout */}
-          <button className="user-button icon-button">
-            <FaUserCircle />
-          </button>
-          <div className="User-Status-Profil">
-            <p className="User">Benutzername</p>
-            <button className="Logout"></button>
-          </div>
-          {/* ------------------------------------------------------ */}
-          {/* Menu Btn */}
+      <div className="button-group">
+        <button className="User-Icon" onClick={() => setUserSee(!UserSee)}>
+          <FaUserCircle />
+        </button>
           <button
             ref={menuButtonRef}
             onClick={OpenMenu}
@@ -139,7 +152,6 @@ const Header = () => {
           >
             <FaBars />
           </button>
-          {/* ------------------------------------------------------ */}
           <button
             ref={cartButtonRef}
             className={`icon-button cart-button ${
@@ -153,8 +165,6 @@ const Header = () => {
               <span className="cart-count">{cartItems.length}</span>
             )}
           </button>
-          {/* ------------------------------------------------------ */}
-          {/* Dark Mode Btn */}
           <button
             className="btn-toggle"
             onClick={() => setDarkMode(!darkMode)}
@@ -163,7 +173,6 @@ const Header = () => {
             <span>{darkMode ? "Light" : "Dark"}</span>
             <span>{darkMode ? <FaSun /> : <FaMoon />}</span>
           </button>
-          {/* ------------------------------------------------------ */}
         </div>
       </div>
 
