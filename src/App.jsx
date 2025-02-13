@@ -13,34 +13,18 @@ import Offers from "./assets/pages/JSX/Offers";
 import Popular from "./assets/pages/JSX/Popular";
 import Cart from "./assets/pages/JSX/Cart";
 import ShippingReturns from "./assets/pages/JSX/ShippingReturns";
-<<<<<<< HEAD
-
-// Importiere den Context Provider
 import AppProvider from "./assets/layout/ContextAPI";
+import ProtectedRoute from "./assets/layout/ProtectedRoute";
+import NotFound404 from "./assets/pages/JSX/NotFound404";
 
-/* Rendern der Komponenten und setzen von Layout */
 function App() {
   return (
     <AppProvider>
       <Router>
-=======
-import ProtectedRoute from "./assets/layout/ProtectedRoute"; // Import
-import AppProvider from "./assets/layout/ContextAPI";
-import NotFound404 from "./assets/pages/JSX/NotFound404"; // Import
-
-function App() {
-  return (
-    <Router>
-      <AppProvider>
->>>>>>> 8ed6fbb (Erneut Hochladen nach Crash)
         <Header />
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
-<<<<<<< HEAD
-            <Route path="/account-dashboard" element={<Dashboard />} />
-=======
->>>>>>> 8ed6fbb (Erneut Hochladen nach Crash)
             <Route path="/login-register" element={<Login />} />
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/blog" element={<Blog />} />
@@ -51,14 +35,6 @@ function App() {
             <Route path="/popular" element={<Popular />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/shipping-returns" element={<ShippingReturns />} />
-<<<<<<< HEAD
-          </Routes>
-        </main>
-      </Router>
-    </AppProvider>
-=======
-
-            {/* Dashboard geschützt */}
             <Route
               path="/account-dashboard"
               element={
@@ -67,15 +43,13 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
-            {/* 404 Not Found */}
             <Route path="*" element={<NotFound404 />} />
           </Routes>
         </main>
-      </AppProvider>
-    </Router>
->>>>>>> 8ed6fbb (Erneut Hochladen nach Crash)
+      </Router>
+    </AppProvider>
   );
 }
 
 export default App;
+s
