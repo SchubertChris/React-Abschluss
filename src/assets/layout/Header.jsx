@@ -47,8 +47,6 @@ const Header = () => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
 
-<<<<<<< HEAD
-=======
   // Close cart if empty
   useEffect(() => {
     if (cartItems.length === 0) {
@@ -56,7 +54,6 @@ const Header = () => {
     }
   }, [cartItems]);
 
->>>>>>> 8ed6fbb (Erneut Hochladen nach Crash)
   // Handle outside clicks
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -79,6 +76,14 @@ const Header = () => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark-mode');
+    } else {
+      document.documentElement.classList.remove('dark-mode');
+    }
+  }, [darkMode]);
 
   const OpenMenu = () => {
     setMenuOpen(!menuOpen);

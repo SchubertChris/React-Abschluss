@@ -19,8 +19,8 @@ import NotFound404 from "./assets/pages/JSX/NotFound404";
 
 function App() {
   return (
-    <AppProvider>
-      <Router>
+    <Router>
+        <AppProvider>
         <Header />
         <main>
           <Routes>
@@ -46,10 +46,9 @@ function App() {
             <Route path="*" element={<NotFound404 />} />
           </Routes>
         </main>
-      </Router>
     </AppProvider>
+      </Router>
   );
 }
 
 export default App;
-s

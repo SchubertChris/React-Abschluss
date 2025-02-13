@@ -15,8 +15,10 @@ const Dashboard = () => {
   const [activeMenuItem, setActiveMenuItem] = useState("Übersicht");
   const [city, setCity] = useState("Berlin");
   const [inputCity, setInputCity] = useState("");
-  const [successMessage, setSuccessMessage] = useState(""); // New state for success message
-  
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+
   const [noteInput, setNoteInput] = useState({
     name: "",
     date: "",
@@ -84,6 +86,38 @@ const Dashboard = () => {
     fetchNews();
   }, [city]);
 
+  const resetForm = () => {
+    setNoteInput({
+      name: "",
+      date: "",
+      time: "",
+      content: "",
+      id: null,
+      isImportant: false
+    });
+    setIsEditing(false);
+    setEditingId(null);
+  };
+
+  const handleEditNote = (note) => {
+    setNoteInput({
+      ...note,
+      date: note.date,
+      time: note.time
+    });
+    setIsEditing(true);
+    setEditingId(note.id);
+    
+    const formElement = document.querySelector('.notes-form');
+    if (formElement) {
+      formElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleCancelEdit = () => {
+    resetForm();
+  };
+
   const handleSaveNote = () => {
     if (noteInput.name && noteInput.date && noteInput.time && noteInput.content) {
       const newNote = {
@@ -92,10 +126,20 @@ const Dashboard = () => {
         id: noteInput.id || Date.now()
       };
 
-      if (noteInput.id) {
-        setSavedNotes(prev => prev.map(note => note.id === noteInput.id ? newNote : note));
+      if (isEditing) {
+        setSavedNotes(prev => prev.map(note => 
+          note.id === editingId ? newNote : note
+        ));
+
         if (newNote.isImportant) {
-          setImportantDates(prev => prev.map(note => note.id === noteInput.id ? newNote : note));
+          setImportantDates(prev => {
+            const filtered = prev.filter(note => note.id !== editingId);
+            return [...filtered, newNote];
+          });
+        } else {
+          setImportantDates(prev => 
+            prev.filter(note => note.id !== editingId)
+          );
         }
       } else {
         setSavedNotes(prev => [...prev, newNote]);
@@ -104,26 +148,29 @@ const Dashboard = () => {
         }
       }
 
-      setNoteInput({
-        name: "",
-        date: "",
-        time: "",
-        content: "",
-        id: null,
-        isImportant: false
-      });
-
-      setSuccessMessage("Termin erfolgreich gespeichert!"); // Set success message
+      setSuccessMessage(isEditing ? "Termin erfolgreich aktualisiert!" : "Termin erfolgreich gespeichert!");
+      resetForm();
 
       setTimeout(() => {
-        setSuccessMessage(""); // Clear success message after 3 seconds
+        setSuccessMessage("");
       }, 3000);
     }
   };
 
   const handleDeleteNote = (id) => {
-    setSavedNotes(prev => prev.filter(note => note.id !== id));
-    setImportantDates(prev => prev.filter(note => note.id !== id));
+    if (window.confirm('Möchten Sie diesen Termin wirklich löschen?')) {
+      setSavedNotes(prev => prev.filter(note => note.id !== id));
+      setImportantDates(prev => prev.filter(note => note.id !== id));
+      
+      if (editingId === id) {
+        resetForm();
+      }
+
+      setSuccessMessage("Termin erfolgreich gelöscht!");
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 3000);
+    }
   };
 
   const handleCityChange = () => {
@@ -187,25 +234,35 @@ const Dashboard = () => {
                 <tr>
                   <th>Name</th>
                   <th>Uhrzeit</th>
-                  <th></th>
+                  <th>Beschreibung</th>
+                  <th>Aktionen</th>
                 </tr>
               </thead>
               <tbody>
                 {todayImportantDates.map((note) => (
-                  <tr key={note.id} onClick={() => setNoteInput(note)}>
+                  <tr key={note.id}>
                     <td>{note.name}</td>
                     <td>{note.time} Uhr</td>
+                    <td>{note.content}</td>
                     <td>
-                      <button onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteNote(note.id);
-                      }}>Löschen</button>
+                      <button 
+                        onClick={() => handleEditNote(note)}
+                        disabled={isEditing && editingId !== note.id}
+                      >
+                        Bearbeiten
+                      </button>
+                      <button 
+                        onClick={() => handleDeleteNote(note.id)}
+                        disabled={isEditing && editingId !== note.id}
+                      >
+                        Löschen
+                      </button>
                     </td>
                   </tr>
                 ))}
                 {todayImportantDates.length === 0 && (
                   <tr>
-                    <td colSpan="3">Keine wichtigen Termine heute</td>
+                    <td colSpan="4">Keine wichtigen Termine heute</td>
                   </tr>
                 )}
               </tbody>
@@ -251,7 +308,9 @@ const Dashboard = () => {
                         onChange={(e) => setInputCity(e.target.value)}
                       />
                     </div>
-                    <button className="submit-city" onClick={handleCityChange}>Aktualisieren</button>
+                    <button className="submit-city" onClick={handleCityChange}>
+                      Aktualisieren
+                    </button>
                   </div>
                 </div>
               ) : (
@@ -301,9 +360,16 @@ const Dashboard = () => {
               </div>
             </div>
             <div className="saveTodo">
-              <button onClick={handleSaveNote}>
-                {noteInput.id ? 'Aktualisieren' : 'Merken'}
-              </button>
+              <div className="button-group">
+                <button onClick={handleSaveNote} className="save-button">
+                  {isEditing ? 'Aktualisieren' : 'Speichern'}
+                </button>
+                {isEditing && (
+                  <button onClick={handleCancelEdit} className="cancel-button">
+                    Abbrechen
+                  </button>
+                )}
+              </div>
               <hr />
             </div>
             {successMessage && (
@@ -311,17 +377,29 @@ const Dashboard = () => {
                 <FaCheckCircle className="success-icon" /> {successMessage}
               </div>
             )}
+
             <div className="saved-notes">
               {selectedDateNotes.length > 0 ? (
                 selectedDateNotes.map((note) => (
-                  <div key={note.id} className="note-item">
+                  <div key={note.id} className={`note-item ${editingId === note.id ? 'editing' : ''}`}>
                     <h5>{note.name} {note.isImportant && '⭐'}</h5>
                     <p>{note.time} Uhr</p>
                     <p>{note.content}</p>
                     <div className="note-actions">
-                      <button onClick={() => setNoteInput(note)}>Bearbeiten</button>
-                      <br />
-                      <button onClick={() => handleDeleteNote(note.id)}>Löschen</button>
+                      <button 
+                        onClick={() => handleEditNote(note)}
+                        className="edit-button"
+                        disabled={isEditing && editingId !== note.id}
+                      >
+                        Bearbeiten
+                      </button>
+                      <button 
+                        onClick={() => handleDeleteNote(note.id)}
+                        className="delete-button"
+                        disabled={isEditing && editingId !== note.id}
+                      >
+                        Löschen
+                      </button>
                     </div>
                   </div>
                 ))

@@ -3,7 +3,8 @@
 @forward "typography"; // Schriftarten & Text-Styling
 
 :root {
-background: linear-gradient(to bottom, #9ad3ffba, #f5f3f6);
+  background: linear-gradient(to bottom, #9ad3ffba, #f5f3f6);
+  --background-color: #ffffff;  // Diese Zeile hinzufügen
   --text-color: #000000;
   --text-color-dark: #ffffff;
 }

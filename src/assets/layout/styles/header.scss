@@ -91,11 +91,10 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
       margin: 0;
       transition: all 0.5s;
       z-index: 3000;
-      background-color: #000000b7;
     }
 
     li {
-      background-color: rgba(36, 36, 36, 0.87);
+      background-color: rgba(7, 7, 7, 0.87);
       flex: 1 1 100px;
       height: 70px;
       display: flex;
@@ -675,7 +674,6 @@ hr {
   position: absolute;
   bottom: 0;
   width: 100%;
-  background-color: #00000000;
   color: white;
   padding: 35px 0;
   text-align: center;
@@ -787,7 +785,6 @@ hr {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif,
     cursive;
   display: flex;
-  background-color: #000000b7;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -801,7 +798,7 @@ hr {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.5rem;
+    font-size: 1rem;
     height: 3.8rem;
     border-radius: 15px !important;
     background-color: #000000b7;
