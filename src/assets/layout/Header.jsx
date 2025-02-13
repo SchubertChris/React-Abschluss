@@ -15,7 +15,7 @@ import {
   FaInstagram,
   FaFacebook,
   FaTrash,
-  FaUserCircle
+  FaUserCircle,
 } from "react-icons/fa";
 
 const Header = () => {
@@ -122,9 +122,10 @@ const Header = () => {
             <FaUserCircle />
           </button>
           <div className="User-Status-Profil">
-            <p className="User">
-            </p>
-            <button className="Logout">Ausloggen</button>
+            <p className="User">Benutzername</p>
+            <button className="Logout">
+              
+            </button>
           </div>
           {/* ------------------------------------------------------ */}
           {/* Menu Btn */}
@@ -181,10 +182,9 @@ const Header = () => {
           <li>
             <Link to="/categories" onClick={closeMenu}>Kategorien</Link>
           </li>
-       <li>
+          <li>
             <Link to="/cart" onClick={closeMenu}>Warenkorb</Link>
           </li>
-
         </ul>
       </nav>
 
@@ -217,6 +217,7 @@ const Header = () => {
       </div>
 
       <div ref={cartRef} className={`Cart-Sidebar ${cartVisible ? "OpenCart" : ""}`}>
+        <button className="close-cart" onClick={() => setCartVisible(false)}>✖</button>
         <h2>Warenkorb</h2>
         {cartItems.length > 0 ? (
           cartItems.map((item) => (

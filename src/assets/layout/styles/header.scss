@@ -64,23 +64,19 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
         transition: all 0.3s ease;
         box-shadow: $box-shadow;
         font-size: 1rem;
+        color: black !important;
       }
     }
   }
 .User-Status-Profil {
   width: 210px;
   height: 150px;
-  background-color: #b8e994;
+  background: $gradient;
   border-radius: 10px;
   padding: 1rem;
   position: absolute;
   top: 100px;
-  .user-button{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    z-index: 2000;
-    .icon-button {
+    button {
       position: relative;
       background: $gradient;
       border: none;
@@ -97,7 +93,7 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
       font-size: 1rem;
     }
   }
-}
+
   .nav-menu {
     position: fixed;
     bottom: 0;
@@ -110,7 +106,7 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
     opacity: 0;
 
     ul {
-      width: 100%;
+      width: 90%;
       height: 20rem;
       display: flex;
       justify-content: center;
@@ -121,6 +117,7 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
       margin: 0;
       transition: all 0.5s;
       z-index: 3000;
+      margin: 0 auto;
     }
 
     li {
@@ -152,14 +149,14 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
         font-size: 1.1rem;
         padding: 10px;
         transition: color 0.3s, background-color 0.3s;
-        border: 1px solid $primary-color;
       z-index: 3000;
       border-radius: 10px;
 
         &:hover,
         &:active {
-          color: $primary-color;
-          border: 1px solid $primary-color;
+          color: rgba(255, 217, 0, 0.687);
+          border: 1px solid goldenrod;
+          box-shadow: 0 0 15px goldenrod;
         }
       }
     }
@@ -836,6 +833,8 @@ hr {
   justify-content: center;
   align-items: center;
   gap: 0; // Entfernt die Abstände zwischen den inneren Elementen
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .visible2 {
@@ -910,8 +909,6 @@ hr {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif, cursive;
   margin: 20px auto;
   z-index: 9000;
-button{margin-top: 7rem !important;
-}
   h2 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
@@ -946,11 +943,12 @@ button{margin-top: 7rem !important;
     color: #fff;
   }
   button{
+    margin-top: 10rem;
+    background: linear-gradient(45deg, #16e8f344, #5bae1f37);
     padding: 10px 20px;
     font-size: 1rem;
     font-weight: bold;
     color: white;
-    background-color: $primary-color;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -965,8 +963,9 @@ button{margin-top: 7rem !important;
 }
 
 @media (max-width: 1400px) {
+
   .Cart-Sidebar {
-    top: 200px;
+    top: -20px;
     width: 100vw;
   }
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import ProductList from "./ProductList"; // Produktliste einbinden
 import "../styles/Shop.scss";
@@ -7,6 +7,13 @@ export default function Shop() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const searchTerm = searchParams.get("search") || "";
+  const productListRef = useRef(null);
+
+  useEffect(() => {
+    if (productListRef.current) {
+      productListRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, []);
 
   return (
     <>
@@ -16,7 +23,9 @@ export default function Shop() {
         <hr />
         <br />
         {searchTerm && <p>Suchergebnisse für: <strong>{searchTerm}</strong></p>}
-        <ProductList searchTerm={searchTerm} />
+        <div ref={productListRef}>
+          <ProductList searchTerm={searchTerm} />
+        </div>
         <hr />
         <p>Solltest du Individuelle Anfragen haben oder suchst nach einem <strong>Face to Face Coaching</strong> schreibe mir eine Mail: </p>
         <br />
