@@ -2,6 +2,12 @@
 @forward "reset";      // CSS-Reset (z. B. Normalize.css)
 @forward "typography"; // Schriftarten & Text-Styling
 
+@font-face {
+  font-family: Azonix;
+  src: url(../../fonts/Azonix.otf);
+}
+
+
 :root {
   background: linear-gradient(to bottom, #9ad3ffba, #f5f3f6);
   --background-color: #ffffff;  // Diese Zeile hinzufügen
@@ -49,3 +55,7 @@ main {
   margin: 50px auto;
 }
 
+
+h1, h2, h3, h4, h5, h6{
+  font-family: Azonix;
+}

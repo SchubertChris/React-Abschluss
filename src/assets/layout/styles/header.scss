@@ -570,7 +570,7 @@ hr {
   text-align: center;
   color: white;
   padding: 20px;
-  overflow: hidden;
+  width: 100%;
 
   h1 {
     font-size: 2.5rem;
@@ -589,23 +589,50 @@ hr {
     font-size: 1rem;
     font-weight: bold;
     color: white;
-    background-color: $primary-color;
+    background: rgb(251,33,117);
+    background: linear-gradient(0deg, rgb(22, 255, 243) 0%, rgba(49, 45, 47, 0.212) 100%);
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    box-shadow: $box-shadow;
+    transition: all 0.3s ease;
+    box-shadow: 4px 4px 6px 0 rgba(255,255,255,.3),
+                -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+                inset -4px -4px 6px 0 rgba(255,255,255,.2),
+                inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
+    position: relative;
+    border-bottom: 1px solid rgb(0, 255, 225);
+  }
 
-    &:hover {
-      background-color: $highlight-color;
-      transform: scale(1.05);
-    }
+  button:hover {
+    text-decoration: none;
+    color: #fff;
+    opacity: 0.7;
+    transform: scale(1.1);
+    transition: all 0.3s;
+  }
+
+  button:before {
+    position: absolute;
+    content: '';
+    display: inline-block;
+    top: -180px;
+    left: 0;
+    width: 30px;
+    height: 100%;
+    background-color: #fff;
+    animation: shiny-btn1 3s ease-in-out infinite;
+  }
+
+  button:active {
+    box-shadow: 4px 4px 6px 0 rgba(255,255,255,.3),
+                -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+                inset -4px -4px 6px 0 rgba(255,255,255,.2),
+                inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
   }
 
   img {
+    width: 100%;
     height: 10rem;
-    width: 800px;
-    max-width: 60vw;
     object-fit: cover;
     object-position: center;
     border-radius: 10px;
