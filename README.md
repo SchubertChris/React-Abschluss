@@ -25,7 +25,7 @@ Der Grund, warum ich mich für einen Onlineshop entschieden habe, ist ganz einfa
 4. Ein gesamtes Rohgerüst für meine weiteren Shop-Projekte erstellen, was mir am Ende die Arbeit vereinfacht.
 ```
 
-# Die Ordnerstruktur
+# ||| Die Ordnerstruktur |||
 
 ```js
 ____________________________________________________________________________________________
