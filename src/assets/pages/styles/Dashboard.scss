@@ -19,7 +19,7 @@
 
 // Sidebar Styles
 .sidebar {
-  width: 420px;
+  width: 500px;
   background: linear-gradient(to bottom, #9ad3ffba, #f5f3f6);
   box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
   flex-shrink: 0;
@@ -444,22 +444,51 @@
     margin-bottom: 1rem;
 
     button {
-      background: linear-gradient(to right, #674585, #efcbff);
-      border: 1px solid white;
-      color: var(--text-color-dark);
+      margin: .5rem;
+      width: 130px;
+      padding: 10px 20px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: white;
+      background: rgb(251, 33, 117);
+      background: linear-gradient(0deg, rgb(22, 255, 243) 0%, rgba(49, 45, 47, 0.212) 100%);
       border: none;
-      border-radius: 0.5rem;
-      padding: 0.5rem 1rem;
-      margin-left: 3rem;
+      border-radius: 5px;
+      overflow: hidden;
       cursor: pointer;
-      transition: all 0.4s;
-
-      &:hover {
-      background: linear-gradient(to left, #674585, #efcbff);
-      transition: all 0.4s;
-      }
+      transition: all 0.3s ease;
+      box-shadow: 4px 4px 6px 0 rgba(0, 0, 0, 0.3), -4px -4px 6px 0 rgba(0, 0, 0, 0.2),
+      inset -4px -4px 6px 0 rgba(0, 0, 0, 0.2), inset 4px 4px 6px 0 rgba(0, 0, 0, 0.2);
+      position: relative;
+      border-bottom: 1px solid rgb(0, 255, 225);
     }
-  }
+
+    button:hover {
+      text-decoration: none;
+      color: #fff;
+      opacity: 0.7;
+      transform: scale(1.1);
+      transition: all 0.3s;
+    }
+
+    button:before {
+      position: absolute;
+      content: '';
+      display: inline-block;
+      top: -180px;
+      left: 0;
+      width: 30px;
+      height: 100%;
+      background-color: #fff;
+      animation: shiny-btn1 3s ease-in-out infinite;
+    }
+
+    button:active {
+      box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.3), -4px -4px 6px 0 rgba(116, 125, 136, 0.2),
+      inset -4px -4px 6px 0 rgba(255, 255, 255, 0.2), inset 4px 4px 6px 0 rgba(0, 0, 0, 0.2);
+    }
+    }
+  
 
   .saved-notes {
     h4 {
@@ -492,19 +521,52 @@
       }
 
       button {
-        background: linear-gradient(to left, #382547, #efcbff);
+        width: 110px;
+        padding: 10px 20px;
+      margin: .5rem;
+      font-size: .9rem;
+        font-weight: bold;
+        color: white;
+        background: rgb(251, 33, 117);
+        background: linear-gradient(0deg, rgb(22, 255, 243) 0%, rgba(49, 45, 47, 0.212) 100%);
         border: none;
-        color: #ef4444;
+        border-radius: 5px;
+        overflow: hidden;
         cursor: pointer;
-        transition: color 0.2s;
+        transition: all 0.3s ease;
+        box-shadow: 4px 4px 6px 0 rgba(0, 0, 0, 0.3), -4px -4px 6px 0 rgba(0, 0, 0, 0.2),
+          inset -4px -4px 6px 0 rgba(0, 0, 0, 0.2), inset 4px 4px 6px 0 rgba(0, 0, 0, 0.2);
+        position: relative;
+        border-bottom: 1px solid rgb(0, 255, 225);
+      }
 
-        &:hover {
-          color: #dc2626;
-        }
+      button:hover {
+        text-decoration: none;
+        color: #fff;
+        opacity: 0.7;
+        transform: scale(1.1);
+        transition: all 0.3s;
+      }
+
+      button:before {
+        position: absolute;
+        content: '';
+        display: inline-block;
+        top: -180px;
+        left: 0;
+        width: 30px;
+        height: 100%;
+        background-color: #fff;
+        animation: shiny-btn1 3s ease-in-out infinite;
+      }
+
+      button:active {
+        box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.3), -4px -4px 6px 0 rgba(116, 125, 136, 0.2),
+          inset -4px -4px 6px 0 rgba(255, 255, 255, 0.2), inset 4px 4px 6px 0 rgba(0, 0, 0, 0.2);
+      }
+      }
       }
     }
-  }
-}
 
 // Nachrichtenkarten Styles
 .news-card {
@@ -598,19 +660,52 @@
 // Wichtige Daten Tabelle
 .Wichtige {
   margin-bottom: 2rem;
-  button{
-    background-color: #3b82f6;
-    color: var(--text-color-dark);
+  border-bottom: 1px solid black;
+  button {
+    width: 110px;
+      margin-bottom: .25rem;
+      padding: 10px 20px;
+    font-size: .9rem;
+    font-weight: bold;
+    color: white;
+    background: rgb(251, 33, 117);
+    background: linear-gradient(0deg, rgb(22, 255, 243) 0%, rgba(49, 45, 47, 0.212) 100%);
     border: none;
-    border-radius: 0.5rem;
-    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    overflow: hidden;
     cursor: pointer;
-    transition: background-color 0.2s;
-
-    &:hover {
-      background-color: #2563eb;
-    }
+    transition: all 0.3s ease;
+    box-shadow: 4px 4px 6px 0 rgba(0, 0, 0, 0.3), -4px -4px 6px 0 rgba(0, 0, 0, 0.2),
+      inset -4px -4px 6px 0 rgba(0, 0, 0, 0.2), inset 4px 4px 6px 0 rgba(0, 0, 0, 0.2);
+    position: relative;
+    border-bottom: 1px solid rgb(0, 255, 225);
   }
+
+  button:hover {
+    text-decoration: none;
+    color: #fff;
+    opacity: 0.7;
+    transform: scale(1.1);
+    transition: all 0.3s;
+  }
+
+  button:before {
+    position: absolute;
+    content: '';
+    display: inline-block;
+    top: -180px;
+    left: 0;
+    width: 30px;
+    height: 100%;
+    background-color: #fff;
+    animation: shiny-btn1 3s ease-in-out infinite;
+  }
+
+  button:active {
+    box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.3), -4px -4px 6px 0 rgba(116, 125, 136, 0.2),
+      inset -4px -4px 6px 0 rgba(255, 255, 255, 0.2), inset 4px 4px 6px 0 rgba(0, 0, 0, 0.2);
+  }
+  
   h3 {
     font-size: 1.125rem;
     font-weight: 600;
@@ -672,7 +767,7 @@
     border-radius: 0px;
     .sidebar-content {
       width: 100%;
-      max-width: 400px;
+      max-width: 700px;
       height: auto;
       position: static;
       text-align: center;
@@ -727,7 +822,7 @@
 
     .sidebar-content {
       width: 100%;
-      max-width: 400px;
+      max-width: 700px;
       height: auto;
       position: static;
       text-align: center;
@@ -748,8 +843,8 @@
     .weather-card,
     .news-card {
       width: 100%;
-      max-width: 400px !important;
-      margin: 0 auto !important;
+      max-width: 600px;
+      margin: 0 auto;
       display: flex;
       justify-content: center;
     }

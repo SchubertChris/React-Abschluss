@@ -16,27 +16,32 @@ const Home = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
 
-  const prevImage = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + images.length) % images.length
-    );
-  };
-
   const goToImage = (index) => {
     setCurrentIndex(index);
   };
 
   useEffect(() => {
-    const interval = setInterval(nextImage, 10000);
-    return () => clearInterval(interval);
+    const interval = setInterval(nextImage, 10000); // 10 Sekunden timer
+    return () => clearInterval(interval); // Wenn Komponente unmountet wird, wird der Interval cleared
   }, []);
+
+  const ToShop = () => {
+    window.location.href = "/React-Abschluss/shop ";
+  };
+
+  /* 
+  -----------------------------------------------------RETURN----------------------
+  -----------------------------------------------------RETURN----------------------
+  -----------------------------------------------------RETURN----------------------
+  -----------------------------------------------------RETURN----------------------
+  */
 
   return (
     <div className="Home">
       <div className="Carousel-Container">
         <div className="description">
-          <h2>Bild {currentIndex + 1}</h2>
-          <p>Beschreibung des Bildes {currentIndex + 1}</p>
+          <h2>Ein Carrousel mit JS/CSS</h2>
+          <p>Dynamisch, mit Interval von 10 Sekunden</p>
         </div>
         <div className="images-carousel" onClick={nextImage}>
           <img src={images[currentIndex]} alt={`Bild ${currentIndex + 1}`} />
@@ -57,7 +62,7 @@ const Home = () => {
         <h4>Lust auf Style der dich umhauen wird?</h4>
         <h6>Dann bist du bei mir genau richtig!</h6>
         <p>Hier geht es volle Kanone, um Styling, Performance & das coolste du lernst dabei was!</p>
-        <button className="Btn-toCategories">
+        <button onClick={ToShop} className="Btn-toCategories">
           Jetzt schnuppern
         </button>
         </div>

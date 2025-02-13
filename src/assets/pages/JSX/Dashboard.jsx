@@ -108,10 +108,7 @@ const Dashboard = () => {
     setIsEditing(true);
     setEditingId(note.id);
     
-    const formElement = document.querySelector('.notes-form');
-    if (formElement) {
-      formElement.scrollIntoView({ behavior: 'smooth' });
-    }
+
   };
 
   const handleCancelEdit = () => {
@@ -148,7 +145,7 @@ const Dashboard = () => {
         }
       }
 
-      setSuccessMessage(isEditing ? "Termin erfolgreich aktualisiert!" : "Termin erfolgreich gespeichert!");
+      setSuccessMessage(isEditing ? "Termin aktualisiert!" : "Termin gespeichert!");
       resetForm();
 
       setTimeout(() => {
@@ -228,7 +225,7 @@ const Dashboard = () => {
             <Calendar onChange={setDate} value={date} />
           </div>
           <div className="Wichtige">
-            <h3>Wichtige Termine Heute</h3>
+            <h3>Heutige Termine ⭐</h3>
             <table className="important-dates-table">
               <thead>
                 <tr>
@@ -242,7 +239,7 @@ const Dashboard = () => {
                 {todayImportantDates.map((note) => (
                   <tr key={note.id}>
                     <td>{note.name}</td>
-                    <td>{note.time} Uhr</td>
+                    <td>{note.time}</td>
                     <td>{note.content}</td>
                     <td>
                       <button 

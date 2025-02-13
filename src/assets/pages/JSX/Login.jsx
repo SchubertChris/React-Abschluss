@@ -172,6 +172,14 @@ const LoginForm = () => {
     login(formData.email, formData.password, navigate);
   };
 
+
+  /* 
+  -----------------------------------------------------RETURN----------------------
+  -----------------------------------------------------RETURN----------------------
+  -----------------------------------------------------RETURN----------------------
+  -----------------------------------------------------RETURN----------------------
+  */
+
   return (
     <div className="page-container">
       <canvas id="demo-canvas" className="background-canvas"></canvas>

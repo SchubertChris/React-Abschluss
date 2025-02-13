@@ -122,7 +122,8 @@ const Header = () => {
             <FaUserCircle />
           </button>
           <div className="User-Status-Profil">
-            {/* WEITERRMACHEN */}
+            <p className="User">
+            </p>
             <button className="Logout">Ausloggen</button>
           </div>
           {/* ------------------------------------------------------ */}

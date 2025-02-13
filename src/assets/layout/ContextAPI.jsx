@@ -19,6 +19,7 @@ export const AppProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const dummyUser = {
+    name: "Chris Schubert",
     email: "chris@schubert.com",
     password: "123456",
   };

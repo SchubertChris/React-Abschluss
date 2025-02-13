@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import '../styles/Categories.scss';
+import React from "react";
+import { Link } from "react-router-dom";
+import "../styles/Categories.scss";
 
 export default function Categories() {
   return (
