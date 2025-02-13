@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+<<<<<<< HEAD
 
 // Context erstellen
 export const AppContext = createContext();
@@ -35,6 +36,31 @@ export const AppProvider = ({ children }) => {
       localStorage.setItem("theme", "light");
     }
   }, [darkMode]);
+=======
+import { useNavigate } from "react-router-dom";
+
+export const AppContext = createContext();
+
+const WEATHER_API_KEY = "08348b60c39f4fe7a593f787efa8f843";
+const NEWS_API_KEY = "UMSE3crsBtDGk45XaX8FRetRM6zmkbNsSUOao332";
+
+export const AppProvider = ({ children }) => {
+  const [darkMode, setDarkMode] = useState(localStorage.getItem("theme") === "dark");
+  const [weather, setWeather] = useState(null);
+  const [city, setCity] = useState("Berlin");
+  const [news, setNews] = useState([]);
+  const [loadingNews, setLoadingNews] = useState(true);
+  const [savedNotes, setSavedNotes] = useState([]);
+  const [importantDates, setImportantDates] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
+
+  const dummyUser = {
+    email: "test@dummy.com",
+    password: "123456",
+  };
+>>>>>>> 8ed6fbb (Erneut Hochladen nach Crash)
 
   // Wetter abrufen
   const fetchWeather = async (city) => {
@@ -56,9 +82,13 @@ export const AppProvider = ({ children }) => {
       const response = await fetch(
         `https://api.thenewsapi.com/v1/news/top?api_token=${NEWS_API_KEY}&locale=de&limit=10`
       );
+<<<<<<< HEAD
 
       if (!response.ok) throw new Error(`HTTP-Fehler! Status: ${response.status}`);
 
+=======
+      if (!response.ok) throw new Error(`HTTP-Fehler! Status: ${response.status}`);
+>>>>>>> 8ed6fbb (Erneut Hochladen nach Crash)
       const data = await response.json();
       setNews(data.data || []);
     } catch (error) {
@@ -69,6 +99,7 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+<<<<<<< HEAD
   // Stadt ändern und Wetter aktualisieren
   const updateCity = (newCity) => {
     setCity(newCity);
@@ -108,6 +139,22 @@ export const AppProvider = ({ children }) => {
         item.id === productId ? { ...item, quantity: Math.max(1, quantity) } : item
       )
     );
+=======
+  // Dummy-Login-Funktion
+  const login = (email, password) => {
+    if (email === dummyUser.email && password === dummyUser.password) {
+      setIsAuthenticated(true);
+      navigate("/account-dashboard"); // Nach Login direkt weiterleiten
+    } else {
+      alert("Falsche Login-Daten");
+    }
+  };
+
+  // Logout-Funktion
+  const logout = () => {
+    setIsAuthenticated(false);
+    navigate("/login-register");
+>>>>>>> 8ed6fbb (Erneut Hochladen nach Crash)
   };
 
   useEffect(() => {
@@ -122,17 +169,31 @@ export const AppProvider = ({ children }) => {
         setDarkMode,
         weather,
         city,
+<<<<<<< HEAD
         updateCity,
         news,
         loadingNews,
         saveNote,
         deleteNote,
+=======
+        setCity,
+        news,
+>>>>>>> 8ed6fbb (Erneut Hochladen nach Crash)
         savedNotes,
         importantDates,
         cartItems,
         setCartItems,
+<<<<<<< HEAD
         addToCart,
         updateCartQuantity,
+=======
+        savedNotes,
+        importantDates,
+        cartItems,
+        isAuthenticated,
+        login,
+        logout,
+>>>>>>> 8ed6fbb (Erneut Hochladen nach Crash)
       }}
     >
       {children}

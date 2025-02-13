@@ -47,6 +47,16 @@ const Header = () => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
 
+<<<<<<< HEAD
+=======
+  // Close cart if empty
+  useEffect(() => {
+    if (cartItems.length === 0) {
+      setCartVisible(false);
+    }
+  }, [cartItems]);
+
+>>>>>>> 8ed6fbb (Erneut Hochladen nach Crash)
   // Handle outside clicks
   useEffect(() => {
     const handleClickOutside = (event) => {

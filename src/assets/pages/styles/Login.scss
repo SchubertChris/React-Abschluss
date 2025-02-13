@@ -1,6 +1,10 @@
 // Mixins
 @mixin glass-effect {
+<<<<<<< HEAD
   background: rgba(255, 255, 255, 0.3);
+=======
+  background: rgba(180, 180, 180, 0.623);
+>>>>>>> 8ed6fbb (Erneut Hochladen nach Crash)
 }
 
 @mixin flex-center {
@@ -14,9 +18,14 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
+<<<<<<< HEAD
   background: #333;
   overflow: hidden;
 
+=======
+  overflow: hidden;
+  
+>>>>>>> 8ed6fbb (Erneut Hochladen nach Crash)
   &::before {
     content: "";
     position: absolute;
@@ -35,7 +44,11 @@
 // Canvas Background
 .background-canvas {
   position: absolute;
+<<<<<<< HEAD
   top: 0;
+=======
+  bottom: 0;
+>>>>>>> 8ed6fbb (Erneut Hochladen nach Crash)
   left: 0;
   width: 100%;
   height: 100%;
@@ -44,11 +57,21 @@
 
 // Content Container
 .content-container {
+<<<<<<< HEAD
   position: relative;
   @include flex-center;
   flex-direction: column;
   height: 100vh;
   z-index: 2;
+=======
+  margin-top: 100px;
+  position: relative;
+  @include flex-center;
+  flex-direction: column;
+  min-height: 100vh !important;
+  z-index: 2;
+  bottom: 0px;
+>>>>>>> 8ed6fbb (Erneut Hochladen nach Crash)
 }
 
 // Main Title
@@ -58,12 +81,17 @@
   text-align: center;
   margin-bottom: 2rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 8ed6fbb (Erneut Hochladen nach Crash)
   .thin {
     font-weight: 300;
   }
 }
 
+<<<<<<< HEAD
 // Login Container
 .login-container {
   @include glass-effect;
@@ -160,3 +188,76 @@
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
   z-index: 3;
 }
+=======
+
+// Login Container
+.login-container {
+  display: flex;
+  flex-direction: column;
+  @include glass-effect;
+  width: 100%;
+  max-width: 400px;
+  height: 400px;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.652);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  text-align: center;
+  
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    
+    input {
+      margin-bottom: 1rem;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    
+    .error {
+      color: red;
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+    }
+    
+    button {
+      padding: 0.75rem;
+      border: none;
+      border-radius: 4px;
+      background-color: #007bff;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  }
+  
+  .toggle-button {
+    margin-top: 1rem;
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: underline;
+    
+    &:hover {
+      color: #0056b3;
+    }
+  }
+}
+
+.blende{
+  position: fixed;
+  bottom: 0px;
+  background-color: #000000;
+  width: 100vw;
+  min-height: 5vh;
+}
+>>>>>>> 8ed6fbb (Erneut Hochladen nach Crash)

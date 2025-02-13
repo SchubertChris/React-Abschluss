@@ -8,7 +8,11 @@
   position: relative;
   color: var(--text-color);
   border-radius: 0px;
+<<<<<<< HEAD
   z-index: 1000;
+=======
+  z-index: 500;
+>>>>>>> 8ed6fbb (Erneut Hochladen nach Crash)
   body.dark-mode & {
     background-color: #000000;
   }
