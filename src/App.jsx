@@ -19,7 +19,7 @@ import NotFound404 from "./assets/pages/JSX/NotFound404";
 
 function App() {
   return (
-    <Router>
+    <Router basename="/React-Abschluss">
         <AppProvider>
         <Header />
         <main>
