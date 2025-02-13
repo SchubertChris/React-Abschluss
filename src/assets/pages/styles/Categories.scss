@@ -24,17 +24,17 @@
     overflow: hidden;
     transition: color 0.3s ease-out, transform 0.3s ease-out;
     padding: 1rem;
-      border-radius: 5px;
-      text-decoration: none;
+    border-radius: 5px;
+    text-decoration: none;
 
     // Hintergrundbild
     background-color: transparent;
-    background-image: url('../../images/Logo/Grid-Kategorien-Bg.png');
+    background-image: url("../../images/Logo/Grid-Kategorien-Bg.png");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     background-repeat: no-repeat;
-    
+
     // Extra div für den Blur-Effekt
     .blur-bg {
       position: absolute;
@@ -42,7 +42,11 @@
       background-image: inherit;
       background-size: cover;
       background-position: center;
-      background: radial-gradient(circle, transparent, rgba(255, 255, 255, 0.5));
+      background: radial-gradient(
+        circle,
+        transparent,
+        rgba(255, 255, 255, 0.5)
+      );
       filter: blur(5px);
       opacity: 0;
       transition: opacity 0.3s ease-out, transform 0.3s ease-out;
@@ -58,7 +62,7 @@
     span {
       position: relative;
       z-index: 2;
-      padding: .5rem 1rem;
+      padding: 0.5rem 1rem;
       border-radius: 5px;
       background-color: rgba(0, 0, 0, 0.603);
     }
@@ -67,7 +71,7 @@
       color: #fff;
     }
 
-    &:hover span{
+    &:hover span {
       transform: translateY(-1rem);
       transition: all 0.5s ease-out;
     }
@@ -92,7 +96,11 @@
       width: 100%;
       height: 100%;
       opacity: 0;
-      background: linear-gradient(180deg, hsl(0, 0%, 0%, 0) 5%, hsl(0, 0%, 0%, .8));
+      background: linear-gradient(
+        180deg,
+        hsl(0, 0%, 0%, 0) 5%,
+        hsl(0, 0%, 0%, 0.8)
+      );
       backdrop-filter: blur(6px);
       transition: opacity 0.4s ease-out;
       z-index: -1;
@@ -103,7 +111,7 @@
     }
 
     &.alt {
-      background-image: url('https://images.unsplash.com/photo-1639682916310-3f383bc67cc4?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MDAzMTc0Mw&ixlib=rb-1.2.1&q=85');
+      background-image: url("https://images.unsplash.com/photo-1639682916310-3f383bc67cc4?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MDAzMTc0Mw&ixlib=rb-1.2.1&q=85");
     }
   }
 
@@ -122,19 +130,17 @@
   }
 }
 
-
 @media screen and (max-width: 930px) {
   .grid {
     display: flex;
     flex-direction: column;
     margin-bottom: 1100px;
-a{
+    a {
       min-height: 200px;
       aspect-ratio: auto;
-    background-size: cover;
-    width: 100%;
-
-}    
+      background-size: cover;
+      width: 100%;
+    }
   }
 }
 
@@ -142,7 +148,7 @@ a{
   .grid {
     grid-template-columns: 1fr;
     margin-bottom: 180px;
-    
+
     a {
       min-height: auto;
       aspect-ratio: auto;

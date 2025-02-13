@@ -68,14 +68,14 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
       }
     }
   }
-.User-Status-Profil {
-  width: 210px;
-  height: 150px;
-  background: $gradient;
-  border-radius: 10px;
-  padding: 1rem;
-  position: absolute;
-  top: 100px;
+  .User-Status-Profil {
+    width: 210px;
+    height: 150px;
+    background: $gradient;
+    border-radius: 10px;
+    padding: 1rem;
+    position: absolute;
+    top: 100px;
     button {
       position: relative;
       background: $gradient;
@@ -148,8 +148,8 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
         font-size: 1.1rem;
         padding: 10px;
         transition: color 0.3s, background-color 0.3s;
-      z-index: 3000;
-      border-radius: 10px;
+        z-index: 3000;
+        border-radius: 10px;
 
         &:hover,
         &:active {
@@ -615,16 +615,20 @@ hr {
     font-size: 1rem;
     font-weight: bold;
     color: white;
-    background: rgb(251,33,117);
-    background: linear-gradient(0deg, rgb(22, 255, 243) 0%, rgba(49, 45, 47, 0.212) 100%);
+    background: rgb(251, 33, 117);
+    background: linear-gradient(
+      0deg,
+      rgb(22, 255, 243) 0%,
+      rgba(49, 45, 47, 0.212) 100%
+    );
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 4px 4px 6px 0 rgba(255,255,255,.3),
-                -4px -4px 6px 0 rgba(116, 125, 136, .2), 
-                inset -4px -4px 6px 0 rgba(255,255,255,.2),
-                inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
+    box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.3),
+      -4px -4px 6px 0 rgba(116, 125, 136, 0.2),
+      inset -4px -4px 6px 0 rgba(255, 255, 255, 0.2),
+      inset 4px 4px 6px 0 rgba(0, 0, 0, 0.2);
     position: relative;
     border-bottom: 1px solid rgb(0, 255, 225);
   }
@@ -639,7 +643,7 @@ hr {
 
   button:before {
     position: absolute;
-    content: '';
+    content: "";
     display: inline-block;
     top: -180px;
     left: 0;
@@ -650,10 +654,10 @@ hr {
   }
 
   button:active {
-    box-shadow: 4px 4px 6px 0 rgba(255,255,255,.3),
-                -4px -4px 6px 0 rgba(116, 125, 136, .2), 
-                inset -4px -4px 6px 0 rgba(255,255,255,.2),
-                inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
+    box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.3),
+      -4px -4px 6px 0 rgba(116, 125, 136, 0.2),
+      inset -4px -4px 6px 0 rgba(255, 255, 255, 0.2),
+      inset 4px 4px 6px 0 rgba(0, 0, 0, 0.2);
   }
 
   img {
@@ -737,8 +741,8 @@ hr {
   align-items: center;
   flex-wrap: wrap;
   font-size: 1.6rem;
-      z-index: 3000;
-      display: none;
+  z-index: 3000;
+  display: none;
 
   .Social,
   .Datenschutz,
@@ -746,6 +750,7 @@ hr {
     margin: 10px;
     flex: 1;
     min-width: 150px;
+    z-index: 2;
   }
 
   .Social {
@@ -774,33 +779,6 @@ hr {
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    .FeedbackSpan {
-      margin-bottom: 10px;
-      font-size: 1.2rem;
-    }
-
-    input[type="text"] {
-      padding: 10px;
-      font-size: 1rem;
-      border: 1px solid $primary-color;
-      width: 100%;
-      height: 1rem;
-      max-width: 300px;
-      transition: border-color 0.3s, box-shadow 0.3s;
-      background-color: #0f302f1a;
-      color: gold;
-      border: 1px solid $primary-color;
-      border-radius: 15px;
-      caret-color: $highlight-color; // Makes the cursor more visible
-
-      &:focus {
-        border-color: $highlight-color;
-        outline: none;
-        box-shadow: 0 0 5px $highlight-color;
-        transform: scale(1.1);
-      }
-    }
   }
 }
 
@@ -906,7 +884,8 @@ hr {
   max-width: 100%;
   box-shadow: $box-shadow;
   color: white;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif, cursive;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif,
+    cursive;
   margin: 20px auto;
   z-index: 9000;
   h2 {
@@ -942,7 +921,7 @@ hr {
     font-size: 1rem;
     color: #fff;
   }
-  button{
+  button {
     margin-top: 10rem;
     background: linear-gradient(45deg, #16e8f344, #5bae1f37);
     padding: 10px 20px;
@@ -955,7 +934,8 @@ hr {
     transition: background-color 0.3s ease, transform 0.3s ease;
     box-shadow: $box-shadow;
 
-    &:hover, &:active {
+    &:hover,
+    &:active {
       background-color: $highlight-color;
       transform: scale(1.05);
     }
@@ -963,7 +943,6 @@ hr {
 }
 
 @media (max-width: 1400px) {
-
   .Cart-Sidebar {
     top: -20px;
     width: 100vw;
@@ -993,4 +972,5 @@ hr {
   to {
     transform: translateY(0);
     opacity: 1;
-  }}
+  }
+}

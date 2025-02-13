@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const randomColor = () => {
-  const letters = '0123456789ABCDEF';
-  let color = '#';
+  const letters = "0123456789ABCDEF";
+  let color = "#";
   for (let i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
@@ -24,7 +24,7 @@ const DiamondSVG = () => {
       height="170"
       viewBox="0 0 100 100"
       xmlns="http://www.w3.org/2000/svg"
-      style={{ backgroundColor: '#121212', cursor: 'pointer' }} // Schwarzer Hintergrund und Zeiger-Cursor bei Hover
+      style={{ backgroundColor: "#121212", cursor: "pointer" }} // Schwarzer Hintergrund und Zeiger-Cursor bei Hover
       onClick={handleClick} // Klick-Handler, der die Farbe ändert
     >
       {/* Oben */}

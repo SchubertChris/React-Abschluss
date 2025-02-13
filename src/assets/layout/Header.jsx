@@ -19,13 +19,14 @@ import {
 } from "react-icons/fa";
 
 const Header = () => {
-  const { darkMode, setDarkMode, cartItems, setCartItems } = useContext(AppContext);
+  const { darkMode, setDarkMode, cartItems, setCartItems } =
+    useContext(AppContext);
   const [footerVisible, setFooterVisible] = useState(false);
   const [cartVisible, setCartVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
-  
+
   const menuRef = useRef(null);
   const menuButtonRef = useRef(null);
   const cartRef = useRef(null);
@@ -33,19 +34,19 @@ const Header = () => {
 
   // Load cart items from localStorage on mount
   useEffect(() => {
-    const savedCartItems = localStorage.getItem('cartItems');
+    const savedCartItems = localStorage.getItem("cartItems");
     if (savedCartItems) {
       try {
         setCartItems(JSON.parse(savedCartItems));
       } catch (error) {
-        console.error('Error loading cart items:', error);
+        console.error("Error loading cart items:", error);
       }
     }
   }, []);
 
   // Save cart items to localStorage when they change
   useEffect(() => {
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
   // Close cart if empty
@@ -59,30 +60,34 @@ const Header = () => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       // For navigation menu
-      if (menuRef.current && 
-          !menuRef.current.contains(event.target) && 
-          !menuButtonRef.current.contains(event.target)) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target) &&
+        !menuButtonRef.current.contains(event.target)
+      ) {
         setMenuOpen(false);
         document.querySelector(".nav-menu").classList.remove("open");
       }
 
       // For cart
-      if (cartRef.current && 
-          !cartRef.current.contains(event.target) && 
-          !cartButtonRef.current.contains(event.target)) {
+      if (
+        cartRef.current &&
+        !cartRef.current.contains(event.target) &&
+        !cartButtonRef.current.contains(event.target)
+      ) {
         setCartVisible(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   useEffect(() => {
     if (darkMode) {
-      document.documentElement.classList.add('dark-mode');
+      document.documentElement.classList.add("dark-mode");
     } else {
-      document.documentElement.classList.remove('dark-mode');
+      document.documentElement.classList.remove("dark-mode");
     }
   }, [darkMode]);
 
@@ -123,23 +128,23 @@ const Header = () => {
           </button>
           <div className="User-Status-Profil">
             <p className="User">Benutzername</p>
-            <button className="Logout">
-              
-            </button>
+            <button className="Logout"></button>
           </div>
           {/* ------------------------------------------------------ */}
           {/* Menu Btn */}
-          <button 
+          <button
             ref={menuButtonRef}
-            onClick={OpenMenu} 
+            onClick={OpenMenu}
             className="icon-button menu-button"
           >
             <FaBars />
           </button>
           {/* ------------------------------------------------------ */}
-          <button 
+          <button
             ref={cartButtonRef}
-            className={`icon-button cart-button ${cartItems.length > 0 ? "has-items" : ""}`} 
+            className={`icon-button cart-button ${
+              cartItems.length > 0 ? "has-items" : ""
+            }`}
             onClick={() => setCartVisible(!cartVisible)}
           >
             {/* Warenkorb Btn */}
@@ -165,25 +170,39 @@ const Header = () => {
       <nav ref={menuRef} className="nav-menu">
         <ul className={footerVisible ? "visibleFooter" : ""}>
           <li>
-            <Link to="/account-dashboard" onClick={closeMenu}>Dashboard</Link>
+            <Link to="/account-dashboard" onClick={closeMenu}>
+              Dashboard
+            </Link>
           </li>
           <li>
-            <Link to="/login-register" onClick={closeMenu}>Login</Link>
+            <Link to="/login-register" onClick={closeMenu}>
+              Login
+            </Link>
           </li>
           <li>
-            <Link to="/about-us" onClick={closeMenu}>About Us</Link>
+            <Link to="/about-us" onClick={closeMenu}>
+              About Us
+            </Link>
           </li>
           <li>
-            <Link to="/blog" onClick={closeMenu}>Blog</Link>
+            <Link to="/blog" onClick={closeMenu}>
+              Blog
+            </Link>
           </li>
           <li>
-            <Link to="/shop" onClick={closeMenu}>Shop</Link>
+            <Link to="/shop" onClick={closeMenu}>
+              Shop
+            </Link>
           </li>
           <li>
-            <Link to="/categories" onClick={closeMenu}>Kategorien</Link>
+            <Link to="/categories" onClick={closeMenu}>
+              Kategorien
+            </Link>
           </li>
           <li>
-            <Link to="/cart" onClick={closeMenu}>Warenkorb</Link>
+            <Link to="/cart" onClick={closeMenu}>
+              Warenkorb
+            </Link>
           </li>
         </ul>
       </nav>
@@ -216,8 +235,13 @@ const Header = () => {
         />
       </div>
 
-      <div ref={cartRef} className={`Cart-Sidebar ${cartVisible ? "OpenCart" : ""}`}>
-        <button className="close-cart" onClick={() => setCartVisible(false)}>✖</button>
+      <div
+        ref={cartRef}
+        className={`Cart-Sidebar ${cartVisible ? "OpenCart" : ""}`}
+      >
+        <button className="close-cart" onClick={() => setCartVisible(false)}>
+          ✖
+        </button>
         <h2>Warenkorb</h2>
         {cartItems.length > 0 ? (
           cartItems.map((item) => (

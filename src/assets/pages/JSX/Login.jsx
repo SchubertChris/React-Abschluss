@@ -35,8 +35,8 @@ const LoginForm = () => {
 
       for (let x = 0; x < width; x += width / 20) {
         for (let y = 0; y < height; y += height / 20) {
-          let px = x + Math.random() * width / 20;
-          let py = y + Math.random() * height / 20;
+          let px = x + (Math.random() * width) / 20;
+          let py = y + (Math.random() * height) / 20;
           points.push({
             x: px,
             originX: px,
@@ -143,10 +143,18 @@ const LoginForm = () => {
   const validate = () => {
     let errors = {};
     if (isRegistering) {
-      if (!formData.firstName || formData.firstName.length < 2 || formData.firstName.length > 25) {
+      if (
+        !formData.firstName ||
+        formData.firstName.length < 2 ||
+        formData.firstName.length > 25
+      ) {
         errors.firstName = "Vorname muss zwischen 2 und 25 Zeichen lang sein";
       }
-      if (!formData.lastName || formData.lastName.length < 2 || formData.lastName.length > 25) {
+      if (
+        !formData.lastName ||
+        formData.lastName.length < 2 ||
+        formData.lastName.length > 25
+      ) {
         errors.lastName = "Nachname muss zwischen 2 und 25 Zeichen lang sein";
       }
     }
@@ -171,7 +179,6 @@ const LoginForm = () => {
     }
     login(formData.email, formData.password, navigate);
   };
-
 
   /* 
   -----------------------------------------------------RETURN----------------------
@@ -201,7 +208,9 @@ const LoginForm = () => {
                   onChange={handleInputChange}
                   autoFocus
                 />
-                {errors.firstName && <p className="error">{errors.firstName}</p>}
+                {errors.firstName && (
+                  <p className="error">{errors.firstName}</p>
+                )}
 
                 <input
                   type="text"
@@ -221,7 +230,7 @@ const LoginForm = () => {
               value={formData.email}
               onChange={handleInputChange}
               autoFocus
-              />
+            />
             {errors.email && <p className="error">{errors.email}</p>}
 
             <input
@@ -233,7 +242,9 @@ const LoginForm = () => {
             />
             {errors.password && <p className="error">{errors.password}</p>}
 
-            <button type="submit">{isRegistering ? "Registrieren" : "Anmelden"}</button>
+            <button type="submit">
+              {isRegistering ? "Registrieren" : "Anmelden"}
+            </button>
           </form>
 
           <button
@@ -244,7 +255,9 @@ const LoginForm = () => {
             }}
             className="toggle-button"
           >
-            {isRegistering ? "Bereits ein Konto? Anmelden" : "Konto benötigt? Registrieren"}
+            {isRegistering
+              ? "Bereits ein Konto? Anmelden"
+              : "Konto benötigt? Registrieren"}
           </button>
         </div>
         <div className="blende"></div>

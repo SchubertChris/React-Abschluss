@@ -19,17 +19,31 @@ export default function Shop() {
     <>
       <div className="Suchergebnis">
         <h1>Willkommen im Trading Hub</h1>
-        <p>Hier findest du wirklich alles, um deine Skills auf das nächste Level zu bringen!</p>
+        <p>
+          Hier findest du wirklich alles, um deine Skills auf das nächste Level
+          zu bringen!
+        </p>
         <hr />
         <br />
-        {searchTerm && <p>Suchergebnisse für: <strong>{searchTerm}</strong></p>}
+        {searchTerm && (
+          <p>
+            Suchergebnisse für: <strong>{searchTerm}</strong>
+          </p>
+        )}
         <div ref={productListRef}>
           <ProductList searchTerm={searchTerm} />
         </div>
         <hr />
-        <p>Solltest du Individuelle Anfragen haben oder suchst nach einem <strong>Face to Face Coaching</strong> schreibe mir eine Mail: </p>
+        <p>
+          Solltest du Individuelle Anfragen haben oder suchst nach einem{" "}
+          <strong>Face to Face Coaching</strong> schreibe mir eine Mail:{" "}
+        </p>
         <br />
-        <strong><a href="mailto:schubert_chris@rocketmail.com">schubert_chris@rocketmail.com</a></strong>
+        <strong>
+          <a href="mailto:schubert_chris@rocketmail.com">
+            schubert_chris@rocketmail.com
+          </a>
+        </strong>
       </div>
     </>
   );

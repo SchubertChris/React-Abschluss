@@ -161,10 +161,9 @@
   transition: background-color 0.3s ease, transform 0.3s ease;
   padding: 5rem;
   outline: 1px solid wheat;
-    transition: all 1s;
-    border: 1px solid rgb(0, 0, 0);
-    border-radius: 100px 1px 100px 1px;
-
+  transition: all 1s;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 100px 1px 100px 1px;
 
   &:hover {
     background: linear-gradient(45deg, #bbff00, #ffc400, #8400ff);

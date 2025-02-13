@@ -1,14 +1,13 @@
-@forward "variables";  // Globale Variablen (Farben, Fonts etc.)
-@forward "reset";      // CSS-Reset (z. B. Normalize.css)
+@forward "variables"; // Globale Variablen (Farben, Fonts etc.)
+@forward "reset"; // CSS-Reset (z. B. Normalize.css)
 
 @font-face {
   font-family: Azonix;
   src: url(../../fonts/Azonix.otf);
 }
 
-
 :root {
-  --background-color: #ffffff;  // Diese Zeile hinzufügen
+  --background-color: #ffffff; // Diese Zeile hinzufügen
   --text-color: #000000;
   --text-color-dark: #ffffff;
 }
@@ -24,7 +23,7 @@ body {
   margin: 0;
   background-color: var(--background-color) !important;
   color: var(--text-color) !important;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 body.dark-mode {
@@ -35,11 +34,12 @@ body.dark-mode {
   color: var(--text-color) !important;
 }
 
-.cart-button, .menu-button {
+.cart-button,
+.menu-button {
   color: var(--text-color) !important;
 }
 
-body.dark-mode .cart-button, 
+body.dark-mode .cart-button,
 body.dark-mode .menu-button {
   color: var(--text-color-dark) !important;
 }
@@ -54,6 +54,11 @@ main {
   margin: 50px auto;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: Azonix;
 }

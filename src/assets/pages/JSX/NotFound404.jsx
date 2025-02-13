@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import '../styles/NotFound404.scss';
+import React, { useEffect, useState } from "react";
+import "../styles/NotFound404.scss";
 
 const handleBack = () => {
-  window.location.href = '/';
-}
+  window.location.href = "/";
+};
 
 export default function NotFound404() {
   const [count, setCount] = useState(0);
@@ -19,10 +19,15 @@ export default function NotFound404() {
     <div className="not-found">
       <h1>{count}</h1>
       <h2>Nope, das war nichts</h2>
-      <div className='Mond'></div>
-      <img src="https://media.tenor.com/6JptszQgCnkAAAAi/text-work.gif" alt="Bild eines Pinguins, beim warten, dass was passiert." />
+      <div className="Mond"></div>
+      <img
+        src="https://media.tenor.com/6JptszQgCnkAAAAi/text-work.gif"
+        alt="Bild eines Pinguins, beim warten, dass was passiert."
+      />
       <p>Sag mal, wo willst du denn hin? Komm ja zurück</p>
-      <button className='backtoHome' onClick={handleBack}>@Home</button>
+      <button className="backtoHome" onClick={handleBack}>
+        @Home
+      </button>
     </div>
-  )
+  );
 }

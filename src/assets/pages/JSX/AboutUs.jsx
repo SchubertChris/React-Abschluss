@@ -54,7 +54,7 @@ export default function AboutUs() {
     <>
       <div className="parallax-wrapper">
         <p id="TOP"></p>
-        
+
         {/* Titel */}
         <div
           className="parallax-section parallax-section-title"
@@ -63,8 +63,8 @@ export default function AboutUs() {
           <div className="parallax-content">
             <h1>Real CSS Parallax</h1>
             <p>
-              Erleben Sie die Schönheit des Parallax-Scrollings mit atemberaubenden Bildern
-              und sanften Übergängen.
+              Erleben Sie die Schönheit des Parallax-Scrollings mit
+              atemberaubenden Bildern und sanften Übergängen.
             </p>
           </div>
         </div>
@@ -91,11 +91,12 @@ export default function AboutUs() {
           <div className="parallax-content slide2-content">
             <h1>Das Erlebnis</h1>
             <p>
-              User Experience ist das A und O. Wir wollen, dass Sie sich wohlfühlen.
+              User Experience ist das A und O. Wir wollen, dass Sie sich
+              wohlfühlen.
             </p>
             <p>
-              Jede Folie erzählt eine Geschichte, mit Bildern, die den Text ergänzen und
-              das Erlebnis verbessern.
+              Jede Folie erzählt eine Geschichte, mit Bildern, die den Text
+              ergänzen und das Erlebnis verbessern.
             </p>
           </div>
           <img

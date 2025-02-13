@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Calendar } from "react-calendar";
-import { FaChartBar, FaTasks, FaUsers, FaCog, FaCloudSun, FaNewspaper, FaShoppingCart, FaCheckCircle } from "react-icons/fa";
+import {
+  FaChartBar,
+  FaTasks,
+  FaUsers,
+  FaCog,
+  FaCloudSun,
+  FaNewspaper,
+  FaShoppingCart,
+  FaCheckCircle,
+} from "react-icons/fa";
 import "react-calendar/dist/Calendar.css";
 import "../styles/Dashboard.scss";
 
@@ -25,22 +34,22 @@ const Dashboard = () => {
     time: "",
     content: "",
     id: null,
-    isImportant: false
+    isImportant: false,
   });
 
   const [savedNotes, setSavedNotes] = useState(() => {
-    const saved = localStorage.getItem('savedNotes');
+    const saved = localStorage.getItem("savedNotes");
     return saved ? JSON.parse(saved) : [];
   });
 
   const [importantDates, setImportantDates] = useState(() => {
-    const saved = localStorage.getItem('importantDates');
+    const saved = localStorage.getItem("importantDates");
     return saved ? JSON.parse(saved) : [];
   });
 
   useEffect(() => {
-    localStorage.setItem('savedNotes', JSON.stringify(savedNotes));
-    localStorage.setItem('importantDates', JSON.stringify(importantDates));
+    localStorage.setItem("savedNotes", JSON.stringify(savedNotes));
+    localStorage.setItem("importantDates", JSON.stringify(importantDates));
   }, [savedNotes, importantDates]);
 
   const fetchWeather = async (city) => {
@@ -61,7 +70,7 @@ const Dashboard = () => {
       const response = await fetch(
         `https://api.thenewsapi.com/v1/news/top?api_token=${NEWS_API_KEY}&locale=de&limit=10`
       );
-      
+
       if (!response.ok) {
         throw new Error(`HTTP-Fehler! Status: ${response.status}`);
       }
@@ -93,7 +102,7 @@ const Dashboard = () => {
       time: "",
       content: "",
       id: null,
-      isImportant: false
+      isImportant: false,
     });
     setIsEditing(false);
     setEditingId(null);
@@ -103,12 +112,10 @@ const Dashboard = () => {
     setNoteInput({
       ...note,
       date: note.date,
-      time: note.time
+      time: note.time,
     });
     setIsEditing(true);
     setEditingId(note.id);
-    
-
   };
 
   const handleCancelEdit = () => {
@@ -116,36 +123,43 @@ const Dashboard = () => {
   };
 
   const handleSaveNote = () => {
-    if (noteInput.name && noteInput.date && noteInput.time && noteInput.content) {
+    if (
+      noteInput.name &&
+      noteInput.date &&
+      noteInput.time &&
+      noteInput.content
+    ) {
       const newNote = {
         ...noteInput,
         timestamp: new Date(),
-        id: noteInput.id || Date.now()
+        id: noteInput.id || Date.now(),
       };
 
       if (isEditing) {
-        setSavedNotes(prev => prev.map(note => 
-          note.id === editingId ? newNote : note
-        ));
+        setSavedNotes((prev) =>
+          prev.map((note) => (note.id === editingId ? newNote : note))
+        );
 
         if (newNote.isImportant) {
-          setImportantDates(prev => {
-            const filtered = prev.filter(note => note.id !== editingId);
+          setImportantDates((prev) => {
+            const filtered = prev.filter((note) => note.id !== editingId);
             return [...filtered, newNote];
           });
         } else {
-          setImportantDates(prev => 
-            prev.filter(note => note.id !== editingId)
+          setImportantDates((prev) =>
+            prev.filter((note) => note.id !== editingId)
           );
         }
       } else {
-        setSavedNotes(prev => [...prev, newNote]);
+        setSavedNotes((prev) => [...prev, newNote]);
         if (newNote.isImportant) {
-          setImportantDates(prev => [...prev, newNote]);
+          setImportantDates((prev) => [...prev, newNote]);
         }
       }
 
-      setSuccessMessage(isEditing ? "Termin aktualisiert!" : "Termin gespeichert!");
+      setSuccessMessage(
+        isEditing ? "Termin aktualisiert!" : "Termin gespeichert!"
+      );
       resetForm();
 
       setTimeout(() => {
@@ -155,10 +169,10 @@ const Dashboard = () => {
   };
 
   const handleDeleteNote = (id) => {
-    if (window.confirm('Möchten Sie diesen Termin wirklich löschen?')) {
-      setSavedNotes(prev => prev.filter(note => note.id !== id));
-      setImportantDates(prev => prev.filter(note => note.id !== id));
-      
+    if (window.confirm("Möchten Sie diesen Termin wirklich löschen?")) {
+      setSavedNotes((prev) => prev.filter((note) => note.id !== id));
+      setImportantDates((prev) => prev.filter((note) => note.id !== id));
+
       if (editingId === id) {
         resetForm();
       }
@@ -181,10 +195,10 @@ const Dashboard = () => {
     { icon: <FaChartBar />, label: "Übersicht" },
     { icon: <FaTasks />, label: "Termine" },
     { icon: <FaShoppingCart />, label: "Warenkorb" },
-    { icon: <FaNewspaper />, label: "Nachrichten" }
+    { icon: <FaNewspaper />, label: "Nachrichten" },
   ];
 
-  const selectedDateNotes = savedNotes.filter(note => {
+  const selectedDateNotes = savedNotes.filter((note) => {
     const noteDate = new Date(note.date);
     return (
       noteDate.getDate() === date.getDate() &&
@@ -193,7 +207,7 @@ const Dashboard = () => {
     );
   });
 
-  const todayImportantDates = importantDates.filter(note => {
+  const todayImportantDates = importantDates.filter((note) => {
     const noteDate = new Date(note.date);
     const today = new Date();
     return (
@@ -212,7 +226,9 @@ const Dashboard = () => {
             {menuItems.map((item, index) => (
               <button
                 key={index}
-                className={`nav-item ${activeMenuItem === item.label ? "active" : ""}`}
+                className={`nav-item ${
+                  activeMenuItem === item.label ? "active" : ""
+                }`}
                 onClick={() => setActiveMenuItem(item.label)}
               >
                 {item.icon}
@@ -242,13 +258,13 @@ const Dashboard = () => {
                     <td>{note.time}</td>
                     <td>{note.content}</td>
                     <td>
-                      <button 
+                      <button
                         onClick={() => handleEditNote(note)}
                         disabled={isEditing && editingId !== note.id}
                       >
                         Bearbeiten
                       </button>
-                      <button 
+                      <button
                         onClick={() => handleDeleteNote(note.id)}
                         disabled={isEditing && editingId !== note.id}
                       >
@@ -271,7 +287,9 @@ const Dashboard = () => {
       <main className="main-content">
         <div className="content-grid">
           <div className="card weather-card">
-            <h3><FaCloudSun className="card-icon" /> Wetter in {city}</h3>
+            <h3>
+              <FaCloudSun className="card-icon" /> Wetter in {city}
+            </h3>
             <div className="card-content">
               {weather ? (
                 <div className="weather-info">
@@ -279,7 +297,7 @@ const Dashboard = () => {
                     <div className="temperature">
                       {Math.round(weather.main.temp)}°C
                     </div>
-                    <img 
+                    <img
                       src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
                       alt={weather.weather[0].description}
                       className="weather-icon"
@@ -317,32 +335,43 @@ const Dashboard = () => {
           </div>
 
           <div className="card notes-card">
-            <h3>Termine für {date.toLocaleDateString('de-DE')}</h3>
+            <h3>Termine für {date.toLocaleDateString("de-DE")}</h3>
             <div className="card-content">
               <div className="notes-form">
                 <input
                   type="text"
                   placeholder="Name des Termins"
                   value={noteInput.name}
-                  onChange={(e) => setNoteInput(prev => ({...prev, name: e.target.value}))}
+                  onChange={(e) =>
+                    setNoteInput((prev) => ({ ...prev, name: e.target.value }))
+                  }
                   className="notes-input"
                 />
                 <input
                   type="date"
                   value={noteInput.date}
-                  onChange={(e) => setNoteInput(prev => ({...prev, date: e.target.value}))}
+                  onChange={(e) =>
+                    setNoteInput((prev) => ({ ...prev, date: e.target.value }))
+                  }
                   className="notes-input"
                 />
                 <input
                   type="time"
                   value={noteInput.time}
-                  onChange={(e) => setNoteInput(prev => ({...prev, time: e.target.value}))}
+                  onChange={(e) =>
+                    setNoteInput((prev) => ({ ...prev, time: e.target.value }))
+                  }
                   className="notes-input"
                 />
                 <textarea
                   placeholder="Beschreibung..."
                   value={noteInput.content}
-                  onChange={(e) => setNoteInput(prev => ({...prev, content: e.target.value}))}
+                  onChange={(e) =>
+                    setNoteInput((prev) => ({
+                      ...prev,
+                      content: e.target.value,
+                    }))
+                  }
                   className="notes-textarea"
                 />
                 <div className="important-checkbox">
@@ -350,7 +379,12 @@ const Dashboard = () => {
                     type="checkbox"
                     id="isImportant"
                     checked={noteInput.isImportant}
-                    onChange={(e) => setNoteInput(prev => ({...prev, isImportant: e.target.checked}))}
+                    onChange={(e) =>
+                      setNoteInput((prev) => ({
+                        ...prev,
+                        isImportant: e.target.checked,
+                      }))
+                    }
                   />
                   <label htmlFor="isImportant">Wichtiger Termin</label>
                 </div>
@@ -359,7 +393,7 @@ const Dashboard = () => {
             <div className="saveTodo">
               <div className="button-group">
                 <button onClick={handleSaveNote} className="save-button">
-                  {isEditing ? 'Aktualisieren' : 'Speichern'}
+                  {isEditing ? "Aktualisieren" : "Speichern"}
                 </button>
                 {isEditing && (
                   <button onClick={handleCancelEdit} className="cancel-button">
@@ -378,19 +412,26 @@ const Dashboard = () => {
             <div className="saved-notes">
               {selectedDateNotes.length > 0 ? (
                 selectedDateNotes.map((note) => (
-                  <div key={note.id} className={`note-item ${editingId === note.id ? 'editing' : ''}`}>
-                    <h5>{note.name} {note.isImportant && '⭐'}</h5>
+                  <div
+                    key={note.id}
+                    className={`note-item ${
+                      editingId === note.id ? "editing" : ""
+                    }`}
+                  >
+                    <h5>
+                      {note.name} {note.isImportant && "⭐"}
+                    </h5>
                     <p>{note.time} Uhr</p>
                     <p>{note.content}</p>
                     <div className="note-actions">
-                      <button 
+                      <button
                         onClick={() => handleEditNote(note)}
                         className="edit-button"
                         disabled={isEditing && editingId !== note.id}
                       >
                         Bearbeiten
                       </button>
-                      <button 
+                      <button
                         onClick={() => handleDeleteNote(note.id)}
                         className="delete-button"
                         disabled={isEditing && editingId !== note.id}
@@ -407,7 +448,9 @@ const Dashboard = () => {
           </div>
 
           <div className="card news-card">
-            <h3><FaNewspaper className="card-icon" /> Aktuelle News</h3>
+            <h3>
+              <FaNewspaper className="card-icon" /> Aktuelle News
+            </h3>
             <div className="card-content">
               <div className="news-list">
                 {loadingNews ? (
@@ -422,17 +465,23 @@ const Dashboard = () => {
                       className="news-item"
                     >
                       {article.image_url && (
-                        <img src={article.image_url} alt={article.title} className="news-image" />
+                        <img
+                          src={article.image_url}
+                          alt={article.title}
+                          className="news-image"
+                        />
                       )}
                       <h4>{article.title}</h4>
                       {article.description && <p>{article.description}</p>}
                       <span className="news-source">
-                        {article.source || 'Unbekannte Quelle'}
+                        {article.source || "Unbekannte Quelle"}
                       </span>
                     </a>
                   ))
                 ) : (
-                  <div className="no-content">Keine aktuellen News verfügbar.</div>
+                  <div className="no-content">
+                    Keine aktuellen News verfügbar.
+                  </div>
                 )}
               </div>
             </div>

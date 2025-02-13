@@ -16,7 +16,7 @@ import NotFound404 from "./assets/pages/JSX/NotFound404";
 function App() {
   return (
     <Router basename="/React-Abschluss">
-        <AppProvider>
+      <AppProvider>
         <Header />
         <main>
           <Routes>
@@ -38,8 +38,8 @@ function App() {
             <Route path="*" element={<NotFound404 />} />
           </Routes>
         </main>
-    </AppProvider>
-      </Router>
+      </AppProvider>
+    </Router>
   );
 }
 
