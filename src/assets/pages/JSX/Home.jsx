@@ -52,6 +52,15 @@ const Home = () => {
         </div>
       </div>
       <div className="Text-Container">
+        <div className="Test-Head-Inner">
+        <h1>Willkommen</h1>
+        <h4>Lust auf Style der dich umhauen wird?</h4>
+        <h6>Dann bist du bei mir genau richtig!</h6>
+        <p>Hier geht es volle Kanone, um Styling, Performance & das coolste du lernst dabei was!</p>
+        <button className="Btn-toCategories">
+          Jetzt schnuppern
+        </button>
+        </div>
         <div className="text1">
           <h2>Über uns</h2>
           <p>Wir sind ein kreatives Team, das sich auf die Erstellung von beeindruckenden Bildern spezialisiert hat.</p>

@@ -212,7 +212,8 @@ const LoginForm = () => {
               placeholder="E-Mail"
               value={formData.email}
               onChange={handleInputChange}
-            />
+              autoFocus
+              />
             {errors.email && <p className="error">{errors.email}</p>}
 
             <input

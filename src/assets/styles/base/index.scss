@@ -9,16 +9,9 @@
 
 
 :root {
-  background: linear-gradient(to bottom, #9ad3ffba, #f5f3f6);
   --background-color: #ffffff;  // Diese Zeile hinzufügen
   --text-color: #000000;
   --text-color-dark: #ffffff;
-}
-
-body.dark-mode {
-  --background-color: #000000 !important;
-  --text-color: #ffffff !important;
-  --text-color-dark: #ffffff !important;
 }
 
 body {
@@ -35,6 +28,13 @@ body {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+body.dark-mode {
+  --background-color: #000000 !important;
+  --text-color: #ffffff !important;
+  --text-color-dark: #ffffff !important;
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
+}
 
 .cart-button, .menu-button {
   color: var(--text-color) !important;
@@ -55,7 +55,6 @@ main {
   margin: 50px auto;
 }
 
-
-h1, h2, h3, h4, h5, h6{
+h1, h2, h3, h4, h5, h6 {
   font-family: Azonix;
 }

@@ -7,7 +7,6 @@
   padding: var(--gap);
   height: 100vh;
   position: relative;
-  margin-bottom: 200px;
   border-radius: 5px;
 
   a {
@@ -29,7 +28,7 @@
       text-decoration: none;
 
     // Hintergrundbild
-    background-color: teal;
+    background-color: transparent;
     background-image: url('../../images/Logo/Grid-Kategorien-Bg.png');
     background-size: cover;
     background-position: center;

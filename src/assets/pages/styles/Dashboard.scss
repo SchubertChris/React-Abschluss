@@ -1,9 +1,11 @@
 // Dashboard Container
+
+
 .dashboard-container {
   display: flex;
   margin: 0 auto;
   min-width: 100vw;
-  background-color: #ffffff;
+  background: linear-gradient(to bottom, #74d5ff90, #c2bcfc);
   padding: 3rem;
   position: relative;
   color: var(--text-color);
@@ -11,13 +13,13 @@
   z-index: 1000;
   z-index: 500;
   body.dark-mode & {
-    background-color: #000000;
+    background: linear-gradient(to bottom, #33333393, #00000097);
   }
 }
 
 // Sidebar Styles
 .sidebar {
-  width: 380px;
+  width: 420px;
   background: linear-gradient(to bottom, #9ad3ffba, #f5f3f6);
   box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
   flex-shrink: 0;
@@ -442,17 +444,19 @@
     margin-bottom: 1rem;
 
     button {
-      background-color: #3b82f6;
+      background: linear-gradient(to right, #674585, #efcbff);
+      border: 1px solid white;
       color: var(--text-color-dark);
       border: none;
       border-radius: 0.5rem;
       padding: 0.5rem 1rem;
       margin-left: 3rem;
       cursor: pointer;
-      transition: background-color 0.2s;
+      transition: all 0.4s;
 
       &:hover {
-        background-color: #2563eb;
+      background: linear-gradient(to left, #674585, #efcbff);
+      transition: all 0.4s;
       }
     }
   }
@@ -488,7 +492,7 @@
       }
 
       button {
-        background: none;
+        background: linear-gradient(to left, #382547, #efcbff);
         border: none;
         color: #ef4444;
         cursor: pointer;

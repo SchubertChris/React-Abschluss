@@ -12,9 +12,12 @@
 // Page Container
 .page-container {
   position: relative;
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
   overflow: hidden;
+  position: fixed;
+  top: -10%;
+  background-color: #000000;
   
   &::before {
     content: "";
@@ -26,7 +29,7 @@
     background-image: url("https://www.marcoguglie.it/Codepen/AnimatedHeaderBg/demo-1/img/demo-1-bg.jpg");
     background-size: contain;
     background-position: center;
-    background-repeat: repeat;
+    background-repeat: no-repeat;
     z-index: 0;
   }
 }
@@ -72,12 +75,12 @@
   @include glass-effect;
   width: 100%;
   max-width: 400px;
-  height: 400px;
   padding: 2rem;
   background: rgba(0, 0, 0, 0.652);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   text-align: center;
+  z-index: 400;
   
   .login-form {
     display: flex;
@@ -110,6 +113,9 @@
       &:hover {
         background-color: #0056b3;
       }
+      &:focus, &:active {
+        z-index: 490;
+      }
     }
   }
   
@@ -133,5 +139,6 @@
   bottom: 0px;
   background-color: #000000;
   width: 100vw;
-  min-height: 5vh;
+  min-height: 3vh;
+  z-index: 500;
 }

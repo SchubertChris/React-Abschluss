@@ -15,6 +15,7 @@ import {
   FaInstagram,
   FaFacebook,
   FaTrash,
+  FaUserCircle
 } from "react-icons/fa";
 
 const Header = () => {
@@ -115,6 +116,17 @@ const Header = () => {
         </div>
 
         <div className="button-group">
+          {/* ------------------------------------------------------ */}
+          {/* User-Profil - Logout */}
+          <button className="user-button icon-button">
+            <FaUserCircle />
+          </button>
+          <div className="User-Status-Profil">
+            {/* WEITERRMACHEN */}
+            <button className="Logout">Ausloggen</button>
+          </div>
+          {/* ------------------------------------------------------ */}
+          {/* Menu Btn */}
           <button 
             ref={menuButtonRef}
             onClick={OpenMenu} 
@@ -122,16 +134,20 @@ const Header = () => {
           >
             <FaBars />
           </button>
+          {/* ------------------------------------------------------ */}
           <button 
             ref={cartButtonRef}
             className={`icon-button cart-button ${cartItems.length > 0 ? "has-items" : ""}`} 
             onClick={() => setCartVisible(!cartVisible)}
           >
+            {/* Warenkorb Btn */}
             <FaShoppingCart />
             {cartItems.length > 0 && (
               <span className="cart-count">{cartItems.length}</span>
             )}
           </button>
+          {/* ------------------------------------------------------ */}
+          {/* Dark Mode Btn */}
           <button
             className="btn-toggle"
             onClick={() => setDarkMode(!darkMode)}
@@ -140,6 +156,7 @@ const Header = () => {
             <span>{darkMode ? "Light" : "Dark"}</span>
             <span>{darkMode ? <FaSun /> : <FaMoon />}</span>
           </button>
+          {/* ------------------------------------------------------ */}
         </div>
       </div>
 
@@ -163,21 +180,10 @@ const Header = () => {
           <li>
             <Link to="/categories" onClick={closeMenu}>Kategorien</Link>
           </li>
-          <li>
-            <Link to="/new" onClick={closeMenu}>Neu</Link>
-          </li>
-          <li>
-            <Link to="/offers" onClick={closeMenu}>Angebote</Link>
-          </li>
-          <li>
-            <Link to="/popular" onClick={closeMenu}>Beliebt</Link>
-          </li>
-          <li>
+       <li>
             <Link to="/cart" onClick={closeMenu}>Warenkorb</Link>
           </li>
-          <li>
-            <Link to="/shipping-returns" onClick={closeMenu}>Rückgabe</Link>
-          </li>
+
         </ul>
       </nav>
 

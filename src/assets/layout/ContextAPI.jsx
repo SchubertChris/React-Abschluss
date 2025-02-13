@@ -23,7 +23,7 @@ export const AppProvider = ({ children }) => {
     password: "123456",
   };
 
-  // Wetter abrufen
+  // Wetter API abrufen
   const fetchWeather = async (city) => {
     try {
       const response = await fetch(
@@ -36,7 +36,7 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  // News abrufen
+  // News API abrufen
   const fetchNews = async () => {
     setLoadingNews(true);
     try {
@@ -67,7 +67,7 @@ export const AppProvider = ({ children }) => {
   // Logout-Funktion
   const logout = () => {
     setIsAuthenticated(false);
-    navigate("/login-register");
+    navigate("/login-register"); // Button erstellen
   };
 
   useEffect(() => {
@@ -88,21 +88,21 @@ export const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
-        darkMode,
-        setDarkMode,
-        weather,
-        city,
-        setCity,
-        news,
-        savedNotes,
-        setSavedNotes,
-        importantDates,
-        setImportantDates,
-        cartItems,
-        setCartItems,
-        isAuthenticated,
-        login,
-        logout,
+        darkMode, // Dark Mode aktiviert oder nicht
+        setDarkMode, // Funktion zum Setzen des Dark Mode
+        weather, // Wetterdaten
+        city, // Stadt für die Wetterdaten
+        setCity, // Funktion zum Setzen der Stadt
+        news, // News
+        savedNotes, // Gespeichert Notizen
+        setSavedNotes, // Funktion zum Setzen der gespeicherten Notizen
+        importantDates, // Wichtige Termine importieren
+        setImportantDates, // Funktion zum Setzen der wichtigen Termine
+        cartItems, // Artikel im Warenkorb
+        setCartItems, // Funktion zum Setzen der Artikel im Warenkorb
+        isAuthenticated, // Ist der Benutzer eingeloggt?
+        login, // Funktion zum Einloggen
+        logout, // Funktion zum Ausloggen - MUSS NOCH UMGESETZT werden bzw erweitert werden
       }}
     >
       {children}
