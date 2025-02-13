@@ -103,7 +103,7 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s ease, opacity 0.5s ease;
-    opacity: 0;
+    display: none;
 
     ul {
       width: 90%;
@@ -116,7 +116,6 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
       padding: 0;
       margin: 0;
       transition: all 0.5s;
-      z-index: 3000;
       margin: 0 auto;
     }
 
@@ -164,7 +163,7 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
 
   .nav-menu.open {
     max-height: 500px;
-    opacity: 1;
+    display: block;
 
     li {
       animation-delay: calc(0.1s * var(--i));
@@ -835,6 +834,7 @@ hr {
   gap: 0; // Entfernt die Abstände zwischen den inneren Elementen
   left: 50%;
   transform: translateX(-50%);
+  display: block;
 }
 
 .visible2 {
