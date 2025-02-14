@@ -131,7 +131,7 @@ const Header = () => {
               {user.name} <span>{user.email}</span>
             </p>
             <button className="Logout" onClick={logout}>
-              <FaArrowRightFromBracket /> Logout
+              <FaArrowRightFromBracket />
             </button>
           </>
         ) : (

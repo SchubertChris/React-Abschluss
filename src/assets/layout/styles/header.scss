@@ -66,7 +66,8 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
         font-size: 1rem;
         color: black !important;
         transition: all 0.5s;
-        &:hover, &:active {
+        &:hover,
+        &:active {
           background: linear-gradient(45deg, #b8e994, $secondary-color);
           transition: all 0.3s ease;
           transition: all 0.5s;
@@ -75,7 +76,7 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
     }
   }
 
-  .User-Icon{
+  .User-Icon {
     position: relative;
     background: $gradient;
     border: none;
@@ -92,41 +93,44 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
     font-size: 1rem;
     color: black !important;
     transition: all 0.5s;
-    &:hover, &:active {
+    &:hover,
+    &:active {
       background: linear-gradient(45deg, #b8e994, $secondary-color);
       transition: all 0.3s ease;
       transition: all 0.5s;
     }
   }
 
-
   .User-Status-Profil.visible {
     display: block;
   }
-  
+
   .User-Status-Profil {
     font-weight: bold;
-    width: 210px;
-    height: 150px;
-    background: $gradient;
+    width: 170px;
+    height: 125px;
+    background: rgba(0, 0, 0, 0.66);
     border-radius: 10px;
     padding: 1rem;
     position: absolute;
     top: 100px;
     right: 6vw;
     box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
-    border: 3px solid black;
+    border: 1px solid $primary-color;
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: black;
+    color: white;
     justify-content: space-between;
     display: none;
-    .User{
+    z-index: 3000;
+
+    .User {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 10px;
+
       img {
         width: 50px;
         height: 50px;
@@ -134,37 +138,55 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
         object-fit: cover;
         box-shadow: $box-shadow;
       }
+
       p {
         font-size: 1rem;
-        color: black;
-    }
+        color: white;
+      }
     }
 
-    .Logout, .Login {
-      position: relative;
-      background: $gradient;
-      border: 1px solid black;
-      border-radius: 25px 15px 0 25px;
-      box-shadow: 0 2px 15px 2px black;
-      width: 180px;
+    .Logout {
+      margin: 5px 5px;
+      background: transparent;
+      border: 1px solid $primary-color;
+      border-radius: 5px 15px 0 25px;
+      box-shadow: 0 2px 15px 2px rgba(0, 0, 0, 0.5);
+      width: 90px;
       height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      color: black;
+      color: white;
+      font-size: 1rem !important;
+
+      &:hover,
+      :active {
+        background: linear-gradient(45deg, #b7e99447, $secondary-color);
+      }
     }
 
     .login-link {
-      text-decoration: none;
-      color: inherit;
+      margin-right: 5px;
+      background: transparent;
+      border: 1px solid $primary-color;
+      border-radius: 5px 15px 0 25px;
+      box-shadow: 0 2px 15px 2px rgba(0, 0, 0, 0.5);
+      width: 60px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
-      height: 100%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: white;
+      font-size: 1rem !important;
+      text-decoration: none;
+      &:hover,
+      &:active {
+        background: linear-gradient(45deg, #b7e99447, $secondary-color);
+      }
     }
   }
 

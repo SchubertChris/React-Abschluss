@@ -5,6 +5,9 @@ import "../styles/Login.scss";
 import { FaUser } from "react-icons/fa";
 
 const LoginForm = () => {
+  const [errors, setErrors] = useState({});
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const navigate = useNavigate();
   const { login } = useContext(AppContext);
   const [isRegistering, setIsRegistering] = useState(false);
   const [formData, setFormData] = useState({
@@ -14,10 +17,10 @@ const LoginForm = () => {
     password: "",
     confirmPassword: "",
   });
-  const [errors, setErrors] = useState({});
-  const [feedbackMessage, setFeedbackMessage] = useState("");
-  const navigate = useNavigate();
 
+  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^Meins^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+  /* ---------------------------------------------------BACKGROUND */
   useEffect(() => {
     let width = window.innerWidth;
     let height = window.innerHeight;
@@ -129,7 +132,8 @@ const LoginForm = () => {
       window.removeEventListener("mousemove", onMouseMove);
     };
   }, []);
-
+  /* ---------------------------------------------------BACKGROUND */
+  /* °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°___MEINS°°° */
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -236,7 +240,6 @@ const LoginForm = () => {
             <input
               type="password"
               name="password"
-              placeholder="Passwort"
               value={formData.password}
               onChange={handleInputChange}
             />

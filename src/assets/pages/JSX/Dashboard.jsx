@@ -345,7 +345,7 @@ const Dashboard = () => {
                   onChange={(e) =>
                     setNoteInput((prev) => ({ ...prev, name: e.target.value }))
                   }
-                  className="notes-input"
+                  className="notes-input-name"
                 />
                 <input
                   type="date"
@@ -353,7 +353,7 @@ const Dashboard = () => {
                   onChange={(e) =>
                     setNoteInput((prev) => ({ ...prev, date: e.target.value }))
                   }
-                  className="notes-input"
+                  className="notes-input-date"
                 />
                 <input
                   type="time"
@@ -361,7 +361,7 @@ const Dashboard = () => {
                   onChange={(e) =>
                     setNoteInput((prev) => ({ ...prev, time: e.target.value }))
                   }
-                  className="notes-input"
+                  className="notes-input-time"
                 />
                 <textarea
                   placeholder="Beschreibung..."
@@ -386,7 +386,7 @@ const Dashboard = () => {
                       }))
                     }
                   />
-                  <label htmlFor="isImportant">Wichtiger Termin</label>
+                  <label htmlFor="isImportant"> Wichtiger Termin ? ⭐</label>
                 </div>
               </div>
             </div>
@@ -418,10 +418,11 @@ const Dashboard = () => {
                       editingId === note.id ? "editing" : ""
                     }`}
                   >
+                    <p>Termin kann bearbeitet oder gelöscht werden</p>
                     <h5>
                       {note.name} {note.isImportant && "⭐"}
                     </h5>
-                    <p>{note.time} Uhr</p>
+                    <p>{note.time} </p>
                     <p>{note.content}</p>
                     <div className="note-actions">
                       <button
