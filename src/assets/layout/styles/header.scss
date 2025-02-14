@@ -884,7 +884,8 @@ hr {
   bottom: 5px;
   right: 20px;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 10px 5px 5px 5px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 20px 20px);
   border: none;
   background-color: rgba(0, 0, 0, 0.733);
   cursor: pointer;

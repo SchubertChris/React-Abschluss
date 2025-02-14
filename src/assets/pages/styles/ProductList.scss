@@ -17,11 +17,6 @@
 }
 
 .product-list {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(10, 1fr);
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
   width: 100vw;
   max-width: 1200px;
   min-height: 100vh;
@@ -51,6 +46,7 @@
   transition: transform 0.3s, box-shadow 0.3s;
   border-radius: 0px 20px 10px;
   animation: moveUpDown 1.5s ease-in-out infinite;
+  border: 1px solid rgba(0, 0, 0, 1);
   p {
     margin-top: 1rem;
   }

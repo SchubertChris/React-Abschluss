@@ -17,33 +17,37 @@ export default function Shop() {
 
   return (
     <>
-      <div className="Suchergebnis">
-        <h1>Willkommen im Trading Hub</h1>
-        <p>
-          Hier findest du wirklich alles, um deine Skills auf das nächste Level
-          zu bringen!
-        </p>
-        <hr />
+      <div className="shop-container">
+        <div className="shop-header">
+          <h1>Willkommen im Trading Hub</h1>
+          <p>
+            Hier findest du wirklich alles, um deine Skills auf das nächste Level
+            zu bringen!
+          </p>
+        </div>
+        <hr className="shop-divider" />
         <br />
         {searchTerm && (
-          <p>
+          <p className="search-results">
             Suchergebnisse für: <strong>{searchTerm}</strong>
           </p>
         )}
-        <div ref={productListRef}>
+        <div ref={productListRef} className="product-list-container">
           <ProductList searchTerm={searchTerm} />
         </div>
-        <hr />
-        <p>
-          Solltest du Individuelle Anfragen haben oder suchst nach einem{" "}
-          <strong>Face to Face Coaching</strong> schreibe mir eine Mail:{" "}
-        </p>
-        <br />
-        <strong>
-          <a href="mailto:schubert_chris@rocketmail.com">
-            schubert_chris@rocketmail.com
-          </a>
-        </strong>
+        <hr className="shop-divider" />
+        <div className="shop-footer">
+          <p>
+            Solltest du Individuelle Anfragen haben oder suchst nach einem{" "}
+            <strong>Face to Face Coaching</strong> schreibe mir eine Mail:{" "}
+          </p>
+          <br />
+          <strong>
+            <a href="mailto:schubert_chris@rocketmail.com" className="contact-email">
+              schubert_chris@rocketmail.com
+            </a>
+          </strong>
+        </div>
       </div>
     </>
   );
