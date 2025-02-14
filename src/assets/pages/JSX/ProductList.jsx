@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AppContext } from "../../layout/ContextAPI"; // Warenkorb aus dem Context holen
 import products from "../../data/produkte.json";
 import "../styles/ProductList.scss";
@@ -15,12 +15,15 @@ const ProductList = ({ searchTerm }) => {
     : products;
 
   // Funktion zum Hinzufügen eines Produkts in den Warenkorb (nur einmal pro Produkt)
+  const [message, setMessage] = useState({});
+
   const addToCart = (product) => {
     if (cartItems.some((item) => item.id === product.id)) {
       alert("Dieses digitale Produkt kann nur einmal gekauft werden.");
       return;
     }
     setCartItems([...cartItems, { ...product }]);
+    setMessage({ [product.id]: ` wurde zum Warenkorb hinzugefügt.` });
   };
 
   return (
@@ -38,6 +41,7 @@ const ProductList = ({ searchTerm }) => {
             >
               In den Warenkorb
             </button>
+            {message[product.id] && <p className="message">{message[product.id]}</p>}
           </div>
         ))
       ) : (

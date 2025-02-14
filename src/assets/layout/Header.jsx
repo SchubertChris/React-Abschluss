@@ -18,6 +18,11 @@ import {
   FaTrash,
   FaUserCircle,
   FaSignInAlt,
+  FaPaypal,
+  FaCcMastercard,
+  FaCcVisa,
+  FaFileInvoice,
+  FaMoneyCheckAlt,
 } from "react-icons/fa";
 
 const Header = () => {
@@ -115,7 +120,7 @@ const Header = () => {
 
   const [UserSee, setUserSee] = useState(false);
 
-/*  ------------------------------------------------------*/
+  /*  ------------------------------------------------------*/
   return (
     <header className="header">
       <div className="header-content">
@@ -125,26 +130,26 @@ const Header = () => {
           </Link>
         </div>
         <div className={`User-Status-Profil ${UserSee ? "visible" : ""}`}>
-        {user ? ( // Falls ein Benutzer eingeloggt ist
-          <>
-            <p className="User">
-              {user.name} <span>{user.email}</span>
-            </p>
-            <button className="Logout" onClick={logout}>
-              <FaArrowRightFromBracket />
-            </button>
-          </>
-        ) : (
-          <Link to="/login-register" className="login-link">
-            <FaSignInAlt className="Login" /> Login
-          </Link>
-        )}
-      </div>
+          {user ? ( // Falls ein Benutzer eingeloggt ist
+            <>
+              <p className="User">
+                {user.name} <span>{user.email}</span>
+              </p>
+              <button className="Logout" onClick={logout}>
+                <FaArrowRightFromBracket />
+              </button>
+            </>
+          ) : (
+            <Link to="/login-register" className="login">
+              <FaSignInAlt className="Login" /> Login
+            </Link>
+          )}
+        </div>
 
-      <div className="button-group">
-        <button className="User-Icon" onClick={() => setUserSee(!UserSee)}>
-          <FaUserCircle />
-        </button>
+        <div className="button-group">
+          <button className="User-Icon" onClick={() => setUserSee(!UserSee)}>
+            <FaUserCircle />
+          </button>
           <button
             ref={menuButtonRef}
             onClick={OpenMenu}
@@ -239,7 +244,7 @@ const Header = () => {
           <button>Dashboard</button>
         </Link>
         <img
-          src="https://cdn.pixabay.com/photo/2018/05/20/21/01/sunset-3416768_960_720.jpg"
+          src="https://cdn.pixabay.com/photo/2016/08/03/09/04/universe-1566161_960_720.jpg"
           alt="Natur"
         />
       </div>
@@ -271,6 +276,43 @@ const Header = () => {
         ) : (
           <p>Der Warenkorb ist leer</p>
         )}
+        <h4>Hier geht es zur Kasse </h4>
+        <p>Total: {}</p>
+        <p>Produkte: </p>
+        <br />
+        <p>Das sind unsere Zahlungsmöglichkeiten</p>
+        <div className="Zahlungsmöglichkeiten">
+          <p>
+            PayPal
+            <span className="PayPal">
+              <FaPaypal />
+            </span>
+          </p>
+          <p>
+            Mastercard
+            <span className="Mastercard">
+              <FaCcMastercard />
+            </span>
+          </p>
+          <p>
+            Visa
+            <span className="Visa">
+              <FaCcVisa />
+            </span>
+          </p>
+          <p>
+            Auf Rechnung
+            <span className="Rechnung">
+              <FaFileInvoice />
+            </span>
+          </p>
+          <p>
+            Per Nachname
+            <span className="Nachname">
+              <FaMoneyCheckAlt />
+            </span>
+          </p>
+        </div>
       </div>
 
       <div className="Footer">

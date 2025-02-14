@@ -7,7 +7,7 @@
 }
 
 :root {
-  --background-color: #a3a3a3; // Diese Zeile hinzufügen
+  --background-color: #ecfdff; // Diese Zeile hinzufügen
   --text-color: #000000;
   --text-color-dark: #ffffff;
 }
@@ -27,7 +27,7 @@ body {
 }
 
 body.dark-mode {
-  --background-color: #282828 !important;
+  --background-color: #121212 !important;
   --text-color: #ffffff !important;
   --text-color-dark: #ffffff !important;
   background-color: var(--background-color) !important;
