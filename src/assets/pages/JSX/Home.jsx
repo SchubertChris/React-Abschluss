@@ -70,54 +70,78 @@ const Home = () => {
           </button>
         </div>
         <div className="text1">
-          <h2>Über uns</h2>
+          <h2>Über mich</h2>
           <p>
-            Wir sind ein kreatives Team, das sich auf die Erstellung von
-            beeindruckenden Bildern spezialisiert hat.
+            Willkommen! Schön, dass du hier bist. Ich bin [Dein Name], ein
+            kreativer Kopf mit einer Leidenschaft für Design, Ästhetik und
+            Innovation. Mein Ziel ist es, einzigartige Erlebnisse zu schaffen –
+            sei es durch visuelle Kunst, digitale Medien oder stilvolle
+            Konzepte, die inspirieren und begeistern.
           </p>
           <p>
-            Unsere Mission ist es, die Schönheit der Welt durch unsere Linse
-            einzufangen.
+            Seit vielen Jahren beschäftige ich mich intensiv mit den neuesten
+            Trends in den Bereichen Mode, Design und Technologie. Ich liebe es,
+            bestehende Konzepte weiterzuentwickeln und neue, frische Ideen
+            umzusetzen, die sowohl funktional als auch stilvoll sind. Meine
+            Arbeit ist geprägt von Präzision, Detailverliebtheit und einem
+            Gespür für das Besondere.
           </p>
-          <p>Jedes Bild erzählt eine einzigartige Geschichte.</p>
           <hr />
         </div>
+
         <div className="text2">
-          <h2>Unsere Vision</h2>
+          <h2>Mein Ansatz</h2>
           <p>
-            Wir streben danach, die Kunst der Fotografie auf die nächste Stufe
-            zu heben.
+            Ich glaube fest daran, dass Stil nicht nur eine äußere Erscheinung
+            ist – er ist eine Form des Ausdrucks, eine Sprache, die ohne Worte
+            spricht. Jeder Mensch hat eine einzigartige Identität, die sich
+            durch Mode, Kunst und Kreativität widerspiegeln kann. Deshalb lege
+            ich großen Wert darauf, individuelle Konzepte zu entwickeln, die
+            perfekt zu den Wünschen und Bedürfnissen meiner Kunden oder meiner
+            Community passen.
           </p>
           <p>
-            Unsere Vision ist es, durch unsere Arbeit Emotionen zu wecken und
-            Menschen zu inspirieren.
+            Egal, ob es um Styling, Performance oder innovative Designlösungen
+            geht – ich bin immer auf der Suche nach neuen Wegen, um Dinge auf
+            das nächste Level zu bringen. Dabei kombiniere ich moderne
+            Technologie mit kreativer Freiheit und schaffe so unverwechselbare
+            Looks und Erlebnisse.
           </p>
-          <p>Wir glauben an die Kraft der Bilder, die Welt zu verändern.</p>
           <hr />
         </div>
+
         <div className="text3">
-          <h2>Unsere Werte</h2>
+          <h2>Meine Vision</h2>
           <p>
-            Kreativität, Innovation und Leidenschaft sind die Kernwerte, die uns
-            antreiben.
+            Meine Vision ist es, Menschen mit meiner Arbeit zu inspirieren, ihre
+            eigene Kreativität zu entfalten und ihren individuellen Stil
+            selbstbewusst zu leben. Ich bin davon überzeugt, dass Ästhetik und
+            Design nicht nur schön aussehen, sondern Emotionen wecken,
+            Erinnerungen schaffen und sogar den Alltag verändern können.
           </p>
           <p>
-            Wir legen großen Wert auf Qualität und Detailgenauigkeit in jedem
-            unserer Projekte.
-          </p>
-          <p>
-            Unser Ziel ist es, stets die Erwartungen unserer Kunden zu
-            übertreffen.
+            Ich strebe danach, Trends nicht nur zu folgen, sondern sie
+            mitzugestalten und neue Standards zu setzen. Mein Ziel ist es, eine
+            Community von Gleichgesinnten aufzubauen, die sich für Innovation,
+            Design und das gewisse Etwas begeistern.
           </p>
           <hr />
         </div>
+
         <div className="text4">
-          <h2>Kontakt</h2>
-          <p>Haben Sie Fragen oder möchten Sie mit uns zusammenarbeiten?</p>
+          <h2>Warum du hier genau richtig bist</h2>
           <p>
-            Kontaktieren Sie uns unter info@unserefirma.com oder 123-456-7890.
+            Wenn du Lust auf etwas Besonderes hast – sei es in Sachen Mode,
+            Design oder einfach ein frischer Blick auf kreative Prozesse – dann
+            bist du hier genau richtig! Ich möchte mein Wissen, meine
+            Erfahrungen und meine Leidenschaft mit dir teilen, damit du das
+            Beste aus deinem Stil und deiner Kreativität herausholen kannst.
           </p>
-          <p>Wir freuen uns darauf, von Ihnen zu hören!</p>
+          <p>
+            Lass uns gemeinsam neue Wege gehen, Inspiration finden und eine Welt
+            voller Stil und Ästhetik entdecken. Ich freue mich darauf, dich auf
+            dieser Reise zu begleiten!
+          </p>
           <hr />
         </div>
       </div>
