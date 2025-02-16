@@ -7,9 +7,20 @@ const WEATHER_API_KEY = "08348b60c39f4fe7a593f787efa8f843";
 const NEWS_API_KEY = "UMSE3crsBtDGk45XaX8FRetRM6zmkbNsSUOao332";
 
 export const AppProvider = ({ children }) => {
+  /* LocalStorage */
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    localStorage.getItem("isAuthenticated") === "true"
+  );
+
+  useEffect(() => {
+    localStorage.setItem("isAuthenticated", isAuthenticated);
+  }, [isAuthenticated]);
+
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("theme") === "dark"
   );
+
+  /* UseStates */
   const [weather, setWeather] = useState(null);
   const [city, setCity] = useState("Berlin");
   const [news, setNews] = useState([]);
@@ -17,7 +28,6 @@ export const AppProvider = ({ children }) => {
   const [savedNotes, setSavedNotes] = useState([]);
   const [importantDates, setImportantDates] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null); // Benutzerzustand hinzufügen
   const navigate = useNavigate();
 
@@ -91,6 +101,8 @@ export const AppProvider = ({ children }) => {
       localStorage.setItem("theme", "light");
     }
   }, [darkMode]);
+
+  
 
   return (
     <AppContext.Provider

@@ -12,71 +12,96 @@ import {
 } from "react-icons/fa";
 import "react-calendar/dist/Calendar.css";
 import "../styles/Dashboard.scss";
+import { useNavigate } from "react-router-dom";
 
 const WEATHER_API_KEY = "08348b60c39f4fe7a593f787efa8f843";
 const NEWS_API_KEY = "UMSE3crsBtDGk45XaX8FRetRM6zmkbNsSUOao332";
 
 const Dashboard = () => {
+
+  const navigate = useNavigate();
   const [date, setDate] = useState(new Date());
-  const [weather, setWeather] = useState(null);
   const [news, setNews] = useState([]);
   const [loadingNews, setLoadingNews] = useState(true);
-  const [activeMenuItem, setActiveMenuItem] = useState("Übersicht");
   const [city, setCity] = useState("Berlin");
   const [inputCity, setInputCity] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editingId, setEditingId] = useState(null);
-
+  const [activeMenuItem, setActiveMenuItem] = useState("Übersicht");
+  const [weather, setWeather] = useState({
+    Dubai: null,
+    Havana: null,
+    Berlin: null,
+  });
+  
+  const [cityInputs, setCityInputs] = useState({
+    Dubai: "Dubai",
+    Havana: "Havana",
+    Berlin: "Berlin",
+  });
+  
   const [noteInput, setNoteInput] = useState({
     name: "",
-    date: "",
-    time: "",
+    date: new Date().toISOString().split("T")[0], // Setzt das aktuelle Datum als Default
+    time: "00:00",
     content: "",
     id: null,
     isImportant: false,
   });
-
+  
+  
   const [savedNotes, setSavedNotes] = useState(() => {
     const saved = localStorage.getItem("savedNotes");
     return saved ? JSON.parse(saved) : [];
   });
-
+  
   const [importantDates, setImportantDates] = useState(() => {
     const saved = localStorage.getItem("importantDates");
     return saved ? JSON.parse(saved) : [];
   });
-
+  
   useEffect(() => {
     localStorage.setItem("savedNotes", JSON.stringify(savedNotes));
     localStorage.setItem("importantDates", JSON.stringify(importantDates));
   }, [savedNotes, importantDates]);
-
-  const fetchWeather = async (city) => {
+  
+  const fetchWeatherForCity = async (cityKey) => {
+    const API_KEY = "08348b60c39f4fe7a593f787efa8f843";
+    const cityName = cityInputs[cityKey]; // Holt den aktuellen Stadt-Namen aus dem Input
+  
     try {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${WEATHER_API_KEY}`
+        `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${API_KEY}`
       );
       const data = await response.json();
-      setWeather(data);
+  
+      if (data.cod === 200) {
+        setWeather((prev) => ({ ...prev, [cityKey]: data }));
+      } else {
+        alert("Stadt nicht gefunden!");
+      }
     } catch (error) {
       console.error("Fehler beim Laden der Wetterdaten:", error);
     }
   };
-
+  
+  
+  
+  
   const fetchNews = async () => {
     setLoadingNews(true);
     try {
       const response = await fetch(
         `https://api.thenewsapi.com/v1/news/top?api_token=${NEWS_API_KEY}&locale=de&limit=10`
       );
-
+      
       if (!response.ok) {
         throw new Error(`HTTP-Fehler! Status: ${response.status}`);
       }
-
+      
       const data = await response.json();
-
+      
       if (data.data && Array.isArray(data.data)) {
         setNews(data.data);
       } else {
@@ -89,17 +114,17 @@ const Dashboard = () => {
       setLoadingNews(false);
     }
   };
-
+  
   useEffect(() => {
-    fetchWeather(city);
+    Object.keys(weather).forEach((cityKey) => fetchWeatherForCity(cityKey));
     fetchNews();
-  }, [city]);
-
+  }, []);  
+  
   const resetForm = () => {
     setNoteInput({
       name: "",
-      date: "",
-      time: "",
+      date: new Date().toISOString().split("T")[0], // Wieder aktuelles Datum setzen
+      time: "00:00",
       content: "",
       id: null,
       isImportant: false,
@@ -107,7 +132,8 @@ const Dashboard = () => {
     setIsEditing(false);
     setEditingId(null);
   };
-
+  
+  
   const handleEditNote = (note) => {
     setNoteInput({
       ...note,
@@ -117,11 +143,11 @@ const Dashboard = () => {
     setIsEditing(true);
     setEditingId(note.id);
   };
-
+  
   const handleCancelEdit = () => {
     resetForm();
   };
-
+  
   const handleSaveNote = () => {
     if (
       noteInput.name &&
@@ -134,70 +160,70 @@ const Dashboard = () => {
         timestamp: new Date(),
         id: noteInput.id || Date.now(),
       };
-
+      
       if (isEditing) {
         setSavedNotes((prev) =>
           prev.map((note) => (note.id === editingId ? newNote : note))
-        );
-
-        if (newNote.isImportant) {
-          setImportantDates((prev) => {
-            const filtered = prev.filter((note) => note.id !== editingId);
-            return [...filtered, newNote];
-          });
-        } else {
-          setImportantDates((prev) =>
-            prev.filter((note) => note.id !== editingId)
-          );
-        }
-      } else {
-        setSavedNotes((prev) => [...prev, newNote]);
-        if (newNote.isImportant) {
-          setImportantDates((prev) => [...prev, newNote]);
-        }
-      }
-
-      setSuccessMessage(
-        isEditing ? "Termin aktualisiert!" : "Termin gespeichert!"
       );
+      
+      if (newNote.isImportant) {
+        setImportantDates((prev) => {
+          const filtered = prev.filter((note) => note.id !== editingId);
+          return [...filtered, newNote];
+        });
+      } else {
+        setImportantDates((prev) =>
+          prev.filter((note) => note.id !== editingId)
+      );
+    }
+  } else {
+    setSavedNotes((prev) => [...prev, newNote]);
+    if (newNote.isImportant) {
+      setImportantDates((prev) => [...prev, newNote]);
+    }
+  }
+  
+  setSuccessMessage(
+    isEditing ? "Termin aktualisiert!" : "Termin gespeichert!"
+  );
       resetForm();
-
+      
       setTimeout(() => {
         setSuccessMessage("");
       }, 3000);
     }
   };
-
+  
   const handleDeleteNote = (id) => {
     if (window.confirm("Möchten Sie diesen Termin wirklich löschen?")) {
       setSavedNotes((prev) => prev.filter((note) => note.id !== id));
       setImportantDates((prev) => prev.filter((note) => note.id !== id));
-
+      
       if (editingId === id) {
         resetForm();
       }
-
+      
       setSuccessMessage("Termin erfolgreich gelöscht!");
       setTimeout(() => {
         setSuccessMessage("");
       }, 3000);
     }
   };
-
+  
   const handleCityChange = () => {
     if (inputCity.trim()) {
       setCity(inputCity);
       setInputCity("");
     }
   };
-
+  
   const menuItems = [
     { icon: <FaChartBar />, label: "Übersicht" },
     { icon: <FaTasks />, label: "Termine" },
-    { icon: <FaShoppingCart />, label: "Warenkorb" },
+    { icon: <FaShoppingCart />, label: "Shop" },
     { icon: <FaNewspaper />, label: "Nachrichten" },
   ];
-
+  
   const selectedDateNotes = savedNotes.filter((note) => {
     const noteDate = new Date(note.date);
     return (
@@ -206,7 +232,7 @@ const Dashboard = () => {
       noteDate.getFullYear() === date.getFullYear()
     );
   });
-
+  
   const todayImportantDates = importantDates.filter((note) => {
     const noteDate = new Date(note.date);
     const today = new Date();
@@ -216,7 +242,13 @@ const Dashboard = () => {
       noteDate.getFullYear() === today.getFullYear()
     );
   });
-
+  
+  useEffect(() => {
+    if (activeMenuItem === "Shop") {
+      navigate("/shop");
+    }
+  }, [activeMenuItem, navigate]);
+  
   return (
     <div className="dashboard-container">
       <aside className="sidebar">
@@ -241,7 +273,7 @@ const Dashboard = () => {
             <Calendar onChange={setDate} value={date} />
           </div>
           <div className="Wichtige">
-            <h3>Heutige Termine ⭐</h3>
+            <h3>Wichtigen  Termine ⭐</h3>
             <table className="important-dates-table">
               <thead>
                 <tr>
@@ -286,55 +318,62 @@ const Dashboard = () => {
 
       <main className="main-content">
         <div className="content-grid">
-          <div className="card weather-card">
-            <h3>
-              <FaCloudSun className="card-icon" /> Wetter in {city}
-            </h3>
-            <div className="card-content">
-              {weather ? (
-                <div className="weather-info">
-                  <div className="weather-main">
-                    <div className="temperature">
-                      {Math.round(weather.main.temp)}°C
-                    </div>
-                    <img
-                      src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-                      alt={weather.weather[0].description}
-                      className="weather-icon"
-                    />
-                  </div>
-                  <div className="description">
-                    {weather.weather[0].description}
-                  </div>
-                  <div className="weather-details">
-                    <div className="detail-item">
-                      <span>Luftfeuchtigkeit</span>
-                      <span>{weather.main.humidity}%</span>
-                    </div>
-                    <div className="detail-item">
-                      <span>Wind</span>
-                      <span>{Math.round(weather.wind.speed)} m/s</span>
-                    </div>
-                    <div className="city-input">
-                      <input
-                        type="text"
-                        placeholder="Stadt eingeben"
-                        value={inputCity}
-                        onChange={(e) => setInputCity(e.target.value)}
-                      />
-                    </div>
-                    <button className="submit-city" onClick={handleCityChange}>
-                      Aktualisieren
-                    </button>
-                  </div>
+        <div className={`card weather-card ${activeMenuItem === "Termine" || activeMenuItem === "Nachrichten" ? "hidden" : ""}`}>
+  <h3><FaCloudSun className="card-icon" /> Wetter Übersicht</h3>
+  <div className="card-content">
+    <div className="weather-multi">
+      {Object.keys(weather).map((cityKey) => (
+        <div key={cityKey} className="weather-info">
+          {weather[cityKey] ? (
+            <>
+              <h4>{weather[cityKey].name}</h4>
+              <div className="weather-main">
+                <div className="temperature">{Math.round(weather[cityKey].main.temp)}°C</div>
+                <img
+                  src={`https://openweathermap.org/img/wn/${weather[cityKey].weather[0].icon}@2x.png`}
+                  alt={weather[cityKey].weather[0].description}
+                  className="weather-icon"
+                />
+              </div>
+              <div className="description">{weather[cityKey].weather[0].description}</div>
+              <div className="weather-details">
+                <div className="detail-item">
+                  <span>Luftfeuchtigkeit</span>
+                  <span>{weather[cityKey].main.humidity}%</span>
                 </div>
-              ) : (
-                <div className="loading">Lade Wetterdaten...</div>
-              )}
-            </div>
-          </div>
+                <div className="detail-item">
+                  <span>Wind</span>
+                  <span>{Math.round(weather[cityKey].wind.speed)} m/s</span>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="loading">Lade Wetterdaten...</div>
+          )}
 
-          <div className="card notes-card">
+          {/* Stadt ändern */}
+          <div className="city-input">
+            <input
+              type="text"
+              placeholder="Stadt eingeben"
+              value={cityInputs[cityKey]}
+              onChange={(e) =>
+                setCityInputs((prev) => ({ ...prev, [cityKey]: e.target.value }))
+              }
+            />
+          </div>
+          <button className="submit-city" onClick={() => fetchWeatherForCity(cityKey)}>
+            Aktualisieren
+          </button>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+
+
+          <div className={`card notes-card ${activeMenuItem === "Termine" ? "notes-expanded" : ""} ${activeMenuItem === "Nachrichten" ? "hidden" : ""}`}>
             <h3>Termine für {date.toLocaleDateString("de-DE")}</h3>
             <div className="card-content">
               <div className="notes-form">
@@ -395,6 +434,7 @@ const Dashboard = () => {
                 <button onClick={handleSaveNote} className="save-button">
                   {isEditing ? "Aktualisieren" : "Speichern"}
                 </button>
+                <h3>Alle Termine</h3>
                 {isEditing && (
                   <button onClick={handleCancelEdit} className="cancel-button">
                     Abbrechen
@@ -410,8 +450,8 @@ const Dashboard = () => {
             )}
 
             <div className="saved-notes">
-              {selectedDateNotes.length > 0 ? (
-                selectedDateNotes.map((note) => (
+              {savedNotes.length > 0 ? (
+                savedNotes.map((note) => (
                   <div
                     key={note.id}
                     className={`note-item ${
@@ -422,6 +462,7 @@ const Dashboard = () => {
                     <h5>
                       {note.name} {note.isImportant && "⭐"}
                     </h5>
+                    <p>{date.toLocaleDateString("de-DE")}</p>
                     <p>{note.time} </p>
                     <p>{note.content}</p>
                     <div className="note-actions">
@@ -448,7 +489,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="card news-card">
+          <div className={`card news-card ${activeMenuItem === "Nachrichten" ? "news-expanded" : ""}`}>
             <h3>
               <FaNewspaper className="card-icon" /> Aktuelle News
             </h3>

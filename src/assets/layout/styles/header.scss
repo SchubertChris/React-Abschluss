@@ -58,11 +58,11 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
       .icon-button {
         position: relative;
         background: $gradient;
-        border: 1px solid $primary-color;
         border-radius: 25px 15px 0 25px;
         width: 40px;
         height: 40px;
         display: flex;
+        border: none;
         align-items: center;
         justify-content: center;
         font-size: 1.2rem;
@@ -84,12 +84,12 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
 
   .User-Icon {
     position: relative;
-    border: 1px solid $primary-color;
     background: $gradient;
     border-radius: 25px 15px 0 25px;
     width: 40px;
     height: 40px;
     display: flex;
+    border: none;
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
@@ -99,9 +99,15 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
     font-size: 1rem;
     color: rgb(255, 255, 255) !important;
     transition: all 0.5s;
-    background: linear-gradient(45deg, #29361f, $secondary-color);
+    background: $gradient;
     transition: all 0.3s ease;
     transition: all 0.5s;
+    &:hover,
+    &:active {
+      background: linear-gradient(45deg, #29361f, $secondary-color);
+      transition: all 0.3s ease;
+      transition: all 0.5s;
+    }
   }
 
   .User-Status-Profil.visible {
@@ -109,24 +115,16 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
   }
 
   .User-Status-Profil {
-    font-weight: bold;
-    width: 170px;
-    height: 125px;
-    background: rgba(0, 0, 0, 0.66);
-    border-radius: 10px;
-    padding: 1rem;
-    position: absolute;
-    top: 100px;
-    right: 6vw;
-    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
-    border: 1px solid $primary-color;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: white;
-    justify-content: space-between;
+    position: relative;
+    top: 55px;
+    right: -500px;
     display: none;
     z-index: 3000;
+    p {
+      position: relative;
+      top: 20px;
+      left: -150px;
+    }
 
     .User {
       display: flex;
@@ -149,7 +147,6 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
     }
 
     .Logout {
-      margin: 5px 5px;
       background: transparent;
       border: 1px solid $primary-color;
       border-radius: 5px 15px 0 25px;
@@ -163,6 +160,9 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
       transition: all 0.3s ease;
       color: white;
       font-size: 1rem !important;
+      position: relative;
+      top: -25px;
+      left: 20px;
 
       &:hover,
       :active {
@@ -397,8 +397,9 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
 
       &:hover,
       &:active {
-        background: linear-gradient(45deg, #b8e994, $secondary-color);
-        transition: all 1s;
+        background: linear-gradient(45deg, #29361f, $secondary-color);
+        transition: all 0.3s ease;
+        transition: all 0.5s;
       }
     }
   }
@@ -428,26 +429,24 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
       text-align: center;
       line-height: 45px;
       transition: all 0.3s;
-      border: 1px solid $primary-color;
       opacity: 0;
     }
 
     span:nth-child(1) {
-      background: $gradient;
       transform: rotateX(90deg);
       transform-origin: 50% 50% -20px;
       box-shadow: inset 2px 2px 5px rgba(255, 255, 255, 0.5);
     }
 
     span:nth-child(2) {
-      background: linear-gradient(45deg, #b8e994, $secondary-color);
+      background: linear-gradient(45deg, #29361f, $secondary-color);
       transform: rotateX(0deg);
       transform-origin: 50% 50% -20px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: inset 2px 2px 5px rgba(255, 255, 255, 0.5);
       opacity: 1;
     }
 
@@ -482,22 +481,6 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2),
   perspective: 1000px;
   margin: 125px auto;
   animation: OpacityHero 1.2s ease;
-
-  .description {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #fff;
-
-    h2 {
-      font-size: 26px;
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 18px;
-      line-height: 1.5;
-    }
-  }
 
   .images-carousel {
     display: flex;
@@ -702,12 +685,11 @@ hr {
 }
 
 .WerbeBanner {
-  margin-top: 3rem;
   position: relative;
   text-align: center;
   color: white;
   padding: 20px;
-  width: 100%;
+  width: 80vw;
 
   h1 {
     font-size: 2.5rem;

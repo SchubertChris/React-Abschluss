@@ -32,14 +32,15 @@ const Header = () => {
   const [cartVisible, setCartVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [UserSee, setUserSee] = useState(false);
   const navigate = useNavigate();
 
   const menuRef = useRef(null);
-  const menuButtonRef = useRef(null);
   const cartRef = useRef(null);
+  const menuButtonRef = useRef(null);
   const cartButtonRef = useRef(null);
 
-  // Load cart items from localStorage on mount
+  // Laden von cartItems aus localStorage 
   useEffect(() => {
     const savedCartItems = localStorage.getItem("cartItems");
     if (savedCartItems) {
@@ -51,22 +52,22 @@ const Header = () => {
     }
   }, []);
 
-  // Save cart items to localStorage when they change
+  // Speichern von cartItems in localStorage, wenn sie sich ändern
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  // Close cart if empty
+  // Schließen des Warenkorbs, wenn er leer ist
   useEffect(() => {
     if (cartItems.length === 0) {
       setCartVisible(false);
     }
   }, [cartItems]);
 
-  // Handle outside clicks
+  // Behandlung von Klicks außerhalb des Menüs oder Warenkorbs
   useEffect(() => {
     const handleClickOutside = (event) => {
-      // For navigation menu
+      // Für Navigationsmenü
       if (
         menuRef.current &&
         !menuRef.current.contains(event.target) &&
@@ -76,7 +77,7 @@ const Header = () => {
         document.querySelector(".nav-menu").classList.remove("open");
       }
 
-      // For cart
+      // Für Warenkorb
       if (
         cartRef.current &&
         !cartRef.current.contains(event.target) &&
@@ -90,6 +91,7 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Umschalten des Dark Modes
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark-mode");
@@ -117,8 +119,6 @@ const Header = () => {
     if (!searchTerm.trim()) return;
     navigate(`/shop?search=${searchTerm}`);
   };
-
-  const [UserSee, setUserSee] = useState(false);
 
   /*  ------------------------------------------------------*/
   return (

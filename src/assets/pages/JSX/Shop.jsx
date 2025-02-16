@@ -9,11 +9,12 @@ export default function Shop() {
   const searchTerm = searchParams.get("search") || "";
   const productListRef = useRef(null);
 
+
   useEffect(() => {
     if (productListRef.current) {
       productListRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, []);
+  }, []); // In die mitte der Seite Scrollen
 
   return (
     <>
