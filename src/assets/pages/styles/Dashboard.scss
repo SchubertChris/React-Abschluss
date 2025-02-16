@@ -11,7 +11,16 @@
   border-radius: 0px;
   z-index: 500;
   body.dark-mode & {
-    background: linear-gradient(90deg, #141e3a, #0f1118, #111319, #101219, #0a1534, #061134, #1b284b);
+    background: linear-gradient(
+      90deg,
+      #141e3a,
+      #0f1118,
+      #111319,
+      #101219,
+      #0a1534,
+      #061134,
+      #1b284b
+    );
   }
 }
 
@@ -207,6 +216,7 @@
   animation: PlopinFFromMiddle 0.7s ease 0.5s forwards;
   transition: box-shadow 0.2s;
   opacity: 0;
+  overflow-y: auto;
 
   &:hover {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -235,7 +245,7 @@
 .weather-card {
   display: flex;
   flex-direction: column;
-  width: 100%; // Make the weather card take full width
+  width: 100%;
   max-width: 600px;
   background-color: var(--background-color);
   border-radius: 1rem;
@@ -269,14 +279,14 @@
     .weather-multi {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
+      gap: 3rem;
       margin-bottom: 1rem;
 
       .weather-info {
         display: flex;
         flex-direction: column;
         text-align: center;
-        width: 100%; // Allow the weather info to take full width
+        width: 100%;
 
         h4 {
           font-size: 1.125rem;
@@ -316,7 +326,7 @@
           display: grid;
           gap: 1rem;
           width: 100%;
-
+          margin-bottom: 1rem;
           .detail-item {
             background-color: #f9fafb;
             padding: 1rem;
@@ -481,9 +491,18 @@
     justify-content: flex-end;
     align-items: center;
     margin-bottom: 1rem;
+    h3{
+      border-top: 1px solid rgb(0, 238, 255);
+    }
+
+    hr {
+      border: .1px solid rgb(255, 255, 255)  !important;
+      box-shadow: 0 0 20px 2px rgb(0, 238, 255);
+    }
 
     button {
       margin: 0.5rem;
+      margin-bottom: 2rem;
       width: 130px;
       padding: 10px 20px;
       font-size: 0.9rem;
@@ -912,9 +931,7 @@
     }
   }
 }
-
 /* Asside Zustände bei Acitv Menu */
-
 
 .notes-card {
   transition: all 0.3s ease-in-out;
@@ -949,7 +966,6 @@
     transform: translateY(0);
     opacity: 1;
   }
-  
 }
 
 .news-card {

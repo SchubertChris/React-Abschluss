@@ -23,7 +23,6 @@ const Dashboard = () => {
   const [date, setDate] = useState(new Date());
   const [news, setNews] = useState([]);
   const [loadingNews, setLoadingNews] = useState(true);
-  const [city, setCity] = useState("Berlin");
   const [inputCity, setInputCity] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [isEditing, setIsEditing] = useState(false);
@@ -253,6 +252,7 @@ const Dashboard = () => {
     <div className="dashboard-container">
       <aside className="sidebar">
         <div className="sidebar-content">
+            <hr />
           <h2>Dashboard</h2>
           <nav className="sidebar-nav">
             {menuItems.map((item, index) => (
@@ -268,12 +268,13 @@ const Dashboard = () => {
               </button>
             ))}
           </nav>
-
           <div className="sidebar-calendar">
             <Calendar onChange={setDate} value={date} />
           </div>
           <div className="Wichtige">
-            <h3>Wichtigen  Termine ⭐</h3>
+            <h3>Termine Heute </h3>
+            <p>Wichtige Termine sind mit ⭐ markiert</p>
+            <br />
             <table className="important-dates-table">
               <thead>
                 <tr>

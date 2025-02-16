@@ -689,6 +689,8 @@ hr {
   color: white;
   padding: 20px;
   width: 80vw;
+  border-radius: 20px;
+  border-bottom: 1px solid rgb(0, 247, 255);
 
   h1 {
     font-size: 2.5rem;
@@ -729,7 +731,6 @@ hr {
     text-decoration: none;
     color: #fff;
     opacity: 0.7;
-    transform: scale(1.1);
     transition: all 0.3s;
   }
 
@@ -878,7 +879,7 @@ hr {
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
   z-index: 2000;
-  font-size: .5rem;
+  font-size: 0.5rem;
 
   &:hover,
   :active {

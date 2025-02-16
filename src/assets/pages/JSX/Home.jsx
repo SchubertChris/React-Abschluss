@@ -2,11 +2,11 @@ import React, { use, useEffect, useState } from "react";
 import "../styles/Home.scss";
 
 const images = [
-  "https://cdn.pixabay.com/photo/2023/01/04/19/40/grass-7697505_960_720.jpg",
-  "https://cdn.pixabay.com/photo/2018/05/30/00/24/thunderstorm-3440450_960_720.jpg",
+  "https://cdn.pixabay.com/photo/2022/08/27/08/04/magma-7413903_960_720.jpg",
+  "https://cdn.pixabay.com/photo/2020/01/12/08/12/keyboard-4759501_960_720.jpg",
   "https://cdn.pixabay.com/photo/2024/01/03/18/02/tree-8485930_960_720.jpg",
   "https://cdn.pixabay.com/photo/2023/03/20/20/35/sunset-7865844_960_720.jpg",
-  "https://cdn.pixabay.com/photo/2023/01/08/05/52/sunset-7704594_960_720.jpg",
+  "https://cdn.pixabay.com/photo/2018/06/21/20/23/lightbulb-3489395_960_720.jpg",
 ];
 
 const Home = () => {
