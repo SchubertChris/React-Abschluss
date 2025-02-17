@@ -145,8 +145,8 @@
 
 .btn-toTop {
   position: absolute;
-  bottom: 100px;
-  right: 100px;
+  bottom: 50px;
+  right: 50px;
   background: linear-gradient(45deg, #0fc1f2, #e84ee3, #9dff00);
   color: white;
   border: none;
@@ -159,7 +159,7 @@
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
-  padding: 5rem;
+  padding: 3rem;
   outline: 1px solid wheat;
   transition: all 1s;
   border: 1px solid rgb(0, 0, 0);

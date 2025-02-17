@@ -20,8 +20,8 @@ const NEWS_API_KEY = "UMSE3crsBtDGk45XaX8FRetRM6zmkbNsSUOao332";
 const Dashboard = () => {
   const navigate = useNavigate();
   const [date, setDate] = useState(new Date());
-  const [news, setNews] = useState([]);
-  const [loadingNews, setLoadingNews] = useState(true);
+  const [news, setNews] = useState([]); // News-Array
+  const [loadingNews, setLoadingNews] = useState(true); // Lade-Status
   const [inputCity, setInputCity] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [isEditing, setIsEditing] = useState(false);
@@ -29,50 +29,49 @@ const Dashboard = () => {
   const [activeMenuItem, setActiveMenuItem] = useState("Übersicht");
   const [weather, setWeather] = useState({
     Dubai: null,
-    Havana: null,
     Berlin: null,
   });
-  
+
   const [cityInputs, setCityInputs] = useState({
     Dubai: "Dubai",
     Havana: "Havana",
     Berlin: "Berlin",
   });
-  
+
   const [noteInput, setNoteInput] = useState({
-    name: "",
+    name: "Neuer Termin",
     date: new Date().toISOString().split("T")[0], // Setzt das aktuelle Datum als Default
     time: "00:00",
     content: "",
     id: null,
     isImportant: false,
   });
-  
+
   const [savedNotes, setSavedNotes] = useState(() => {
     const saved = localStorage.getItem("savedNotes");
     return saved ? JSON.parse(saved) : []; // Wenn Daten vorhanden, dann laden, sonst leeres Array
   });
-  
+
   const [importantDates, setImportantDates] = useState(() => {
     const saved = localStorage.getItem("importantDates"); // Wichtige Termine laden
     return saved ? JSON.parse(saved) : [];
   });
-  
+
   useEffect(() => {
     localStorage.setItem("savedNotes", JSON.stringify(savedNotes));
     localStorage.setItem("importantDates", JSON.stringify(importantDates));
   }, [savedNotes, importantDates]); // Speichert die Termine in den LocalStoraged
-  
+
   const fetchWeatherForCity = async (cityKey) => {
     const API_KEY = "08348b60c39f4fe7a593f787efa8f843";
     const cityName = cityInputs[cityKey]; // Holt den aktuellen Stadt-Namen aus dem Input
-  
+
     try {
       const response = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${API_KEY}`
       );
       const data = await response.json();
-  
+
       if (data.cod === 200) {
         setWeather((prev) => ({ ...prev, [cityKey]: data }));
       } else {
@@ -82,20 +81,20 @@ const Dashboard = () => {
       console.error("Fehler beim Laden der Wetterdaten:", error);
     }
   };
-  
+
   const fetchNews = async () => {
     setLoadingNews(true);
     try {
       const response = await fetch(
         `https://api.thenewsapi.com/v1/news/top?api_token=${NEWS_API_KEY}&locale=de&limit=10`
       );
-      
+
       if (!response.ok) {
         throw new Error(`HTTP-Fehler! Status: ${response.status}`);
       }
-      
+
       const data = await response.json();
-      
+
       if (data.data && Array.isArray(data.data)) {
         setNews(data.data);
       } else {
@@ -108,12 +107,12 @@ const Dashboard = () => {
       setLoadingNews(false);
     }
   };
-  
+
   useEffect(() => {
     Object.keys(weather).forEach((cityKey) => fetchWeatherForCity(cityKey));
     fetchNews();
-  }, []);  
-  
+  }, []);
+
   const resetForm = () => {
     setNoteInput({
       name: "",
@@ -126,8 +125,7 @@ const Dashboard = () => {
     setIsEditing(false);
     setEditingId(null);
   };
-  
-  
+
   const handleEditNote = (note) => {
     setNoteInput({
       ...note,
@@ -137,11 +135,11 @@ const Dashboard = () => {
     setIsEditing(true);
     setEditingId(note.id);
   };
-  
+
   const handleCancelEdit = () => {
     resetForm();
   };
-  
+
   const handleSaveNote = () => {
     if (
       noteInput.name &&
@@ -154,70 +152,70 @@ const Dashboard = () => {
         timestamp: new Date(),
         id: noteInput.id || Date.now(), // Wenn ID vorhanden, dann behalten, sonst aktuelle Zeit
       };
-      
-      if (isEditing) { 
-        setSavedNotes((prev) => 
-          prev.map((note) => (note.id === editingId ? newNote : note))  
-      );
-      
-      if (newNote.isImportant) {
-        setImportantDates((prev) => {
-          const filtered = prev.filter((note) => note.id !== editingId);
-          return [...filtered, newNote];
-        });
+
+      if (isEditing) {
+        setSavedNotes((prev) =>
+          prev.map((note) => (note.id === editingId ? newNote : note))
+        );
+
+        if (newNote.isImportant) {
+          setImportantDates((prev) => {
+            const filtered = prev.filter((note) => note.id !== editingId);
+            return [...filtered, newNote];
+          });
+        } else {
+          setImportantDates((prev) =>
+            prev.filter((note) => note.id !== editingId)
+          );
+        }
       } else {
-        setImportantDates((prev) =>
-          prev.filter((note) => note.id !== editingId)
+        setSavedNotes((prev) => [...prev, newNote]);
+        if (newNote.isImportant) {
+          setImportantDates((prev) => [...prev, newNote]);
+        }
+      }
+
+      setSuccessMessage(
+        isEditing ? "Termin aktualisiert!" : "Termin gespeichert!"
       );
-    }
-  } else {
-    setSavedNotes((prev) => [...prev, newNote]);
-    if (newNote.isImportant) {
-      setImportantDates((prev) => [...prev, newNote]);
-    }
-  }
-  
-  setSuccessMessage(
-    isEditing ? "Termin aktualisiert!" : "Termin gespeichert!"
-  );
       resetForm();
-      
+
       setTimeout(() => {
         setSuccessMessage("");
       }, 3000);
     }
   };
-  
+
   const handleDeleteNote = (id) => {
     if (window.confirm("Möchten Sie diesen Termin wirklich löschen?")) {
       setSavedNotes((prev) => prev.filter((note) => note.id !== id));
       setImportantDates((prev) => prev.filter((note) => note.id !== id));
-      
+
       if (editingId === id) {
         resetForm();
       }
-      
+
       setSuccessMessage("Termin erfolgreich gelöscht!");
       setTimeout(() => {
         setSuccessMessage("");
       }, 3000);
     }
   };
-  
+
   const handleCityChange = () => {
     if (inputCity.trim()) {
       setCity(inputCity);
       setInputCity("");
     }
   };
-  
+
   const menuItems = [
     { icon: <FaChartBar />, label: "Übersicht" },
     { icon: <FaTasks />, label: "Termine" },
     { icon: <FaShoppingCart />, label: "Shop" },
     { icon: <FaNewspaper />, label: "Nachrichten" },
   ];
-  
+
   const selectedDateNotes = savedNotes.filter((note) => {
     const noteDate = new Date(note.date);
     return (
@@ -226,28 +224,18 @@ const Dashboard = () => {
       noteDate.getFullYear() === date.getFullYear()
     );
   });
-  
-  const todayImportantDates = importantDates.filter((note) => {
-    const noteDate = new Date(note.date);
-    const today = new Date();
-    return (
-      noteDate.getDate() === today.getDate() &&
-      noteDate.getMonth() === today.getMonth() &&
-      noteDate.getFullYear() === today.getFullYear()
-    );
-  });
-  
+
   useEffect(() => {
     if (activeMenuItem === "Shop") {
       navigate("/shop");
     }
   }, [activeMenuItem, navigate]);
-  
+
   return (
     <div className="dashboard-container">
       <aside className="sidebar">
         <div className="sidebar-content">
-            <hr />
+          <hr />
           <h2>Dashboard</h2>
           <nav className="sidebar-nav">
             {menuItems.map((item, index) => (
@@ -280,30 +268,30 @@ const Dashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {todayImportantDates.map((note) => (
-                  <tr key={note.id}>
-                    <td>{note.name}</td>
+                {selectedDateNotes.map((note) => (
+                  <tr
+                    key={note.id}
+                    className={note.isImportant ? "important-note" : ""}
+                  >
+                    <td>
+                      {note.name} {note.isImportant && "⭐"}
+                    </td>
                     <td>{note.time}</td>
                     <td>{note.content}</td>
                     <td>
-                      <button
-                        onClick={() => handleEditNote(note)}
-                        disabled={isEditing && editingId !== note.id}
-                      >
+                      <button onClick={() => handleEditNote(note)}>
                         Bearbeiten
                       </button>
-                      <button
-                        onClick={() => handleDeleteNote(note.id)}
-                        disabled={isEditing && editingId !== note.id}
-                      >
+                      <button onClick={() => handleDeleteNote(note.id)}>
                         Löschen
                       </button>
                     </td>
                   </tr>
                 ))}
-                {todayImportantDates.length === 0 && (
+
+                {selectedDateNotes.length === 0 && (
                   <tr>
-                    <td colSpan="4">Keine wichtigen Termine heute</td>
+                    <td colSpan="4">Keine Termine für diesen Tag</td>
                   </tr>
                 )}
               </tbody>
@@ -314,62 +302,84 @@ const Dashboard = () => {
 
       <main className="main-content">
         <div className="content-grid">
-        <div className={`card weather-card ${activeMenuItem === "Termine" || activeMenuItem === "Nachrichten" ? "hidden" : ""}`}>
-  <h3><FaCloudSun className="card-icon" /> Wetter Übersicht</h3>
-  <div className="card-content">
-    <div className="weather-multi">
-      {Object.keys(weather).map((cityKey) => (
-        <div key={cityKey} className="weather-info">
-          {weather[cityKey] ? (
-            <>
-              <h4>{weather[cityKey].name}</h4>
-              <div className="weather-main">
-                <div className="temperature">{Math.round(weather[cityKey].main.temp)}°C</div>
-                <img
-                  src={`https://openweathermap.org/img/wn/${weather[cityKey].weather[0].icon}@2x.png`}
-                  alt={weather[cityKey].weather[0].description}
-                  className="weather-icon"
-                />
-              </div>
-              <div className="description">{weather[cityKey].weather[0].description}</div>
-              <div className="weather-details">
-                <div className="detail-item">
-                  <span>Luftfeuchtigkeit</span>
-                  <span>{weather[cityKey].main.humidity}%</span>
-                </div>
-                <div className="detail-item">
-                  <span>Wind</span>
-                  <span>{Math.round(weather[cityKey].wind.speed)} m/s</span>
-                </div>
-              </div>
-            </>
-          ) : (
-            <div className="loading">Lade Wetterdaten...</div>
-          )}
+          <div
+            className={`card weather-card ${
+              activeMenuItem === "Termine" || activeMenuItem === "Nachrichten"
+                ? "hidden"
+                : ""
+            }`}
+          >
+            <h3>
+              <FaCloudSun className="card-icon" /> Wetter Übersicht
+            </h3>
+            <div className="card-content">
+              <div className="weather-multi">
+                {Object.keys(weather).map((cityKey) => (
+                  <div key={cityKey} className="weather-info">
+                    {weather[cityKey] ? (
+                      <>
+                        <h4>{weather[cityKey].name}</h4>
+                        <div className="weather-main">
+                          <div className="temperature">
+                            {Math.round(weather[cityKey].main.temp)}°C
+                          </div>
+                          <img
+                            src={`https://openweathermap.org/img/wn/${weather[cityKey].weather[0].icon}@2x.png`}
+                            alt={weather[cityKey].weather[0].description}
+                            className="weather-icon"
+                          />
+                        </div>
+                        <div className="description">
+                          {weather[cityKey].weather[0].description}
+                        </div>
+                        <div className="weather-details">
+                          <div className="detail-item">
+                            <span>Luftfeuchtigkeit</span>
+                            <span>{weather[cityKey].main.humidity}%</span>
+                          </div>
+                          <div className="detail-item">
+                            <span>Wind</span>
+                            <span>
+                              {Math.round(weather[cityKey].wind.speed)} m/s
+                            </span>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="loading">Lade Wetterdaten...</div>
+                    )}
 
-          {/* Stadt ändern */}
-          <div className="city-input">
-            <input
-              type="text"
-              placeholder="Stadt eingeben"
-              value={cityInputs[cityKey]}
-              onChange={(e) =>
-                setCityInputs((prev) => ({ ...prev, [cityKey]: e.target.value }))
-              }
-            />
+                    {/* Stadt ändern */}
+                    <div className="city-input">
+                      <input
+                        type="text"
+                        placeholder="Stadt eingeben"
+                        value={cityInputs[cityKey]}
+                        onChange={(e) =>
+                          setCityInputs((prev) => ({
+                            ...prev,
+                            [cityKey]: e.target.value,
+                          }))
+                        }
+                      />
+                    </div>
+                    <button
+                      className="submit-city"
+                      onClick={() => fetchWeatherForCity(cityKey)}
+                    >
+                      Aktualisieren
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-          <button className="submit-city" onClick={() => fetchWeatherForCity(cityKey)}>
-            Aktualisieren
-          </button>
-        </div>
-      ))}
-    </div>
-  </div>
-</div>
 
-
-
-          <div className={`card notes-card ${activeMenuItem === "Termine" ? "notes-expanded" : ""} ${activeMenuItem === "Nachrichten" ? "hidden" : ""}`}>
+          <div
+            className={`card notes-card ${
+              activeMenuItem === "Termine" ? "notes-expanded" : ""
+            } ${activeMenuItem === "Nachrichten" ? "hidden" : ""}`}
+          >
             <h3>Termine für {date.toLocaleDateString("de-DE")}</h3>
             <div className="card-content">
               <div className="notes-form">
@@ -399,7 +409,7 @@ const Dashboard = () => {
                   className="notes-input-time"
                 />
                 <textarea
-                  placeholder="Beschreibung..."
+                  placeholder="Notitzen..."
                   value={noteInput.content}
                   onChange={(e) =>
                     setNoteInput((prev) => ({
@@ -447,45 +457,55 @@ const Dashboard = () => {
 
             <div className="saved-notes">
               {savedNotes.length > 0 ? (
-                savedNotes.map((note) => (
-                  <div
-                    key={note.id}
-                    className={`note-item ${
-                      editingId === note.id ? "editing" : ""
-                    }`}
-                  >
-                    <p>Termin kann bearbeitet oder gelöscht werden</p>
-                    <h5>
-                      {note.name} {note.isImportant && "⭐"}
-                    </h5>
-                    <p>{date.toLocaleDateString("de-DE")}</p>
-                    <p>{note.time} </p>
-                    <p>{note.content}</p>
-                    <div className="note-actions">
-                      <button
-                        onClick={() => handleEditNote(note)}
-                        className="edit-button"
-                        disabled={isEditing && editingId !== note.id}
-                      >
-                        Bearbeiten
-                      </button>
-                      <button
-                        onClick={() => handleDeleteNote(note.id)}
-                        className="delete-button"
-                        disabled={isEditing && editingId !== note.id}
-                      >
-                        Löschen
-                      </button>
+                savedNotes
+                  .sort((a, b) => {
+                    const dateA = new Date(`${a.date}T${a.time}`);
+                    const dateB = new Date(`${b.date}T${b.time}`);
+                    return dateA - dateB;
+                  })
+                  .map((note) => (
+                    <div
+                      key={note.id}
+                      className={`note-item ${
+                        editingId === note.id ? "editing" : ""
+                      }`}
+                    >
+                      <p>Termin kann bearbeitet oder gelöscht werden</p>
+                      <h5>
+                        {note.name} {note.isImportant && "⭐"}
+                      </h5>
+                      <p>{new Date(note.date).toLocaleDateString("de-DE")}</p>
+                      <p>{note.time} </p>
+                      <p>{note.content}</p>
+                      <div className="note-actions">
+                        <button
+                          onClick={() => handleEditNote(note)}
+                          className="edit-button"
+                          disabled={isEditing && editingId !== note.id}
+                        >
+                          Bearbeiten
+                        </button>
+                        <button
+                          onClick={() => handleDeleteNote(note.id)}
+                          className="delete-button"
+                          disabled={isEditing && editingId !== note.id}
+                        >
+                          Löschen
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                ))
+                  ))
               ) : (
                 <p>Keine Termine für diesen Tag.</p>
               )}
             </div>
           </div>
 
-          <div className={`card news-card ${activeMenuItem === "Nachrichten" ? "news-expanded" : ""}`}>
+          <div
+            className={`card news-card ${
+              activeMenuItem === "Nachrichten" ? "news-expanded" : ""
+            }`}
+          >
             <h3>
               <FaNewspaper className="card-icon" /> Aktuelle News
             </h3>

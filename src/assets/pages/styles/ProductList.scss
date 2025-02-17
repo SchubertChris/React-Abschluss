@@ -127,11 +127,12 @@
 }
 
 .product-name {
+  text-align: center;
   height: 3rem;
   font-size: 1.5rem;
   margin-bottom: 10px;
-  color: #ffffff;
-  background: linear-gradient(90deg, #e0e0e0, #ffffff, #e0e0e0);
+  color: #c5c5c5;
+  background: linear-gradient(90deg, #cccccc, #ffffff, #e0e0e0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);

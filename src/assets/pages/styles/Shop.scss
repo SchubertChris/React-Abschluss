@@ -1,4 +1,26 @@
 .shop-container {
+  .shop-header {
+    margin-bottom: 1rem;
+    padding: 1rem;
+
+    .shop-title {
+      font-size: 2rem;
+    }
+
+    .shop-sort {
+      display: flex;
+      gap: 0.5rem;
+
+      .sort-label {
+        font-size: 1rem;
+      }
+
+      .sort-select {
+        padding: 0.5rem;
+        font-size: 1rem;
+      }
+    }
+  }
 .product-list {
   display: flex;
   flex-wrap: wrap;

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import ProductList from "./ProductList"; // Produktliste einbinden
+import ProductList from "./ProductList"; 
 import "../styles/Shop.scss";
 
 export default function Shop() {
