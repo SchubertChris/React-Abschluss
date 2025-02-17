@@ -1102,6 +1102,7 @@ hr {
   }
 
   .PayPal svg {
+    cursor: pointer;
     color: #003087; // PayPal blue
     background: linear-gradient(45deg, #003087, #009cde);
     border-radius: 5px;
@@ -1111,6 +1112,7 @@ hr {
   }
 
   .Mastercard svg {
+    cursor: pointer;
     color: #eb001b; // Mastercard red
     background: linear-gradient(45deg, #eb001b, #f79e1b);
     border-radius: 5px;
@@ -1120,6 +1122,7 @@ hr {
   }
 
   .Visa svg {
+    cursor: pointer;
     color: #1a1f71; // Visa blue
     background: linear-gradient(45deg, #1a1f71, #ffffff);
     border-radius: 5px;
@@ -1129,6 +1132,7 @@ hr {
   }
 
   .Rechnung svg {
+    cursor: pointer;
     color: #4d3f08; // Invoice yellow
     background: linear-gradient(45deg, #4d3f08, #ffd700);
     border-radius: 5px;
@@ -1138,6 +1142,7 @@ hr {
   }
 
   .Nachname svg {
+    cursor: pointer;
     color: #28a745; // Nachname green
     background: linear-gradient(45deg, #28a745, #a3e635);
     border-radius: 5px;
@@ -1145,4 +1150,20 @@ hr {
     width: 70px;
     height: 30px;
   }
+}
+
+
+.Total-Price{
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.Total-Prod {
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }

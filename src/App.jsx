@@ -8,7 +8,6 @@ import AboutUs from "./assets/pages/JSX/AboutUs";
 import Blog from "./assets/pages/JSX/Blog";
 import Shop from "./assets/pages/JSX/Shop";
 import Categories from "./assets/pages/JSX/Categories";
-import Cart from "./assets/pages/JSX/Cart";
 import AppProvider from "./assets/layout/ContextAPI";
 import ProtectedRoute from "./assets/layout/ProtectedRoute";
 import NotFound404 from "./assets/pages/JSX/NotFound404";
@@ -26,7 +25,6 @@ function App() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/categories" element={<Categories />} />
-            <Route path="/cart" element={<Cart />} />
             <Route
               path="/account-dashboard"
               element={

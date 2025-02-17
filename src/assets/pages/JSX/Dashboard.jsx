@@ -18,7 +18,6 @@ const WEATHER_API_KEY = "08348b60c39f4fe7a593f787efa8f843";
 const NEWS_API_KEY = "UMSE3crsBtDGk45XaX8FRetRM6zmkbNsSUOao332";
 
 const Dashboard = () => {
-
   const navigate = useNavigate();
   const [date, setDate] = useState(new Date());
   const [news, setNews] = useState([]);
@@ -49,21 +48,20 @@ const Dashboard = () => {
     isImportant: false,
   });
   
-  
   const [savedNotes, setSavedNotes] = useState(() => {
     const saved = localStorage.getItem("savedNotes");
-    return saved ? JSON.parse(saved) : [];
+    return saved ? JSON.parse(saved) : []; // Wenn Daten vorhanden, dann laden, sonst leeres Array
   });
   
   const [importantDates, setImportantDates] = useState(() => {
-    const saved = localStorage.getItem("importantDates");
+    const saved = localStorage.getItem("importantDates"); // Wichtige Termine laden
     return saved ? JSON.parse(saved) : [];
   });
   
   useEffect(() => {
     localStorage.setItem("savedNotes", JSON.stringify(savedNotes));
     localStorage.setItem("importantDates", JSON.stringify(importantDates));
-  }, [savedNotes, importantDates]);
+  }, [savedNotes, importantDates]); // Speichert die Termine in den LocalStoraged
   
   const fetchWeatherForCity = async (cityKey) => {
     const API_KEY = "08348b60c39f4fe7a593f787efa8f843";
@@ -84,9 +82,6 @@ const Dashboard = () => {
       console.error("Fehler beim Laden der Wetterdaten:", error);
     }
   };
-  
-  
-  
   
   const fetchNews = async () => {
     setLoadingNews(true);
@@ -157,12 +152,12 @@ const Dashboard = () => {
       const newNote = {
         ...noteInput,
         timestamp: new Date(),
-        id: noteInput.id || Date.now(),
+        id: noteInput.id || Date.now(), // Wenn ID vorhanden, dann behalten, sonst aktuelle Zeit
       };
       
-      if (isEditing) {
-        setSavedNotes((prev) =>
-          prev.map((note) => (note.id === editingId ? newNote : note))
+      if (isEditing) { 
+        setSavedNotes((prev) => 
+          prev.map((note) => (note.id === editingId ? newNote : note))  
       );
       
       if (newNote.isImportant) {

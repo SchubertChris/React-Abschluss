@@ -121,6 +121,9 @@ const Header = () => {
   };
 
   /*  ------------------------------------------------------*/
+  const totalAmount = cartItems.reduce((total, item) => total + item.price, 0);
+  const totalItems = cartItems.length;
+
   return (
     <header className="header">
       <div className="header-content">
@@ -213,11 +216,6 @@ const Header = () => {
               Kategorien
             </Link>
           </li>
-          <li>
-            <Link to="/cart" onClick={closeMenu}>
-              Warenkorb
-            </Link>
-          </li>
         </ul>
       </nav>
 
@@ -271,15 +269,19 @@ const Header = () => {
               >
                 <FaTrash />
               </button>
+              <hr />
+              <p>Dieses Produkt ist  vom Umtausch ausgeschlossen</p>
             </div>
           ))
         ) : (
           <p>Der Warenkorb ist leer</p>
         )}
+        <hr />
         <h4>Hier geht es zur Kasse </h4>
-        <p>Total: {}</p>
-        <p>Produkte: </p>
+        <p className="Total-Price">Total: €{totalAmount.toFixed(2)}</p>
+        <p className="Total-Prod">Produkte: {totalItems}</p>
         <br />
+        <hr />
         <p>Das sind unsere Zahlungsmöglichkeiten</p>
         <div className="Zahlungsmöglichkeiten">
           <p>
