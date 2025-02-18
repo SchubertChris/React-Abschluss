@@ -10,7 +10,7 @@
   position: relative;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -24,11 +24,11 @@
     position: relative;
     z-index: 2;
   }
-  
+
   .shop-header {
     margin-bottom: 1rem;
-      color: white !important;
-      padding: 1rem;
+    color: white !important;
+    padding: 1rem;
 
     .shop-title {
       font-size: 2rem;
@@ -73,7 +73,8 @@
       &:hover,
       &:active {
         transform: scale(1.1);
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.8);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.8),
+          inset 0 0 20px rgba(255, 255, 255, 0.8);
       }
 
       &::before {

@@ -166,7 +166,7 @@
   position: relative;
   &:before,
   &:after {
-    content: '';
+    content: "";
     position: absolute;
     width: 0;
     height: 0;
@@ -200,7 +200,7 @@
     width: auto;
   }
 }
-.message{
+.message {
   color: red;
   text-align: center;
 }

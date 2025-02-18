@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import ProductList from "./ProductList"; 
+import ProductList from "./ProductList";
 import "../styles/Shop.scss";
 
 export default function Shop() {
@@ -8,7 +8,6 @@ export default function Shop() {
   const searchParams = new URLSearchParams(location.search);
   const searchTerm = searchParams.get("search") || "";
   const productListRef = useRef(null);
-
 
   useEffect(() => {
     if (productListRef.current) {
@@ -22,8 +21,8 @@ export default function Shop() {
         <div className="shop-header">
           <h1>Willkommen im Trading Hub</h1>
           <p>
-            Hier findest du wirklich alles, um deine Skills auf das nächste Level
-            zu bringen!
+            Hier findest du wirklich alles, um deine Skills auf das nächste
+            Level zu bringen!
           </p>
         </div>
         <hr className="shop-divider" />
@@ -44,7 +43,10 @@ export default function Shop() {
           </p>
           <br />
           <strong>
-            <a href="mailto:schubert_chris@rocketmail.com" className="contact-email">
+            <a
+              href="mailto:schubert_chris@rocketmail.com"
+              className="contact-email"
+            >
               schubert_chris@rocketmail.com
             </a>
           </strong>

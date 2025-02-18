@@ -108,7 +108,8 @@
       cursor: pointer;
       transition: background-color 0.3s;
 
-      &:hover, &:active {
+      &:hover,
+      &:active {
         background: linear-gradient(45deg, #b7e994, #b7e994);
       }
       &:focus,

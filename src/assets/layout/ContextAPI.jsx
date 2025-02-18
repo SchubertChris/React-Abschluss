@@ -102,8 +102,6 @@ export const AppProvider = ({ children }) => {
     }
   }, [darkMode]);
 
-  
-
   return (
     <AppContext.Provider
       value={{

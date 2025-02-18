@@ -40,7 +40,7 @@ const Header = () => {
   const menuButtonRef = useRef(null);
   const cartButtonRef = useRef(null);
 
-  // Laden von cartItems aus localStorage 
+  // Laden von cartItems aus localStorage
   useEffect(() => {
     const savedCartItems = localStorage.getItem("cartItems");
     if (savedCartItems) {
@@ -270,7 +270,7 @@ const Header = () => {
                 <FaTrash />
               </button>
               <hr />
-              <p>Dieses Produkt ist  vom Umtausch ausgeschlossen</p>
+              <p>Dieses Produkt ist vom Umtausch ausgeschlossen</p>
             </div>
           ))
         ) : (

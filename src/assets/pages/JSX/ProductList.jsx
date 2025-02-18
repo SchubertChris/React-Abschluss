@@ -4,7 +4,8 @@ import products from "../../data/produkte.json";
 import "../styles/ProductList.scss";
 import DiamondSVG from "../../layout/PlaceholderSVG";
 
-const ProductList = ({ searchTerm }) => { // Übergabe des Suchbegriffs als Prop für den Suchleiste
+const ProductList = ({ searchTerm }) => {
+  // Übergabe des Suchbegriffs als Prop für den Suchleiste
   const { cartItems, setCartItems } = useContext(AppContext); // Usestate wird aus dem ContextAPI importiert
   const [message, setMessage] = useState({}); // Message wird als State gesetzt wenn ein Produkt in den Warenkorb gelegt wird (Rot)
 
@@ -14,8 +15,10 @@ const ProductList = ({ searchTerm }) => { // Übergabe des Suchbegriffs als Prop
       )
     : products;
 
-  const addToCart = (product) => { // Funktion um ein Produkt in den Warenkorb zu legen
-    if (cartItems.some((item) => item.id === product.id)) { // wenn das Produkt bereits im Warenkorb ist, wird eine Meldung ausgegeben und blockiert
+  const addToCart = (product) => {
+    // Funktion um ein Produkt in den Warenkorb zu legen
+    if (cartItems.some((item) => item.id === product.id)) {
+      // wenn das Produkt bereits im Warenkorb ist, wird eine Meldung ausgegeben und blockiert
       alert("Dieses digitale Produkt kann nur einmal gekauft werden.");
       return;
     }
@@ -23,7 +26,8 @@ const ProductList = ({ searchTerm }) => { // Übergabe des Suchbegriffs als Prop
     setMessage({ [product.id]: ` wurde zum Warenkorb hinzugefügt.` });
   };
 
-  return ( // Return durch das Mapping der Produkte und Ausgabe der Produkte
+  return (
+    // Return durch das Mapping der Produkte und Ausgabe der Produkte
     <div className="product-list">
       {filteredProducts.length > 0 ? (
         filteredProducts.map((product) => (
