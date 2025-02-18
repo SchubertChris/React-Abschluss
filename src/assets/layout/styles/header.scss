@@ -846,13 +846,17 @@ hr {
 
   .Social {
     a {
-      font-size: 1.5rem;
+      font-size: 2rem;
       color: white;
       margin: 0 10px;
-      transition: color 0.3s;
+      transition: all 0.3s;
+      -webkit-text-stroke: 1px solid rgba(255, 255, 255, 0);
+      border-radius: 50%;
 
       &:hover {
-        color: $primary-color;
+        color: greenyellow;
+        transition: all 0.3s;
+        -webkit-text-stroke: 1px rgb(0, 255, 17) !important;
       }
     }
   }
@@ -1152,8 +1156,7 @@ hr {
   }
 }
 
-
-.Total-Price{
+.Total-Price {
   margin-top: 2rem;
   font-size: 1.2rem;
   text-align: center;
@@ -1166,4 +1169,15 @@ hr {
   text-align: center;
   font-weight: bold;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 1200px) {
+  .User-Status-Profil.visible {
+    left: 100px;
+    p {
+      left: 115px;
+      padding: 0;
+      font-size: 0.7rem;
+    }
+  }
 }
