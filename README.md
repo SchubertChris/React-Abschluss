@@ -34,72 +34,69 @@ AbschlussProjekt-React/
 ├── 📂 dist/                                     # Produktionsbuild (nach `vite build`)
 ├── 📂 node_modules/                             # Abhängigkeiten (automatisch generiert)
 ├── 📂 public/                                   # Statische öffentliche Dateien
-│   ├── 🖼️ favicon.ico                           # Favicon für den Browser
-│--------------------------------------------------------------------------------------------
-├── 📂 src/                                      # Quellcode-Verzeichnis                    |
-│   ├── 📂 assets/                               # Globale Styles & Medien
-│   │   ├── 🖼️ images/                           # Bilder & Icons
-│   │   ├── 🎨 styles/                           # Globale & seitenbasierte Styles
-│   │   │   ├── 📂 base/                         # Basis-Styles
-│   │   │   │   ├── 🧹 reset.scss                # CSS-Reset
-│   │   │   │   ├── 🛠️ mixins.scss               # SCSS-Mixins
-│   │   │   │   ├── 🎨 variables.scss            # Globale Variablen
-│   │   │   │   ├── 🔤 typography.scss           # Schriftarten-Styles
-│   │   │   │   ├── 📜 index.scss                # Haupt-Style Datei
-│   │   │   │
-│   │   │   ├── 📂 themes/                       # Dark- & Light-Mode Styles
-│   │   │   │   ├── 🌑 dark.scss                 # Dunkles Theme
-│   │   │   │   ├── ☀️ light.scss                # Helles Theme
-│   │   │   │
-│   │   │   ├── 📜 pages/                        # Seiten-Spezifische Styles
-│   │   │   │   ├── ℹ️ AboutUs.scss                # About-Seite
-│   │   │   │   ├── 📖 Blog.scss                 # Blog-Seite
-│   │   │   │   ├── 🏷️ Categories.scss           # Kategorien
-│   │   │   │   ├── 🛒 Cart.scss                 # Warenkorb
-│   │   │   │   ├── 🏠 Home.scss                 # Startseite
-│   │   │   │   ├── 🔑 Login.scss                # Login-Seite
-│   │   │   │   ├── 📩 ShippingReturns.scss      # Versand & Rückgaben
-│   │   │   │   ├── 📣 Offers.scss               # Angebote
-│   │   │   │   ├── ✨ Popular.scss              # Beliebte Produkte
-│   │   │   │   ├── 🆕 New.scss                  # Neue Produkte
-│   │   │   │   ├── 🛍️ Shop.scss                 # Shop-Seite
 │
-│   ├── 📂 layout/                               # Layout-Komponenten & Styles
-│   │   ├── 🎭 header.scss                       # Header-Styles
-│   │   ├── 📏 grid.scss                         # Grid-Styles
-│   │   ├── 📌 footer.scss                       # Footer-Styles
-│   │   ├── 🏗️ layout.scss                       # Allgemeines Layout
+├── 📂 src/                                      # Quellcode-Verzeichnis
+│   ├── 📂 assets/                               # Globale Assets (Bilder, Icons, JSON, Fonts)
+│   │   ├── 📂 data/                             # Daten
+│   │   │   ├── 📜 produkte.json                 # Produktdaten
+│   │   ├── 📂 fonts/                            # Schriftarten
+│   │   ├── 📂 images/                           # Bilder & Icons
+│   │   │   ├── 🖼️ CandleScopeLogo.png
+│   │   │   ├── 🖼️ Grid-Kategorien.png
+│   │   │   ├── 🖼️ Hintergrund-Dashboard.png
+│   │   │   ├── 🖼️ Ordnerstruktur.png
+│   │   │   ├── 🖼️ Sign.gif
+│   │   │   ├── 🖼️ Suchergebnis.jpg
+│   │   │   ├── 🖼️ texture.jpg
+│   │   │   ├── 🖼️ WeltallBlog.jpg
+│
+│   ├── 📂 layout/                               # Layout-Komponenten
+│   │   ├── 📂 styles/                           # Layout-Styles
+│   │   │   ├── 🎨 header.scss                   # Header-Styles
+│   │   ├── ⚛️ ContextAPI.jsx                    # Globale AppContext-Logik
 │   │   ├── ⚛️ Header.jsx                        # Header-Komponente
-│   │   ├── ⚛️ Grid.jsx                          # Grid-Komponente
-│   │   ├── ⚛️ Footer.jsx                        # Footer-Komponente
+│   │   ├── ⚛️ ProtectedRoute.jsx                # Geschützte Routen-Logik
+│   │   ├── ⚛️ PlaceholderSVG.jsx                # Platzhalter SVG-Komponente
 │
 │   ├── 📂 pages/                                # Seiten-Komponenten
-│   │   ├── ℹ️ AboutUs.jsx                         # About-Seite
-│   │   ├── 📖 Blog.jsx                          # Blog-Seite
-│   │   ├── 🏷️ Categories.jsx                    # Kategorien-Seite
-│   │   ├── 🛒 Cart.jsx                          # Warenkorb
-│   │   ├── 🏠 Home.jsx                          # Startseite
-│   │   ├── 🔑 Login.jsx                         # Login-Seite
-│   │   ├── 🆕 New.jsx                           # Neue Produkte
-│   │   ├── 📣 Offers.jsx                        # Angebote
-│   │   ├── ✨ Popular.jsx                       # Beliebte Produkte
-│   │   ├── 📩 ShippingReturns.jsx               # Versand & Rückgaben
-│   │   ├── 🛍️ Shop.jsx                          # Shop-Seite
-│   │   ├── 🖥️ Dashboard.jsx                     # Dashboard                               |
-│-------------------------------------------------------------------------------------------
+│   │   ├── ⚛️ AboutUs.jsx                       # About-Seite
+│   │   ├── ⚛️ Blog.jsx                          # Blog-Seite
+│   │   ├── ⚛️ Categories.jsx                    # Kategorien-Seite
+│   │   ├── ⚛️ Dashboard.jsx                     # Dashboard
+│   │   ├── ⚛️ Home.jsx                          # Startseite
+│   │   ├── ⚛️ Login.jsx                         # Login-Seite
+│   │   ├── ⚛️ NotFound404.jsx                   # 404-Fehlerseite
+│   │   ├── ⚛️ ProductList.jsx                   # Produktlisten-Komponente
+│   │   ├── ⚛️ Shop.jsx                          # Shop-Seite
+│   │   ├── 📂 styles/                           # Seiten-Styles
+│   │   │   ├── 🎨 AboutUs.scss
+│   │   │   ├── 🎨 Blog.scss
+│   │   │   ├── 🎨 Categories.scss
+│   │   │   ├── 🎨 Dashboard.scss
+│   │   │   ├── 🎨 Home.scss
+│   │   │   ├── 🎨 Login.scss
+│   │   │   ├── 🎨 NotFound404.scss
+│   │   │   ├── 🎨 ProductList.scss
+│   │   │   ├── 🎨 Shop.scss
+│
+│   ├── 📂 styles/                               # Allgemeine Styles
+│   │   ├── 📂 base/                             # Basis-Styles
+│   │   │   ├── 🎨 index.scss                    # Haupt-Style Datei
+│   │   │   ├── 🎨 reset.scss                    # CSS-Reset
+│   │   │   ├── 🎨 variables.scss                # Globale Variablen
+│
 │   ├── ⚛️ App.jsx                               # Haupt-React-Komponente
 │   ├── 🚀 main.jsx                              # Einstiegspunkt der App
 │   ├── 🎨 main.scss                             # Haupt-Styles der App
 │
-├── 📖 README.md                                 # Projekt-Dokumentation
+├── 📜 .gitignore                                # Git Ignore Datei
+├── 📜 .gitattributes                            # Git Attribute Datei
+├── 📜 package.json                              # Abhängigkeiten und Skripte
+├── 📜 package-lock.json                         # Versionssicherung der Pakete
+├── 📜 README.md                                 # Projekt-Dokumentation
+├── 📜 vite.config.js                            # Vite-Konfiguration
+├── 📜 eslint.config.js                          # ESLint-Konfiguration
 ├── 🌍 index.html                                # Einstiegspunkt für Vite
-├── 📦 package.json                              # Abhängigkeiten und Skripte
-├── 🔍 eslint.config.mjs                         # ESLint-Konfiguration (modular)
-├── ⚙️ vite.config.js                            # Vite-Konfiguration
-├── 🔒 package-lock.json                         # Versionssicherung der Pakete
-├── 🙅 .gitignore                                # Dateien, die Git ignoriert
-├── 📦 REACT-MODULAR-PROJEKT.zip                 # Projekt als ZIP-Datei
-
 
 
 ____________________________________________________________________________________________
