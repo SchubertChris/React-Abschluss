@@ -1,309 +1,460 @@
-.Home {
-  width: 100vw;
-  margin-bottom: 10rem;
+.home {
+  width: 100%;
+  margin-bottom: 5rem;
+
+  // Apply consistent animations
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 }
 
-.Carousel-Container {
-  padding: 2rem 2rem 3rem 2rem;
+// Improved Carousel
+.carousel-container {
+  padding: 2rem;
   width: 90%;
-  max-height: 700px;
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   border-radius: 15px;
   perspective: 1000px;
-  margin: 3rem auto; /* Center horizontally */
-  animation: OpacityHero 1.2s ease;
-  background-color: #00000000;
-  box-shadow: inset 0 0 50px 10px rgba(59, 59, 59, 0.164) !important;
+  margin: 3rem auto;
+  animation: fadeIn 1.2s ease;
+  background-color: rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  }
 
   .description {
     text-align: center;
     margin-bottom: 20px;
+    animation: slideIn 0.8s ease;
 
     h2 {
-      font-size: 26px;
+      font-size: 1.8rem;
       margin-bottom: 10px;
+      font-weight: 600;
     }
 
     p {
-      font-size: 18px;
+      font-size: 1.1rem;
       line-height: 1.5;
     }
   }
 
-  .images-carousel {
-    border: 1px solid white;
-    border-radius: 10px;
+  .carousel-controls {
+    width: 100%;
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    transform-style: preserve-3d;
+    justify-content: center;
 
-    img {
+    .nav-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      color: rgb(20, 187, 216);
+      height: 40px;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
-      max-width: 900px;
-      aspect-ratio: 16/9;
-      object-fit: cover;
-      border-radius: 10px;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      z-index: 10;
+      opacity: 0.7;
+      transition: all 0.3s ease;
 
       &:hover {
-        transform: translateZ(20px);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+        opacity: 1;
+        background: rgba(0, 0, 0, 0.8);
+      }
+
+      &.prev {
+        left: 10px;
+      }
+
+      &.next {
+        right: 10px;
       }
     }
   }
 
-  .state {
-    display: flex;
-    gap: 8px;
+  .images-carousel {
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.5s ease;
+    transform-style: preserve-3d;
 
-    li {
-      list-style: none;
+    &:hover {
+      transform: translateZ(10px);
+    }
+
+    img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+
+      &:hover {
+        transform: scale(1.02);
+      }
+    }
+  }
+
+  .indicators {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+
+    button {
+      appearance: none;
+      border: none;
       width: 30px;
-      height: 15px;
-      border-radius: 0;
-      border: 2px solid #ffffff;
-      background-color: #000000;
-      transition: background-color 0.3s ease;
-      margin-top: 20px;
+      height: 10px;
+      background-color: rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
       transform: skewX(-20deg);
 
       &.active {
-        transition: all 0.3s ease;
         background-color: rgb(255, 0, 0);
-        border: 1px solid #ffffff;
-        box-shadow: 2px 5px 10px 5px #ff0000;
-      }
-    }
-  }
-
-  @media (max-width: 768px) {
-    padding: 15px;
-
-    .description {
-      h2 {
-        font-size: 22px;
+        box-shadow: 0 0 10px 2px rgba(255, 0, 0, 0.5);
       }
 
-      p {
-        font-size: 16px;
-      }
-    }
-
-    .images-carousel {
-      gap: 10px;
-
-      img {
-        max-width: 100%;
-        height: auto;
-      }
-
-      .nav-button {
-        font-size: 24px;
-      }
-    }
-
-    .state {
-      gap: 5px;
-
-      li {
-        width: 10px;
-        height: 10px;
-      }
-    }
-  }
-
-  @media (max-width: 480px) {
-    .description {
-      h2 {
-        font-size: 20px;
-      }
-
-      p {
-        font-size: 14px;
-      }
-    }
-
-    .images-carousel {
-      gap: 5px;
-
-      img {
-        max-width: 100%;
-        height: auto;
-      }
-
-      .nav-button {
-        font-size: 20px;
-      }
-    }
-
-    .state {
-      gap: 3px;
-
-      li {
-        width: 8px;
-        height: 8px;
+      &:hover:not(.active) {
+        background-color: rgba(0, 0, 0, 0.5);
       }
     }
   }
 }
 
-.Test-Head-Inner {
+// Improved Hero Section
+.hero-section {
   text-align: left;
-  padding: 2rem;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 3rem;
   border-radius: 10px;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   position: relative;
-  margin-bottom: 100px;
   border-bottom: 1px solid rgb(5, 197, 255);
   border-top: 1px solid rgb(5, 197, 255);
+  animation: fadeIn 1s ease;
 
   h1 {
-    font-size: 2.5rem;
+    font-size: 3rem;
     margin-bottom: 1rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, #333, #05c5ff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
   }
 
   h4 {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     margin-bottom: 0.5rem;
+    font-weight: 600;
   }
 
   h6 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
   }
 
   p {
-    font-size: 1rem;
-    line-height: 1.5;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 600px;
+    margin-bottom: 2rem;
   }
 
-  .Btn-toCategories {
-    position: absolute;
-    right: 1rem;
-    bottom: 0.2rem;
-  }
-
-  button {
-    padding: 10px 20px;
-    font-size: 1rem;
+  .btn-to-categories {
+    padding: 12px 25px;
     color: white;
+    font-size: 1rem;
     font-weight: bold;
-    background: rgb(0, 0, 0);
-    margin-bottom: 1rem;
     background: linear-gradient(
       0deg,
       rgb(0, 0, 0) 0%,
-      rgba(49, 45, 47, 0.212) 100%
+      rgba(49, 45, 47, 0.8) 100%
     );
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.3),
-      -4px -4px 6px 0 rgba(116, 125, 136, 0.2),
-      inset -4px -4px 6px 0 rgba(255, 255, 255, 0.2),
-      inset 4px 4px 6px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-bottom: 2px solid rgb(0, 255, 225);
     position: relative;
-    border-bottom: 1px solid rgb(0, 255, 225);
     overflow: hidden;
-  }
 
-  button:hover {
-    text-decoration: none;
-    opacity: 0.7;
-    transform: scale(1.1);
-    transition: all 0.3s;
-  }
+    &:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+    }
 
-  button:before {
-    position: absolute;
-    content: "";
-    display: inline-block;
-    top: 0;
-    left: -75px;
-    width: 30px;
-    height: 100%;
-    background-color: #fff;
-    animation: shiny-btn1 3s ease-in-out infinite;
-  }
+    &:active {
+      transform: translateY(1px);
+    }
 
-  button:active {
-    box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.3),
-      -4px -4px 6px 0 rgba(116, 125, 136, 0.2),
-      inset -4px -4px 6px 0 rgba(255, 255, 255, 0.2),
-      inset 4px 4px 6px 0 rgba(0, 0, 0, 0.2);
-  }
-
-  @keyframes shiny-btn1 {
-    0% {
+    &:before {
+      position: absolute;
+      content: "";
+      display: inline-block;
+      top: 0;
       left: -75px;
-    }
-    50% {
-      left: 100%;
-    }
-    100% {
-      left: 100%;
+      width: 30px;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.5);
     }
   }
 }
 
-.Text-Container {
-  max-width: 1600px;
-  margin: auto;
+// Improved Content Sections
+.text-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  color: white;
   padding: 2rem;
+}
 
-  .text1,
-  .text2,
-  .text3,
-  .text4 {
-    width: 50%;
-    background-color: #0000008a;
-    padding: 2rem;
+.content-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+
+  section {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2.5rem;
     border-radius: 10px;
-    margin-bottom: 2rem;
     position: relative;
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    animation: slideIn 0.8s ease;
+    border-top: 1px solid rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.8);
 
-    &::before {
-      content: "";
-      position: absolute;
-      left: 50%;
-      width: 20px;
-      height: 20px;
-      background: rgb(0, 238, 255);
-      border-radius: 50%;
-      border: 1px solid rgb(0, 0, 0);
-      transform: translateX(-50%);
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     }
 
-    &:nth-child(odd)::before {
+    &:before {
+      content: "";
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: rgb(0, 238, 255);
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(0, 238, 255, 0.7);
+    }
+
+    &:nth-child(odd):before {
       top: 0;
+      left: 50%;
       transform: translate(-50%, -50%);
     }
 
-    &:nth-child(even)::before {
+    &:nth-child(even):before {
       bottom: 0;
+      left: 50%;
       transform: translate(-50%, 50%);
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      position: relative;
+      display: inline-block;
+
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background: linear-gradient(to right, rgb(0, 238, 255), transparent);
+      }
+    }
+
+    .section-content {
+      p {
+        font-size: 1rem;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .about-section,
+  .vision-section {
+    align-self: flex-start;
+  }
+
+  .approach-section,
+  .why-section {
+    align-self: flex-end;
+  }
+}
+
+// Responsive Design
+@media (max-width: 900px) {
+  .hero-section {
+    padding: 2rem;
+
+    h1 {
+      font-size: 2.5rem;
+    }
+    h4 {
+      font-size: 1.5rem;
+    }
+    h6 {
+      font-size: 1.2rem;
+    }
+  }
+
+  .content-sections {
+    section {
+      width: 100%;
+      align-self: center;
     }
   }
 }
 
-@media (max-width: 900px) {
-  .Btn-toCategories {
-    height: 30px;
+@media (max-width: 768px) {
+  .carousel-container {
+    padding: 1.5rem;
+
+    .description {
+      h2 {
+        font-size: 1.5rem;
+      }
+      p {
+        font-size: 1rem;
+      }
+    }
+
+    .carousel-controls {
+      .nav-button {
+        width: 35px;
+        height: 35px;
+        font-size: 1.5rem;
+      }
+    }
+
+    .indicators button {
+      width: 20px;
+      height: 8px;
+    }
   }
-  .text1,
-  .text2,
-  .text3,
-  .text4 {
-    width: 100% !important;
+
+  .hero-section {
+    h1 {
+      font-size: 2.2rem;
+    }
+    h4 {
+      font-size: 1.3rem;
+    }
+    h6 {
+      font-size: 1.1rem;
+    }
+    p {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-container {
+    padding: 1rem;
+
+    .description {
+      h2 {
+        font-size: 1.3rem;
+      }
+      p {
+        font-size: 0.9rem;
+      }
+    }
+
+    .carousel-controls {
+      .nav-button {
+        width: 30px;
+        height: 30px;
+        font-size: 1.2rem;
+      }
+    }
+
+    .indicators button {
+      width: 15px;
+      height: 6px;
+    }
+  }
+
+  .hero-section {
+    padding: 1.5rem;
+    h1 {
+      font-size: 2rem;
+    }
+    h4 {
+      font-size: 1.2rem;
+    }
+    h6 {
+      font-size: 1rem;
+    }
+    p {
+      font-size: 0.9rem;
+    }
+
+    .btn-to-categories {
+      padding: 10px 20px;
+      font-size: 0.9rem;
+    }
+  }
+
+  .content-sections section {
+    padding: 1.5rem;
+
+    h2 {
+      font-size: 1.5rem;
+    }
+    p {
+      font-size: 0.9rem;
+    }
   }
 }

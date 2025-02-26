@@ -6,7 +6,7 @@ function getRandomImage() {
   const width = 1920;
   const height = 1080;
   return `https://picsum.photos/${width}/${height}?random=${Math.floor(
-    Math.random() * 1000
+    Math.random() * 1000 
   )}`;
 }
 
@@ -29,11 +29,11 @@ export default function AboutUs() {
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting) { 
           entry.target.classList.add("visible");
         }
       });
-    }, options);
+    }, options); 
 
     if (leftImageRef.current) observer.observe(leftImageRef.current);
     if (rightImageRef.current) observer.observe(rightImageRef.current);

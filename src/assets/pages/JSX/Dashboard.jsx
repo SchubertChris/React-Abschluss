@@ -18,7 +18,7 @@ const WEATHER_API_KEY = "08348b60c39f4fe7a593f787efa8f843";
 const NEWS_API_KEY = "UMSE3crsBtDGk45XaX8FRetRM6zmkbNsSUOao332";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
   const [date, setDate] = useState(new Date());
   const [news, setNews] = useState([]); // News-Array
   const [loadingNews, setLoadingNews] = useState(true); // Lade-Status
@@ -28,12 +28,11 @@ const Dashboard = () => {
   const [editingId, setEditingId] = useState(null);
   const [activeMenuItem, setActiveMenuItem] = useState("Übersicht");
   const [weather, setWeather] = useState({
-    Dubai: null,
+    Havana: null,
     Berlin: null,
   });
 
   const [cityInputs, setCityInputs] = useState({
-    Dubai: "Dubai",
     Havana: "Havana",
     Berlin: "Berlin",
   });

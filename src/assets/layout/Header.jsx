@@ -233,20 +233,6 @@ const Header = () => {
         </button>
       </div>
 
-      <div className="WerbeBanner">
-        <h1>Willkommen bei meinem Abschlussprojekt in React</h1>
-        <p>
-          Öffne einfach die Navigation und fange am besten beim Dashboard an
-        </p>
-        <Link to="/account-dashboard">
-          <button>Dashboard</button>
-        </Link>
-        <img
-          src="https://cdn.pixabay.com/photo/2016/08/03/09/04/universe-1566161_960_720.jpg"
-          alt="Natur"
-        />
-      </div>
-
       <div
         ref={cartRef}
         className={`Cart-Sidebar ${cartVisible ? "OpenCart" : ""}`}
@@ -317,42 +303,6 @@ const Header = () => {
         </div>
       </div>
 
-      <div className="Footer">
-        <div className="Social">
-          <a
-            href="https://github.com/your-profile"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaGithub />
-          </a>
-          <a
-            href="https://www.instagram.com/your-profile"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaInstagram />
-          </a>
-          <a
-            href="https://www.facebook.com/your-profile"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaFacebook />
-          </a>
-        </div>
-        <div className="Datenschutz">
-          <span>Datenschutz</span>
-        </div>
-        <div className="Cockies-Impressum">
-          <span className="Cockies">Cockies </span>
-          <span className="Impressum">| Impressum</span>
-        </div>
-      </div>
-
-      <button className="Footer-btn" onClick={toggleFooter}>
-        {footerVisible ? <FaArrowUp /> : <FaArrowDown />} Informationen
-      </button>
     </header>
   );
 };
