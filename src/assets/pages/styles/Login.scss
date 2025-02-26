@@ -11,12 +11,11 @@
 
 // Page Container
 .page-container {
-  position: relative;
   width: 100vw;
   min-height: 100vh;
   overflow: hidden;
   position: fixed;
-  top: -10%;
+  top: 0%;
   background-color: #000000;
 
   &::before {

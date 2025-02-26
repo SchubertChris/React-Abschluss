@@ -27,18 +27,17 @@ import {
 
 const Header = () => {
   const { darkMode, setDarkMode, cartItems, setCartItems, user, logout } =
-    useContext(AppContext);
+  useContext(AppContext);
   const [footerVisible, setFooterVisible] = useState(false);
   const [cartVisible, setCartVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
   const [UserSee, setUserSee] = useState(false);
-  const navigate = useNavigate();
-
-  const menuRef = useRef(null);
-  const cartRef = useRef(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const menuButtonRef = useRef(null);
   const cartButtonRef = useRef(null);
+  const menuRef = useRef(null);
+  const cartRef = useRef(null);
+  const navigate = useNavigate();
 
   // Laden von cartItems aus localStorage
   useEffect(() => {
@@ -302,7 +301,6 @@ const Header = () => {
           </p>
         </div>
       </div>
-
     </header>
   );
 };

@@ -63,8 +63,9 @@ const Home = () => {
     <div className="home">
       <div className="carousel-container">
         <div className="description">
-          <h2>Ein Carousel mit React & SCSS</h2>
-          <p>Dynamisch, mit Interval von 10 Sekunden und Navigationsmöglichkeiten</p>
+          <h2>Dynamisch und Stilvoll</h2>
+          <p>Seit dem Orientierungskurs bei Digital Carrer Institut, brenne ich für Frontend.</p>
+          <p>Besonders in Kombination mit React und Tailwind</p>
         </div>
         <div className="carousel-controls">
           <button className="nav-button prev" onClick={prevImage} aria-label="Previous image">

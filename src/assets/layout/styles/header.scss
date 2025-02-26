@@ -1,38 +1,67 @@
 @use "../../styles/base/index.scss" as *;
 
-// New color variables
+// Behalte die Farbvariablen bei
 $primary-color: #3a506b;      // Deep blue
 $secondary-color: #5bc0be;    // Teal
 $accent-color: #ffd166;       // Amber yellow
-$dark-color: #1c2541;         // Dark blue
+$dark-color: #181818;         // Dark blue
 $light-color: #eef2f7;        // Light gray-blue
 $gradient: linear-gradient(45deg, $dark-color, $primary-color);
 $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15),
   -3px -3px 10px rgba(255, 255, 255, 0.1);
 
+// Mixins für häufig verwendete Stile
+@mixin button-style {
+  background: $gradient;
+  border-radius: 12px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: $box-shadow;
+  color: $light-color;
+  
+  &:hover,
+  &:active {
+    background: linear-gradient(45deg, $secondary-color, $primary-color);
+    transform: translateY(-2px);
+  }
+}
+
+@mixin safe-area-padding {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
 .header {
+  width: 90%;
   max-width: 1280px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 10px;
-  z-index: 3000;
+  padding-top: max(40px, env(safe-area-inset-top));
+  z-index: 1000;
   margin: 0 auto;
+  position: relative;
+  @include safe-area-padding;
 
   .header-content {
     display: flex;
     align-items: center;
     width: 100%;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 
     .logo-container {
       display: flex;
       align-items: center;
-      z-index: 2000;
+      z-index: 1000;
 
       .logo {
-        width: 100px;
+        width: 60px;
         height: auto;
         background: linear-gradient(
           45deg,
@@ -40,75 +69,124 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15),
           rgba($secondary-color, 0.5) 50%
         );
         border: $primary-color 2px solid;
-        transition: background 0.5s ease;
+        transition: all 0.3s ease;
         border-radius: 50%;
         box-shadow: $box-shadow;
+        
+        @media (min-width: 768px) {
+          width: 80px;
+        }
       }
     }
 
     .button-group {
       display: flex;
       align-items: center;
-      gap: 10px;
-      z-index: 2000;
+      gap: 8px;
+        z-index: 1000;
+      
+      @media (min-width: 768px) {
+        gap: 12px;
+      }
+      
       .cart-button.has-items {
         color: $accent-color !important;
-        border: 1px solid darken($accent-color, 10%) !important;
-        background-color: transparent !important;
-        background: linear-gradient(45deg, darken($dark-color, 5%), $dark-color);
-      }
-      .icon-button {
         position: relative;
-        background: $gradient;
-        border-radius: 25px 15px 0 25px;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        border: none;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: $box-shadow;
+        
+        .cart-count {
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background-color: $accent-color;
+          color: $dark-color;
+          font-size: 0.7rem;
+          font-weight: bold;
+          border-radius: 50%;
+          width: 20px;
+          height: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: $box-shadow;
+        }
+      }
+      
+      .icon-button {
+        @include button-style;
+        width: 36px;
+        height: 36px;
         font-size: 1rem;
-        color: $light-color !important;
-        transition: all 0.5s;
-        &:hover,
-        &:active {
-          background: linear-gradient(45deg, $secondary-color, $primary-color);
-          transition: all 0.3s ease;
-          transition: all 0.5s;
+        color: white !important;
+        border-radius: 12px;
+        
+        @media (min-width: 768px) {
+          width: 40px;
+          height: 40px;
+          font-size: 1.2rem;
         }
       }
     }
   }
 
   .User-Icon {
-    position: relative;
-    background: $gradient;
-    border-radius: 25px 15px 0 25px;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    border: none;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: $box-shadow;
+    @include button-style;
+    width: 36px;
+    height: 36px;
     font-size: 1rem;
-    color: $light-color !important;
-    transition: all 0.5s;
-    background: $gradient;
-    transition: all 0.3s ease;
-    transition: all 0.5s;
-    &:hover,
-    &:active {
-      background: linear-gradient(45deg, $secondary-color, $primary-color);
-      transition: all 0.3s ease;
-      transition: all 0.5s;
+        color: white;
+        border-radius: 12px;
+    
+    @media (min-width: 768px) {
+      width: 40px;
+      height: 40px;
+      font-size: 1.2rem;
+    }
+  }
+
+  .User-Status-Profil {
+    position: absolute;
+    top: 120px;
+    right: 10px;
+    background: rgba($dark-color, 0.95);
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: $box-shadow;
+    z-index: 2000;
+    min-width: 200px;
+    display: none;
+    animation: fadeIn 0.3s ease;
+    
+    .User {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+      
+      span {
+        display: block;
+        font-size: 0.8rem;
+        color: $secondary-color;
+        word-break: break-word;
+        max-width: 100%;
+        text-align: center;
+      }
+    }
+
+    .Logout, .login {
+      @include button-style;
+      width: 100%;
+      height: 40px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      padding: 0 15px;
+      text-decoration: none;
+      justify-content: center;
+      
+      svg {
+        margin-right: 8px;
+      }
     }
   }
 
@@ -116,659 +194,514 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15),
     display: block;
   }
 
-  .User-Status-Profil {
-    position: relative;
-    top: 55px;
-    right: -500px;
-    display: none;
-    z-index: 3000;
-    p {
-      position: relative;
-      top: 20px;
-      left: -150px;
-    }
-
-    .User {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-
-      img {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        object-fit: cover;
-        box-shadow: $box-shadow;
-      }
-
-      p {
-        font-size: 1rem;
-        color: $light-color;
-      }
-    }
-
-    .Logout {
-      background: $gradient;
-      border: 1px solid $primary-color;
-      border-radius: 5px 15px 0 25px;
-      box-shadow: 0 2px 15px 2px rgba(0, 0, 0, 0.5);
-      width: 90px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 1rem !important;
-      position: relative;
-      top: -25px;
-      left: 20px;
-
-      &:hover,
-      :active {
-        background: linear-gradient(45deg, $secondary-color, $primary-color);
-        transition: all 0.3s ease;
-        transition: all 0.5s;
-      }
-    }
-
-    .login {
-      margin-right: 5px;
-      background: $gradient;
-      border: 1px solid $primary-color;
-      border-radius: 5px 15px 0 25px;
-      box-shadow: 0 2px 15px 2px rgba(0, 0, 0, 0.5);
-      width: 90px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      color: $light-color;
-      font-size: 1rem !important;
-      text-decoration: none;
-      &:hover,
-      &:active {
-        background: linear-gradient(45deg, $secondary-color, $primary-color);
-        transition: all 0.3s ease;
-        transition: all 0.5s;
-      }
-    }
-  }
-
   .nav-menu {
     position: fixed;
-    bottom: 0;
+    top: 0;
     left: 0;
     width: 100%;
-    z-index: 1000;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease, opacity 0.5s ease;
+    height: 100%;
+    background-color: rgba($dark-color, 0.95);
+    z-index: 999;
     display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding-top: 80px;
+    overflow-y: auto;
 
     ul {
-      width: 90%;
-      height: 20rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      transition: all 0.5s;
+      list-style-type: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 15px;
+      padding: 20px;
+      max-width: 1200px;
       margin: 0 auto;
+      
+      @media (min-width: 768px) {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      }
     }
 
     li {
-      background-color: rgba($dark-color, 0.95);
-      flex: 1 1 100px;
-      height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 5px;
-      border-radius: 10px;
-      transition: background-color 0.3s, transform 0.3s;
-      transform-style: preserve-3d;
-      perspective: 1000px;
-      cursor: pointer;
-      text-transform: uppercase;
-      font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif,
-        cursive;
-
+      background-color: rgba($primary-color, 0.8);
+      height: 100px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      box-shadow: $box-shadow;
+      transform: scale(0);
+      
       a {
         width: 100%;
         height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        text-align: center;
         text-decoration: none;
         color: $light-color;
-        font-size: 1.1rem;
-        padding: 10px;
-        transition: color 0.3s, background-color 0.3s;
-        z-index: 3000;
-        border-radius: 10px;
-
+        font-size: 1rem;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        
         &:hover,
         &:active {
-          color: $accent-color;
-          border: 1px solid $secondary-color;
-          box-shadow: 0 0 15px $secondary-color;
+          background-color: rgba($secondary-color, 0.2);
+          color: rgba(255, 255, 255, 0.39);
         }
       }
     }
   }
 
   .nav-menu.open {
-    max-height: 500px;
     display: block;
-
+    opacity: 1;
+    ul{
+      margin-top: 50px;
+    }
+    
     li {
-      animation-delay: calc(0.1s * var(--i));
-      animation: bounceIn 0.6s ease forwards;
-    }
-
-    @keyframes bounceIn {
-      0% {
-        transform: scale(0.5);
-        border: $accent-color 1px solid;
-        opacity: 0;
-        rotate: 40deg;
+      animation: bounceIn 0.5s ease forwards;
+      
+      @for $i from 1 through 12 {
+        &:nth-child(#{$i}) {
+          animation-delay: #{$i * 0.05}s;
+        }
       }
-      60% {
-        transform: scale(1.2);
-        border: 1px solid $primary-color;
-        opacity: 1;
-        rotate: 10deg;
-      }
-      80% {
-        border: $accent-color 1px solid;
-        transform: scale(0.9);
-        rotate: 20deg;
-      }
-      100% {
-        border: 1px solid $primary-color;
-        transform: scale(1);
-        rotate: 0deg;
-      }
-    }
-
-    li:nth-child(1) {
-      --i: 1;
-    }
-    li:nth-child(2) {
-      --i: 2;
-    }
-    li:nth-child(3) {
-      --i: 3;
-    }
-    li:nth-child(4) {
-      --i: 4;
-    }
-    li:nth-child(5) {
-      --i: 5;
-    }
-    li:nth-child(6) {
-      --i: 6;
-    }
-    li:nth-child(7) {
-      --i: 7;
-    }
-    li:nth-child(8) {
-      --i: 8;
-    }
-    li:nth-child(9) {
-      --i: 9;
-    }
-    li:nth-child(10) {
-      --i: 10;
-    }
-    li:nth-child(11) {
-      --i: 11;
     }
   }
 
-  @keyframes fadeInFromTopWithBounce {
+  @keyframes bounceIn {
     0% {
-      transform: translateY(-100%);
+      transform: scale(0.5);
       opacity: 0;
     }
-    40% {
-      transform: translateY(30%);
-      opacity: 0.7;
-    }
     60% {
-      transform: translateY(-15%);
-      opacity: 0.9;
-    }
-    80% {
-      transform: translateY(10%);
+      transform: scale(1.1);
       opacity: 1;
     }
     100% {
-      transform: translateY(0);
-      opacity: 1;
+      transform: scale(1);
     }
   }
 
   .search-container {
-    display: flex;
-    justify-content: center;
+    position: relative;
     width: 90%;
-    margin-top: 20px;
-
+    max-width: 600px;
+    margin: 15px auto 0;
+    
     .search-input {
-      flex: 1;
-      padding: 10px;
+      width: 100%;
+      padding: 12px 50px 12px 15px;
       font-size: 1rem;
+      color: black;
       border: 1px solid $primary-color;
-      border-radius: 5px 0 0 5px;
-      border-right: none;
+      border-radius: 25px;
       background-color: rgba($light-color, 0.9);
-
+      transition: all 0.3s ease;
+      
       &:focus {
         border-color: $secondary-color;
         outline: none;
-        box-shadow: 1px 1px 5px rgba($secondary-color, 0.5);
-
-        & + .search-button {
-          border-color: $secondary-color;
-          border-left: none;
-        }
+        box-shadow: 0 0 0 3px rgba($secondary-color, 0.3);
       }
     }
 
     .search-button {
-      padding: 10px;
-      font-size: 1rem;
-      border: 1px solid $primary-color;
-      border-left: none;
-      border-radius: 0 5px 5px 0;
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 50%;
       background: $gradient;
       color: $light-color;
       cursor: pointer;
-      transition: all 1s;
+      transition: all 0.3s ease;
       box-shadow: $box-shadow;
-      width: 80px;
-
+      
       &:hover,
       &:active {
         background: linear-gradient(45deg, $secondary-color, $primary-color);
-        transition: all 0.3s ease;
-        transition: all 0.5s;
       }
     }
   }
 
   .btn-toggle {
-    position: relative;
-    top: -20px;
-    border: none;
-    width: 60px;
-    height: 45px;
-    line-height: 45px;
-    perspective: 230px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: $light-color !important;
-    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: transparent;
-
+    border: none;
+    cursor: pointer;
+    position: relative;
+    width: 36px;
+    height: 36px;
+        color: white !important;
+        perspective: 230px;
+    
+    @media (min-width: 768px) {
+      width: 40px;
+      height: 40px;
+    }
+    
     span {
-      display: block;
       position: absolute;
-      width: 60px;
-      height: 45px;
-      border-radius: 5px;
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
       text-align: center;
-      line-height: 45px;
-      transition: all 0.3s;
-      opacity: 0;
-    }
-
-    span:nth-child(1) {
-      transform: rotateX(90deg);
-      transform-origin: 50% 50% -20px;
-      box-shadow: inset 2px 2px 5px rgba(255, 255, 255, 0.3);
-    }
-
-    span:nth-child(2) {
-      background: linear-gradient(45deg, $dark-color, $primary-color);
-      transform: rotateX(0deg);
-      transform-origin: 50% 50% -20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      box-shadow: inset 2px 2px 5px rgba(255, 255, 255, 0.3);
-      opacity: 1;
-    }
-
-    &:hover span:nth-child(1) {
-      transform: rotateX(0deg);
-      opacity: 1;
-      background: linear-gradient(45deg, $secondary-color, $primary-color);
       transition: all 0.3s ease;
-      transition: all 0.5s;
+      background: $gradient;
+      box-shadow: $box-shadow;
+      
+      &:nth-child(1) {
+        opacity: 0;
+        transform: rotateY(180deg);
+      }
+      
+      &:nth-child(2) {
+        opacity: 1;
+        transform: rotateY(0);
+      }
     }
-
-    &:hover span:nth-child(2) {
-      transform: rotateX(-90deg);
-      opacity: 0;
-      background: linear-gradient(45deg, $secondary-color, $primary-color);
-      transition: all 0.3s ease;
-      transition: all 0.5s;
+    
+    &:hover {
+      span:nth-child(1) {
+        opacity: 1;
+        transform: rotateY(0);
+      }
+      
+      span:nth-child(2) {
+        opacity: 0;
+        transform: rotateY(-180deg);
+      }
     }
   }
 }
 
+// Mobile-optimierter Warenkorb
 .Cart-Sidebar {
-  overflow-y: auto;
   position: fixed;
-  display: none;
-  top: -20px;
+  top: 0;
   left: 0;
-  background-color: rgba($dark-color, 0.95);
-  padding: 1rem;
-  width: 400px;
-  height: 100vh;
-  max-width: 100%;
-  box-shadow: $box-shadow;
-  color: $light-color;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif,
-    cursive;
-  margin: 20px auto;
-  z-index: 9000;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($dark-color, 0.98);
+  z-index: 2000;
+  overflow-y: auto;
+  display: none;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
   
-  h4 {
-    margin-top: 100px;
+  @media (min-width: 768px) {
+    width: 400px;
+  }
+  
+  .close-cart {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: $gradient;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: $light-color;
+    cursor: pointer;
+    z-index: 2001;
+    box-shadow: $box-shadow;
   }
   
   h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
     text-align: center;
-    margin-top: 10rem !important;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    margin: 70px 0 30px;
     color: $secondary-color;
+    font-size: 1.8rem;
+    font-weight: 600;
   }
-
-  .cart-item {
-    margin-top: 30px;
+  
+  .cart-items-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    gap: 20px;
+    padding: 0 15px;
+    margin-bottom: 30px;
+  }
+  
+  .cart-item {
+    background: linear-gradient(135deg, rgba($primary-color, 0.8), rgba($dark-color, 0.8));
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: $box-shadow;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    min-height: 500px;
-    max-height: 1000px;
-    cursor: pointer;
-    background: linear-gradient(to bottom, $primary-color, $light-color);
-    color: $dark-color;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s, box-shadow 0.3s;
-    border: 1px solid $primary-color;
-    z-index: 100;
+    gap: 10px;
+    width: 100%;
+    min-height: auto;
+    max-height: none;
+    transition: transform 0.3s ease;
     
-    body.dark-mode & {
-      background: linear-gradient(to bottom, $dark-color, $primary-color);
+    &:hover {
+      transform: translateY(-5px);
+    }
+    
+    span {
+      font-size: 1.1rem;
+      font-weight: 500;
       color: $light-color;
-      border: 1px solid $secondary-color;
+      text-align: center;
+      
+      &:nth-of-type(2) {
+        color: $accent-color;
+        font-weight: 600;
+      }
     }
     
     p {
-      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: rgba($light-color, 0.7);
       text-align: center;
-      font-size: 1rem;
-      color: $dark-color;
+      margin-top: 10px;
     }
-
-    button {
-      margin-top: 2rem;
-      background: $light-color;
-      color: $dark-color;
-      border: 1px solid $dark-color;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
+    
+    .remove-button {
+      @include button-style;
+      width: 36px;
+      height: 36px;
       font-size: 1rem;
-      font-weight: bold;
-      transition: all 0.3s;
-
+      border-radius: 8px;
+      margin-top: 10px;
+      background: rgba($primary-color, 0.5);
+      
       &:hover {
-        background: $secondary-color;
-        border-color: $primary-color;
-        color: $light-color;
-      }
-
-      &:active {
-        background: darken($secondary-color, 10%);
-        border-color: $accent-color;
-        color: $light-color;
+        background: rgba(#e74c3c, 0.8);
       }
     }
-
-    &:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    }
   }
-}
-
-@media (max-width: 1400px) {
-  .Cart-Sidebar {
-    top: -20px;
-    width: 100vw;
-  }
-}
-
-.Cart-Sidebar.OpenCart {
-  display: block;
-  animation: DropInFromTop 2s ease forwards;
-}
-
-// Schließen-Button
-.close-cart {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: $accent-color;
-}
-
-@keyframes DropInFromTop {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.Zahlungsmöglichkeiten {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 20px;
-  width: 100%;
-
-  p {
-    width: 100%;
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    font-size: 1.2rem;
-    color: $light-color;
-    span {
-      position: absolute;
-      right: 10px;
-      font-weight: bold;
-    }
-  }
-
-  .PayPal svg {
-    cursor: pointer;
-    color: #003087;
-    background: linear-gradient(45deg, #003087, #009cde);
-    border-radius: 5px;
-    padding: 0.1rem;
-    width: 70px;
-    height: 30px;
-  }
-
-  .Mastercard svg {
-    cursor: pointer;
-    color: #eb001b;
-    background: linear-gradient(45deg, #eb001b, #f79e1b);
-    border-radius: 5px;
-    padding: 0.1rem;
-    width: 70px;
-    height: 30px;
-  }
-
-  .Visa svg {
-    cursor: pointer;
-    color: #1a1f71;
-    background: linear-gradient(45deg, #1a1f71, #ffffff);
-    border-radius: 5px;
-    padding: 0.1rem;
-    width: 70px;
-    height: 30px;
-  }
-
-  .Rechnung svg {
-    cursor: pointer;
-    color: $dark-color;
-    background: linear-gradient(45deg, $dark-color, $accent-color);
-    border-radius: 5px;
-    padding: 0.1rem;
-    width: 70px;
-    height: 30px;
-  }
-
-  .Nachname svg {
-    cursor: pointer;
-    color: $dark-color;
-    background: linear-gradient(45deg, $dark-color, $secondary-color);
-    border-radius: 5px;
-    padding: 0.1rem;
-    width: 70px;
-    height: 30px;
-  }
-}
-
-.Total-Price {
-  margin-top: 2rem;
-  font-size: 1.2rem;
-  text-align: center;
-  font-weight: bold;
-  color: $accent-color;
-}
-
-.Total-Prod {
-  margin-bottom: 2rem;
-  font-size: 1.2rem;
-  text-align: center;
-  font-weight: bold;
-  color: $secondary-color;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-.Footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  color: $light-color;
-  padding: 35px 0;
-  text-align: center;
-  font-weight: bold;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
-  font-size: 1.6rem;
-  z-index: 3000;
-  display: none;
-  background-color: rgba($dark-color, 0.9);
-
-  .Social,
-  .Datenschutz {
-    margin: 10px;
-    flex: 1;
-    min-width: 150px;
-    z-index: 2;
-  }
-
-  .Social {
-    a {
-      font-size: 2rem;
+  
+  .cart-summary {
+    background: linear-gradient(135deg, rgba($primary-color, 0.9), rgba($dark-color, 0.9));
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 15px;
+    box-shadow: $box-shadow;
+    
+    h4 {
       color: $light-color;
-      margin: 0 10px;
-      transition: all 0.3s;
-      -webkit-text-stroke: 1px solid rgba(255, 255, 255, 0);
-      border-radius: 50%;
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    
+    .Total-Price, .Total-Prod {
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+    
+    .Total-Price {
+      color: $accent-color;
+    }
+    
+    .Total-Prod {
+      color: $secondary-color;
+    }
+    
+    hr {
+      border: none;
+      height: 1px;
+      background: rgba($light-color, 0.2);
+      margin: 15px 0;
+    }
+  }
+  
+  .Zahlungsmöglichkeiten {
+    margin: 20px 15px;
+    
+    p {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba($primary-color, 0.4);
+      border-radius: 8px;
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      
+      span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        svg {
+          width: 40px;
+          height: 25px;
+          border-radius: 4px;
+        }
+      }
+    }
+    
+    .PayPal svg {
+      background: linear-gradient(45deg, #003087, #009cde);
+      padding: 3px;
+    }
+    
+    .Mastercard svg {
+      background: linear-gradient(45deg, #eb001b, #f79e1b);
+      padding: 3px;
+    }
+    
+    .Visa svg {
+      background: linear-gradient(45deg, #1a1f71, #ffffff);
+      padding: 3px;
+    }
+    
+    .Rechnung svg {
+      background: linear-gradient(45deg, $dark-color, $accent-color);
+      padding: 3px;
+    }
+    
+    .Nachname svg {
+      background: linear-gradient(45deg, $dark-color, $secondary-color);
+      padding: 3px;
+    }
+  }
 
+  &.OpenCart {
+    display: block;
+    transform: translateX(0);
+    border-right: 1px solid rgba($light-color, 0.2);
+    .cart-item{
+      width: 90%;
+      margin: 0 auto
+    }
+  }
+}
+
+// Der Footer-Button
+.Footer-btn {
+  @include button-style;
+  position: fixed;
+  bottom: max(20px, env(safe-area-inset-bottom));
+  right: max(20px, env(safe-area-inset-right));
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  z-index: 900;
+  font-size: 1.2rem;
+}
+
+// Die Footer-Leiste
+.Footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba($dark-color, 0.95);
+  padding: 20px;
+  padding-bottom: max(20px, env(safe-area-inset-bottom));
+  display: none;
+  z-index: 800;
+  
+  &.visible2 {
+    display: block;
+    animation: slideUpIn 0.3s ease forwards;
+  }
+  
+  .Social {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    
+    a {
+      color: $light-color;
+      font-size: 1.8rem;
+      transition: all 0.3s ease;
+      
       &:hover {
         color: $secondary-color;
-        transition: all 0.3s;
-        -webkit-text-stroke: 1px $secondary-color !important;
+        transform: scale(1.2);
       }
     }
   }
-
+  
   .Datenschutz {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    
     a {
       color: $light-color;
       text-decoration: none;
-      transition: color 0.3s;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      padding: 5px 10px;
+      border-radius: 15px;
+      
+      &:hover {
+        background-color: rgba($secondary-color, 0.2);
+        color: $accent-color;
+      }
     }
   }
 }
 
-.Footer-btn {
-  color: rgba($light-color, 0.8);
-  position: fixed;
-  bottom: 5px;
-  right: 20px;
-  padding: 10px 20px;
-  border-radius: 10px 5px 5px 5px;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 20px 20px);
-  border: none;
-  background-color: rgba($dark-color, 0.9);
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-  z-index: 2000;
-  font-size: 0.5rem;
-
-  &:hover,
-  :active {
-    border: 1px solid $secondary-color;
-    color: $accent-color;
+@keyframes slideUpIn {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
   }
 }
 
-@media (max-width: 1200px) {
-  .User-Status-Profil.visible {
-    left: 100px;
-    p {
-      left: 115px;
-      padding: 0;
-      font-size: 0.7rem;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Unterstützung für dunklen Modus
+html.dark-mode {
+  .search-input {
+    background-color: rgba($dark-color, 0.8);
+    color: $light-color;
+    border-color: $primary-color;
+    
+    &::placeholder {
+      color: rgb(0, 0, 0);
+    }
+  }
+  
+  .cart-item {
+    background: linear-gradient(135deg, rgba($dark-color, 0.8), rgba($primary-color, 0.8));
+    
+    span {
+      color: $light-color;
     }
   }
 }
