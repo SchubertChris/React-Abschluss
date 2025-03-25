@@ -1,41 +1,104 @@
-.shop-container {
+// Variables for consistent design system
+$primary-color: #007bff;
+$secondary-color: #00c6ff;
+$accent-color: #ffcc00;
+$text-light: #f0f0f0;
+$text-primary: #ffffff;
+$text-secondary: rgba(255, 255, 255, 0.8);
+$background-dark: rgba(0, 0, 0, 0.8);
+$background-translucent: rgba(255, 255, 255, 0.08);
+
+// Mixins for reusable code
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-column {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+@mixin gradient-button($start-color, $end-color) {
+  background: linear-gradient(45deg, $start-color, $end-color);
+  color: $text-primary;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba($start-color, 0.4);
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba($start-color, 0.6);
+  }
+  
+  &:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 10px rgba($start-color, 0.4);
+  }
+}
+
+@mixin responsive-padding {
+  padding: 50px 20px;
+  
+  @media (max-width: 768px) {
+    padding: 30px 15px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 20px 10px;
+  }
+}
+
+// Main shop container
+.shop-container {
+  @include flex-column;
   width: 100%;
   max-width: 1800px;
   margin: 0 auto;
   background: url('../../images/Logo/CandleScopeLogo.png');
   background-position: center;
   background-size: cover;
-  padding: 50px 20px;
   position: relative;
   min-height: 100vh;
+  @include responsive-padding;
   
+  // Dark overlay
   &::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.8);
+    inset: 0;
+    background-color: $background-dark;
     z-index: 1;
   }
   
+  // All direct children need to be above the overlay
   > * {
     position: relative;
     z-index: 2;
     width: 100%;
   }
+
+  // Dark mode support
+  &.dark {
+    .sort-select {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+    
+    .product-item {
+      background-color: rgba(20, 20, 20, 0.6);
+    }
+  }
   
+  // Shop header section
   .shop-header {
     margin-bottom: 2rem;
-    color: white !important;
+    color: $text-primary !important;
     padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @include flex-column;
     
     @media (min-width: 768px) {
       flex-direction: row;
@@ -43,15 +106,15 @@
       align-items: center;
     }
     
-    .shop-title {
+    h1 {
       font-size: 2rem;
       margin-bottom: 1rem;
       text-align: center;
       background: linear-gradient(90deg, #fff, #e0e0e0, #fff);
+      background-size: 200% auto;
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-size: 200% auto;
       animation: shine 3s linear infinite;
       
       @media (min-width: 768px) {
@@ -64,294 +127,450 @@
       }
     }
     
-    .shop-sort {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
+    .search-results {
+      font-size: 1.1rem;
+      color: $text-light;
+      margin: 1rem 0;
+      text-align: center;
       
-      @media (min-width: 480px) {
-        flex-direction: row;
-        align-items: center;
+      strong {
+        color: $accent-color;
+      }
+    }
+  }
+
+  // Product list container
+  .product-list-container {
+    width: 100%;
+    margin: 1rem 0;
+  }
+  
+  // Shop footer
+  .shop-footer {
+    margin-top: 2rem;
+    text-align: center;
+    color: $text-light;
+    
+    p {
+      margin-bottom: 0.5rem;
+    }
+    
+    .contact-email {
+      color: $primary-color;
+      text-decoration: none;
+      position: relative;
+      font-size: 1.1rem;
+      transition: color 0.3s;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background-color: $primary-color;
+        transform: scaleX(0);
+        transform-origin: bottom right;
+        transition: transform 0.3s;
       }
       
-      .sort-label {
-        font-size: 1rem;
-        color: #f0f0f0;
-      }
-      
-      .sort-select {
-        padding: 0.5rem;
-        font-size: 1rem;
-        border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        background-color: rgba(0, 0, 0, 0.7);
-        color: white;
-        cursor: pointer;
-        outline: none;
-        transition: all 0.3s;
+      &:hover {
+        color: $secondary-color;
         
-        &:focus {
-          border-color: rgba(255, 255, 255, 0.8);
-          box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        }
-        
-        option {
-          background-color: #222;
+        &::after {
+          transform: scaleX(1);
+          transform-origin: bottom left;
+          background-color: $secondary-color;
         }
       }
     }
   }
   
-  .product-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-    width: 100%;
+  // Dividers
+  .shop-divider {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+    margin: 1.5rem 0;
+    width: 80%;
+  }
+}
+
+// Product list styles
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+  
+  // Product item card
+  .product-item {
+    box-sizing: border-box;
+    padding: 1.5rem;
+    background-color: $background-translucent;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    margin-bottom: 1rem;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    position: relative;
+    transform: perspective(1000px) rotateY(-10deg);
+    border-radius: 15px;
+    border: 1px solid rgba(221, 221, 221, 0.1);
+    @include flex-column;
     
-    @media (max-width: 768px) {
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 1rem;
+    &:hover,
+    &:active {
+      transform: perspective(1000px) rotateY(0deg) scale(1.05);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.2);
+      background-color: rgba(255, 255, 255, 0.12);
     }
     
-    @media (max-width: 480px) {
-      grid-template-columns: 1fr;
+    // Diamond pattern background
+    &::before {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+      inset: -50%;
+      width: 200%;
+      height: 200%;
+      background-image: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.05) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.05) 50%,
+        rgba(255, 255, 255, 0.05) 75%,
+        transparent 75%,
+        transparent
+      );
+      background-size: 8px 8px;
+      animation: diamondSparkle 12s linear infinite;
+      opacity: 0.5;
+      transform: rotate(45deg);
+      z-index: -1;
     }
     
-    .product-item {
-      box-sizing: border-box;
-      padding: 1.5rem;
-      border: 1px solid rgba(221, 221, 221, 0.1);
-      background-color: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    // Spotlight effect
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(
+        circle at center,
+        rgba(255, 255, 255, 0.2) 0%,
+        transparent 60%
+      );
+      transform: scale(0);
+      opacity: 0;
+      transition: transform 1s ease, opacity 1s ease;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    &:hover::after {
+      opacity: 1;
+      transform: scale(1);
+      animation: spotlight 4s infinite;
+    }
+    
+    // Product image
+    .product-image {
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 50%;
       margin-bottom: 1rem;
-      perspective: 1000px;
-      transform-style: preserve-3d;
-      cursor: pointer;
-      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      overflow: hidden;
-      position: relative;
-      transform: perspective(1000px) rotateY(-10deg);
-      border-radius: 15px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      transition: all 0.3s;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
       
-      &:hover,
-      &:active {
-        transform: perspective(1000px) rotateY(0deg) scale(1.05);
-        box-shadow: 0 0 30px rgba(255, 255, 255, 0.2),
-          inset 0 0 20px rgba(255, 255, 255, 0.2);
-        background-color: rgba(255, 255, 255, 0.12);
+      &:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
       }
+      
+      @media (max-width: 768px) {
+        width: 120px;
+        height: 120px;
+      }
+    }
+    
+    // Product name
+    .product-name {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: $text-primary;
+      text-align: center;
+      font-weight: bold;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      
+      @media (max-width: 768px) {
+        font-size: 1.3rem;
+      }
+    }
+    
+    // Product description
+    .product-description {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      color: $text-secondary;
+      text-align: center;
+      line-height: 1.5;
+      
+      @media (max-width: 768px) {
+        font-size: 0.9rem;
+      }
+    }
+    
+    // Product price
+    .product-price {
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+      color: $accent-color;
+      font-weight: bold;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      position: relative;
+      display: inline-block;
+      
+      &::before, &::after {
+        content: "";
+        position: absolute;
+        height: 2px;
+        width: 30px;
+        background: linear-gradient(to right, transparent, $accent-color, transparent);
+        top: 50%;
+      }
+      
+      &::before {
+        left: -40px;
+      }
+      
+      &::after {
+        right: -40px;
+      }
+      
+      @media (max-width: 768px) {
+        font-size: 1.2rem;
+        
+        &::before, &::after {
+          width: 20px;
+        }
+        
+        &::before {
+          left: -30px;
+        }
+        
+        &::after {
+          right: -30px;
+        }
+      }
+    }
+    
+    // Add to cart button
+    .add-to-cart-button {
+      width: 100%;
+      padding: 0.7rem 1.5rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+      @include gradient-button($primary-color, $secondary-color);
+      position: relative;
+      overflow: hidden;
       
       &::before {
         content: "";
         position: absolute;
-        pointer-events: none;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background-image: linear-gradient(
-          45deg,
-          rgba(255, 255, 255, 0.05) 25%,
-          transparent 25%,
-          transparent 50%,
-          rgba(255, 255, 255, 0.05) 50%,
-          rgba(255, 255, 255, 0.05) 75%,
-          transparent 75%,
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
           transparent
         );
-        background-size: 8px 8px;
-        animation: diamondSparkle 12s linear infinite;
-        opacity: 0.5;
-        transform: rotate(45deg);
-        z-index: -1;
+        transition: all 0.5s;
       }
       
-      /* Animated spotlight effect */
-      &::after {
-        content: "";
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(
-          circle at center,
-          rgba(255, 255, 255, 0.2) 0%,
-          transparent 60%
-        );
-        transform: scale(0);
-        opacity: 0;
-        transition: transform 1s ease, opacity 1s ease;
-        pointer-events: none;
-        z-index: -1;
+      &:hover::before {
+        left: 100%;
+        transition: 0.7s;
       }
       
-      &:hover::after {
-        opacity: 1;
-        transform: scale(1);
-        animation: spotlight 4s infinite;
-      }
-      
-      .product-image {
-        width: 140px;
-        height: 140px;
-        object-fit: cover;
-        border-radius: 50%;
-        margin-bottom: 1rem;
-        transition: all 0.3s;
-        border: 3px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        
-        &:hover {
-          transform: scale(1.1);
-          box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-        }
-        
-        @media (max-width: 768px) {
-          width: 120px;
-          height: 120px;
-        }
-      }
-      
-      .product-name {
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
-        color: white;
-        text-align: center;
-        font-weight: bold;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        
-        @media (max-width: 768px) {
-          font-size: 1.3rem;
-        }
-      }
-      
-      .product-description {
-        font-size: 1rem;
-        margin-bottom: 1rem;
-        color: rgba(255, 255, 255, 0.8);
-        text-align: center;
-        line-height: 1.5;
-        
-        @media (max-width: 768px) {
-          font-size: 0.9rem;
-        }
-      }
-      
-      .product-price {
-        font-size: 1.4rem;
-        margin-bottom: 1.5rem;
-        color: #ffcc00;
-        font-weight: bold;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        position: relative;
-        display: inline-block;
-        
-        &::before, &::after {
-          content: "";
-          position: absolute;
-          height: 2px;
-          width: 30px;
-          background: linear-gradient(to right, transparent, #ffcc00, transparent);
-          top: 50%;
-        }
-        
-        &::before {
-          left: -40px;
-        }
-        
-        &::after {
-          right: -40px;
-        }
-        
-        @media (max-width: 768px) {
-          font-size: 1.2rem;
-          
-          &::before, &::after {
-            width: 20px;
-          }
-          
-          &::before {
-            left: -30px;
-          }
-          
-          &::after {
-            right: -30px;
-          }
-        }
-      }
-      
-      .add-to-cart-button {
-        width: 100%;
-        padding: 0.7rem 1.5rem;
-        background: linear-gradient(45deg, #007bff, #00c6ff);
-        color: #fff;
-        border: none;
-        border-radius: 25px;
-        cursor: pointer;
-        font-weight: bold;
-        font-size: .8rem;
-        letter-spacing: 0.5px;
-        transition: all 0.3s;
-        position: relative;
-        overflow: hidden;
-        box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
-        
-        &::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(
-            90deg,
-            transparent,
-            rgba(255, 255, 255, 0.3),
-            transparent
-          );
-          transition: all 0.5s;
-        }
-        
-        &:hover {
-          background: linear-gradient(45deg, #0056b3, #007bff);
-          transform: translateY(-3px);
-          box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6);
-          
-          &::before {
-            left: 100%;
-            transition: 0.7s;
-          }
-        }
-        
-        &:active {
-          transform: translateY(1px);
-          box-shadow: 0 2px 10px rgba(0, 123, 255, 0.4);
-        }
-        
-        @media (max-width: 768px) {
-          padding: 0.6rem 1.2rem;
-          font-size: 0.9rem;
-        }
+      @media (max-width: 768px) {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
       }
     }
   }
+}
+
+/* Cart notification system */
+.cart-count {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+  color: $text-primary;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  @include flex-center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  animation: pulse 2s infinite;
+  z-index: 100;
+}
+
+.cart-notification {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(0, 0, 0, 0.8);
+  color: $text-primary;
+  padding: 12px 24px;
+  border-radius: 50px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  opacity: 0;
+  transition: all 0.5s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   
-  /* Mobile adjustments */
-  @media (max-width: 768px) {
-    padding: 30px 15px;
+  &.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
   }
   
-  @media (max-width: 480px) {
-    padding: 20px 10px;
+  .notification-icon {
+    color: #4CAF50;
+    font-size: 1.2rem;
+  }
+  
+  .notification-text {
+    font-size: 0.95rem;
   }
 }
 
-/* Fancy animations */
+/* Loading state */
+.loading-spinner {
+  @include flex-center;
+  height: 200px;
+  width: 100%;
+  
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 255, 255, 0.1);
+    border-top-color: $primary-color;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+}
+
+/* Empty state */
+.empty-shop {
+  @include flex-column;
+  justify-content: center;
+  min-height: 400px;
+  width: 100%;
+  color: $text-primary;
+  text-align: center;
+  
+  .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+  }
+  
+  .empty-title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  .empty-message {
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin-bottom: 2rem;
+    opacity: 0.8;
+  }
+  
+  .browse-button {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    @include gradient-button(#3498db, #2ecc71);
+    
+    @media (max-width: 768px) {
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .empty-icon {
+      font-size: 3rem;
+    }
+    
+    .empty-title {
+      font-size: 1.5rem;
+    }
+    
+    .empty-message {
+      font-size: 1rem;
+    }
+  }
+}
+
+/* Mobile filter button */
+.filter-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $secondary-color, $primary-color);
+  color: $text-primary;
+  @include flex-center;
+  box-shadow: 0 6px 20px rgba($primary-color, 0.4);
+  z-index: 99;
+  cursor: pointer;
+  transition: all 0.3s;
+  
+  &:hover {
+    transform: scale(1.1);
+  }
+  
+  .filter-icon {
+    font-size: 1.5rem;
+  }
+  
+  @media (min-width: 1024px) {
+    display: none;
+  }
+}
+
+/* Animations */
 @keyframes diamondSparkle {
   0% {
     transform: translate(-90px, -100px) rotate(-70deg);
@@ -381,58 +600,6 @@
   }
 }
 
-/* Cart count and notification styles */
-.cart-count {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
-  color: white;
-  font-size: 1rem;
-  font-weight: bold;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-  animation: pulse 2s infinite;
-  z-index: 100;
-}
-
-.cart-notification {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%) translateY(100px);
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 12px 24px;
-  border-radius: 50px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
-  opacity: 0;
-  transition: all 0.5s;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  
-  &.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-  
-  .notification-icon {
-    color: #4CAF50;
-    font-size: 1.2rem;
-  }
-  
-  .notification-text {
-    font-size: 0.95rem;
-  }
-}
-
 @keyframes pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7);
@@ -445,123 +612,8 @@
   }
 }
 
-/* Loading spinner */
-.loading-spinner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 200px;
-  width: 100%;
-  
-  .spinner {
-    width: 50px;
-    height: 50px;
-    border: 5px solid rgba(255, 255, 255, 0.1);
-    border-top-color: #3498db;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-  }
-}
-
 @keyframes spin {
   to {
     transform: rotate(360deg);
-  }
-}
-
-/* Empty state */
-.empty-shop {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 400px;
-  width: 100%;
-  color: white;
-  text-align: center;
-  
-  .empty-icon {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-    opacity: 0.7;
-  }
-  
-  .empty-title {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-  }
-  
-  .empty-message {
-    font-size: 1.1rem;
-    max-width: 500px;
-    margin-bottom: 2rem;
-    opacity: 0.8;
-  }
-  
-  .browse-button {
-    padding: 0.8rem 2rem;
-    background: linear-gradient(45deg, #3498db, #2ecc71);
-    color: white;
-    border: none;
-    border-radius: 30px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s;
-    
-    &:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .empty-icon {
-      font-size: 3rem;
-    }
-    
-    .empty-title {
-      font-size: 1.5rem;
-    }
-    
-    .empty-message {
-      font-size: 1rem;
-    }
-    
-    .browse-button {
-      padding: 0.7rem 1.5rem;
-      font-size: 1rem;
-    }
-  }
-}
-
-/* Mobile filter button */
-.filter-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 20px rgba(0, 114, 255, 0.4);
-  z-index: 99;
-  cursor: pointer;
-  transition: all 0.3s;
-  
-  &:hover {
-    transform: scale(1.1);
-  }
-  
-  .filter-icon {
-    font-size: 1.5rem;
-  }
-  
-  @media (min-width: 1024px) {
-    display: none;
   }
 }
