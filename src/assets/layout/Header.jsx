@@ -197,7 +197,7 @@ const Header = () => {
           </li>
           <li>
             <Link to="/about-us" onClick={closeMenu}>
-              About Us
+              Über mich
             </Link>
           </li>
           <li>
