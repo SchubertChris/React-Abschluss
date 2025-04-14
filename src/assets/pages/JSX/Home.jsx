@@ -115,7 +115,7 @@ const Home = () => {
             <h2>Über mich</h2>
             <div className="section-content">
               <p>
-                Willkommen! Schön, dass du hier bist. Ich bin [Dein Name], ein
+                Willkommen! Schön, dass du hier bist. Ich bin Chris Schubert, ein
                 kreativer Kopf mit einer Leidenschaft für Design, Ästhetik und
                 Innovation. Mein Ziel ist es, einzigartige Erlebnisse zu schaffen –
                 sei es durch visuelle Kunst, digitale Medien oder stilvolle
