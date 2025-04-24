@@ -1,31 +1,62 @@
 @use "../../styles/base/index.scss" as *;
 
-// Behalte die Farbvariablen bei
-$primary-color: #3a506b;      // Deep blue
-$secondary-color: #5bc0be;    // Teal
-$accent-color: #ffd166;       // Amber yellow
-$dark-color: #181818;         // Dark blue
-$light-color: #eef2f7;        // Light gray-blue
+// Farbvariablen und Konstanten
+$primary-color: #3a506b; // Deep blue
+$secondary-color: #5bc0be; // Teal
+$accent-color: #ffd166; // Amber yellow
+$dark-color: #181818; // Dark blue
+$light-color: #eef2f7; // Light gray-blue
+
+// Abstände und Größen
+$spacing-xs: 5px;
+$spacing-sm: 8px;
+$spacing-md: 15px;
+$spacing-lg: 20px;
+$spacing-xl: 30px;
+
+// Breakpoints für Responsivität
+$breakpoint-sm: 480px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+// Wiederverwendbare Eigenschaften
 $gradient: linear-gradient(45deg, $dark-color, $primary-color);
+$gradient-alt: linear-gradient(45deg, $secondary-color, $primary-color);
 $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15),
   -3px -3px 10px rgba(255, 255, 255, 0.1);
+$border-radius-sm: 8px;
+$border-radius-md: 12px;
+$border-radius-lg: 15px;
+$border-radius-circle: 50%;
+
+// Animationszeiten
+$transition-fast: 0.2s ease;
+$transition-normal: 0.3s ease;
+$transition-slow: 0.5s ease;
+
+// Z-Index-Werte
+$z-index-base: 1;
+$z-index-header: 1000;
+$z-index-menu: 900;
+$z-index-cart: 2000;
 
 // Mixins für häufig verwendete Stile
 @mixin button-style {
   background: $gradient;
-  border-radius: 12px;
+  border-radius: $border-radius-md;
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all $transition-normal;
   box-shadow: $box-shadow;
   color: $light-color;
-  
+
   &:hover,
   &:active {
-    background: linear-gradient(45deg, $secondary-color, $primary-color);
+    background: $gradient-alt;
     transform: translateY(-2px);
   }
 }
@@ -35,64 +66,97 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15),
   padding-right: env(safe-area-inset-right);
 }
 
+@mixin flexcenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Responsive Mixins
+@mixin respond-to($breakpoint) {
+  @if $breakpoint ==sm {
+    @media (min-width: $breakpoint-sm) {
+      @content;
+    }
+  }
+
+  @else if $breakpoint ==md {
+    @media (min-width: $breakpoint-md) {
+      @content;
+    }
+  }
+
+  @else if $breakpoint ==lg {
+    @media (min-width: $breakpoint-lg) {
+      @content;
+    }
+  }
+
+  @else if $breakpoint ==xl {
+    @media (min-width: $breakpoint-xl) {
+      @content;
+    }
+  }
+}
+
+// Hauptkomponenten-Styles
 .header {
   width: 90%;
   max-width: 1280px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
+  padding: $spacing-md;
   padding-top: max(40px, env(safe-area-inset-top));
-  z-index: 1000;
   margin: 0 auto;
-  position: relative;
   @include safe-area-padding;
 
+  // Header-Inhalt (Logo + Buttons)
   .header-content {
     display: flex;
-    align-items: center;
     width: 100%;
     justify-content: space-between;
-    margin-bottom: 15px;
+    margin-bottom: $spacing-md;
 
+    // Logo-Container
     .logo-container {
       display: flex;
       align-items: center;
-      z-index: 1000;
+      z-index: $z-index-header;
 
       .logo {
         width: 60px;
         height: auto;
-        background: linear-gradient(
-          45deg,
-          rgba($dark-color, 0.5) 50%,
-          rgba($secondary-color, 0.5) 50%
-        );
+        background: linear-gradient(45deg,
+            rgba($dark-color, 0.5) 50%,
+            rgba($secondary-color, 0.5) 50%);
         border: $primary-color 2px solid;
-        transition: all 0.3s ease;
-        border-radius: 50%;
+        transition: all $transition-normal;
+        border-radius: $border-radius-circle;
         box-shadow: $box-shadow;
-        
-        @media (min-width: 768px) {
+
+        @include respond-to(md) {
           width: 80px;
         }
       }
     }
 
+    // Button-Gruppe (Menü, Warenkorb, Darkmode)
     .button-group {
       display: flex;
       align-items: center;
-      gap: 8px;
-        z-index: 1000;
-      
-      @media (min-width: 768px) {
-        gap: 12px;
+      gap: $spacing-sm;
+      z-index: $z-index-header;
+
+      @include respond-to(md) {
+        gap: $spacing-md;
       }
-      
+
+      // Warenkorb-Button mit Items
       .cart-button.has-items {
         color: $accent-color !important;
         position: relative;
-        
+
         .cart-count {
           position: absolute;
           top: -8px;
@@ -101,25 +165,24 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15),
           color: $dark-color;
           font-size: 0.7rem;
           font-weight: bold;
-          border-radius: 50%;
+          border-radius: $border-radius-circle;
           width: 20px;
           height: 20px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          @include flexcenter;
           box-shadow: $box-shadow;
         }
       }
-      
+
+      // Icon-Buttons (Menü, Warenkorb)
       .icon-button {
         @include button-style;
         width: 36px;
         height: 36px;
         font-size: 1rem;
         color: white !important;
-        border-radius: 12px;
-        
-        @media (min-width: 768px) {
+        border-radius: $border-radius-md;
+
+        @include respond-to(md) {
           width: 40px;
           height: 40px;
           font-size: 1.2rem;
@@ -128,41 +191,43 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15),
     }
   }
 
+  // Benutzer-Icon
   .User-Icon {
     @include button-style;
     width: 36px;
     height: 36px;
     font-size: 1rem;
-        color: white;
-        border-radius: 12px;
-    
-    @media (min-width: 768px) {
+    color: white;
+    border-radius: $border-radius-md;
+
+    @include respond-to(md) {
       width: 40px;
       height: 40px;
       font-size: 1.2rem;
     }
   }
 
+  // Benutzerprofilbereich
   .User-Status-Profil {
     position: absolute;
     top: 120px;
-    right: 10px;
+    right: $spacing-md;
     background: rgba($dark-color, 0.95);
-    padding: 15px;
-    border-radius: 12px;
+    padding: $spacing-md;
+    border-radius: $border-radius-md;
     box-shadow: $box-shadow;
-    z-index: 2000;
+    z-index: $z-index-cart;
     min-width: 200px;
     display: none;
-    animation: fadeIn 0.3s ease;
-    
+    animation: fadeIn $transition-normal;
+
     .User {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 15px;
-      
+      gap: $spacing-md;
+      margin-bottom: $spacing-md;
+
       span {
         display: block;
         font-size: 0.8rem;
@@ -173,27 +238,29 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15),
       }
     }
 
-    .Logout, .login {
+    .Logout,
+    .login {
       @include button-style;
       width: 100%;
       height: 40px;
-      border-radius: 8px;
+      border-radius: $border-radius-sm;
       font-size: 0.9rem;
-      margin-top: 10px;
-      padding: 0 15px;
+      margin-top: $spacing-md;
+      padding: 0 $spacing-md;
       text-decoration: none;
       justify-content: center;
-      
+
       svg {
-        margin-right: 8px;
+        margin-right: $spacing-sm;
       }
+    }
+
+    &.visible {
+      display: block;
     }
   }
 
-  .User-Status-Profil.visible {
-    display: block;
-  }
-
+  // Navigationsmenü
   .nav-menu {
     position: fixed;
     top: 0;
@@ -201,10 +268,10 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15),
     width: 100%;
     height: 100%;
     background-color: rgba($dark-color, 0.95);
-    z-index: 999;
+    z-index: $z-index-menu;
     display: none;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity $transition-normal;
     padding-top: 80px;
     overflow-y: auto;
 
@@ -212,58 +279,69 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15),
       list-style-type: none;
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 15px;
-      padding: 20px;
+      gap: $spacing-md;
+      padding: $spacing-lg;
       max-width: 1200px;
       margin: 0 auto;
-      
-      @media (min-width: 768px) {
+
+      @include respond-to(md) {
         grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       }
     }
 
     li {
-      background-color: rgba($primary-color, 0.8);
-      height: 100px;
-      border-radius: 12px;
-      transition: all 0.3s ease;
+      background: rgba($dark-color, 0.95);
+      height: 60px;
+      border-radius: $border-radius-md;
+      transition: all $transition-normal;
       box-shadow: $box-shadow;
       transform: scale(0);
-      
+
       a {
         width: 100%;
         height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        @include flexcenter;
         text-decoration: none;
         color: $light-color;
         font-size: 1rem;
         font-weight: 500;
         letter-spacing: 0.5px;
         text-transform: uppercase;
-        border-radius: 12px;
-        transition: all 0.3s ease;
-        
+        border-radius: 6px 32px 6px 32px;
+        transition: all $transition-normal;
+        border: 1px solid rgba(255, 255, 255, 0.32);
+
         &:hover,
-        &:active {
-          background-color: rgba($secondary-color, 0.2);
-          color: rgba(255, 255, 255, 0.39);
-        }
+        {
+        background-color: rgba(0, 191, 255, 0.144);
+        color: white;
+        box-shadow: rgba(0, 191, 255, 0.242) 0px 0px 10px 0px;
+        scale: 1.05;
+        transform: translateY(-2px);
+      }
+
+      &:active {
+        transform: translateY(0);
+        scale: 1;
       }
     }
   }
 
-  .nav-menu.open {
+  &.open {
     display: block;
     opacity: 1;
-    ul{
+
+
+    ul {
       margin-top: 50px;
+      border-radius: 6px 32px 6px 32px;
+
     }
-    
+
     li {
-      animation: bounceIn 0.5s ease forwards;
-      
+      animation: bounceIn $transition-slow forwards;
+      border-radius: 6px 32px 6px 32px;
+
       @for $i from 1 through 12 {
         &:nth-child(#{$i}) {
           animation-delay: #{$i * 0.05}s;
@@ -271,126 +349,111 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15),
       }
     }
   }
+}
 
-  @keyframes bounceIn {
-    0% {
-      transform: scale(0.5);
-      opacity: 0;
-    }
-    60% {
-      transform: scale(1.1);
-      opacity: 1;
-    }
-    100% {
-      transform: scale(1);
+// Suchbereich
+.search-container {
+  position: relative;
+  width: 90%;
+  max-width: 600px;
+  margin: $spacing-md auto 0;
+
+  .search-input {
+    width: 100%;
+    padding: $spacing-md $spacing-lg*2.5 $spacing-md $spacing-md;
+    font-size: 1rem;
+    color: black;
+    border: 1px solid $primary-color;
+    border-radius: 25px;
+    background-color: rgba($light-color, 0.9);
+    transition: all $transition-normal;
+
+    &:focus {
+      border-color: $secondary-color;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba($secondary-color, 0.3);
     }
   }
 
-  .search-container {
-    position: relative;
-    width: 90%;
-    max-width: 600px;
-    margin: 15px auto 0;
-    
-    .search-input {
-      width: 100%;
-      padding: 12px 50px 12px 15px;
-      font-size: 1rem;
-      color: black;
-      border: 1px solid $primary-color;
-      border-radius: 25px;
-      background-color: rgba($light-color, 0.9);
-      transition: all 0.3s ease;
-      
-      &:focus {
-        border-color: $secondary-color;
-        outline: none;
-        box-shadow: 0 0 0 3px rgba($secondary-color, 0.3);
-      }
-    }
-
-    .search-button {
-      position: absolute;
-      right: 5px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: none;
-      border-radius: 50%;
-      background: $gradient;
-      color: $light-color;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: $box-shadow;
-      
-      &:hover,
-      &:active {
-        background: linear-gradient(45deg, $secondary-color, $primary-color);
-      }
-    }
-  }
-
-  .btn-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: transparent;
+  .search-button {
+    position: absolute;
+    right: $spacing-xs;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    @include flexcenter;
     border: none;
+    border-radius: $border-radius-circle;
+    background: $gradient;
+    color: $light-color;
     cursor: pointer;
-    position: relative;
-    width: 36px;
-    height: 36px;
-        color: white !important;
-        perspective: 230px;
-    
-    @media (min-width: 768px) {
-      width: 40px;
-      height: 40px;
-    }
-    
-    span {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 12px;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-      background: $gradient;
-      box-shadow: $box-shadow;
-      
-      &:nth-child(1) {
-        opacity: 0;
-        transform: rotateY(180deg);
-      }
-      
-      &:nth-child(2) {
-        opacity: 1;
-        transform: rotateY(0);
-      }
-    }
-    
-    &:hover {
-      span:nth-child(1) {
-        opacity: 1;
-        transform: rotateY(0);
-      }
-      
-      span:nth-child(2) {
-        opacity: 0;
-        transform: rotateY(-180deg);
-      }
+    transition: all $transition-normal;
+    box-shadow: $box-shadow;
+
+    &:hover,
+    &:active {
+      background: $gradient-alt;
     }
   }
 }
 
-// Mobile-optimierter Warenkorb
+// Dark Mode Toggle-Button
+.btn-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  width: 36px;
+  height: 36px;
+  color: white !important;
+  perspective: 230px;
+
+  @include respond-to(md) {
+    width: 40px;
+    height: 40px;
+  }
+
+  span {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: $border-radius-md;
+    text-align: center;
+    @include flexcenter;
+    transition: all $transition-normal;
+    background: $gradient;
+    box-shadow: $box-shadow;
+
+    &:nth-child(1) {
+      opacity: 0;
+      transform: rotateY(180deg);
+    }
+
+    &:nth-child(2) {
+      opacity: 1;
+      transform: rotateY(0);
+    }
+  }
+
+  &:hover {
+    span:nth-child(1) {
+      opacity: 1;
+      transform: rotateY(0);
+    }
+
+    span:nth-child(2) {
+      opacity: 0;
+      transform: rotateY(-180deg);
+    }
+  }
+}
+}
+
+// Warenkorb-Sidebar
 .Cart-Sidebar {
   position: fixed;
   top: 0;
@@ -398,270 +461,196 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15),
   width: 100%;
   height: 100%;
   background-color: rgba($dark-color, 0.98);
-  z-index: 2000;
   overflow-y: auto;
   display: none;
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
   transform: translateX(-100%);
   transition: transform 0.4s ease;
-  
-  @media (min-width: 768px) {
+  z-index: 9000;
+
+  @include respond-to(md) {
     width: 400px;
   }
-  
+
+  // Schließen-Button
   .close-cart {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: $spacing-lg;
+    right: $spacing-lg;
     width: 40px;
     height: 40px;
     background: $gradient;
     border: none;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius: $border-radius-circle;
+    @include flexcenter;
     font-size: 1.2rem;
     color: $light-color;
     cursor: pointer;
-    z-index: 2001;
+    z-index: $z-index-cart + 1;
     box-shadow: $box-shadow;
   }
-  
+
   h2 {
     text-align: center;
-    margin: 70px 0 30px;
+    margin: 70px 0 $spacing-xl;
     color: $secondary-color;
     font-size: 1.8rem;
     font-weight: 600;
   }
-  
-  .cart-items-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 0 15px;
-    margin-bottom: 30px;
-  }
-  
+
+  // Warenkorbbereich
   .cart-item {
     background: linear-gradient(135deg, rgba($primary-color, 0.8), rgba($dark-color, 0.8));
-    border-radius: 12px;
-    padding: 15px;
+    border-radius: $border-radius-md;
+    padding: $spacing-md;
     box-shadow: $box-shadow;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
-    width: 100%;
+    gap: $spacing-md;
+    width: 90%;
+    margin: 0 auto $spacing-md auto;
     min-height: auto;
     max-height: none;
-    transition: transform 0.3s ease;
-    
+    transition: transform $transition-normal;
+
     &:hover {
       transform: translateY(-5px);
     }
-    
+
     span {
       font-size: 1.1rem;
       font-weight: 500;
       color: $light-color;
       text-align: center;
-      
+
       &:nth-of-type(2) {
         color: $accent-color;
         font-weight: 600;
       }
     }
-    
+
     p {
       font-size: 0.9rem;
       color: rgba($light-color, 0.7);
       text-align: center;
-      margin-top: 10px;
+      margin-top: $spacing-md;
     }
-    
+
     .remove-button {
       @include button-style;
       width: 36px;
       height: 36px;
       font-size: 1rem;
-      border-radius: 8px;
-      margin-top: 10px;
+      border-radius: $border-radius-sm;
+      margin-top: $spacing-md;
       background: rgba($primary-color, 0.5);
-      
+
       &:hover {
         background: rgba(#e74c3c, 0.8);
       }
     }
   }
-  
-  .cart-summary {
-    background: linear-gradient(135deg, rgba($primary-color, 0.9), rgba($dark-color, 0.9));
-    border-radius: 12px;
-    padding: 20px;
-    margin: 20px 15px;
-    box-shadow: $box-shadow;
-    
-    h4 {
-      color: $light-color;
-      font-size: 1.3rem;
-      margin-bottom: 15px;
-      text-align: center;
-    }
-    
-    .Total-Price, .Total-Prod {
-      text-align: center;
-      font-weight: 600;
-      font-size: 1.2rem;
-      margin: 10px 0;
-    }
-    
-    .Total-Price {
-      color: $accent-color;
-    }
-    
-    .Total-Prod {
-      color: $secondary-color;
-    }
-    
-    hr {
-      border: none;
-      height: 1px;
-      background: rgba($light-color, 0.2);
-      margin: 15px 0;
-    }
+
+  hr {
+    border: none;
+    height: 1px;
+    background: rgba($light-color, 0.2);
+    margin: $spacing-md 0;
   }
-  
+
+  h4 {
+    text-align: center;
+    color: $light-color;
+    font-size: 1.3rem;
+    margin: $spacing-md 0;
+  }
+
+  // Preisanzeige
+  .Total-Price,
+  .Total-Prod {
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin: $spacing-md 0;
+  }
+
+  .Total-Price {
+    color: $accent-color;
+  }
+
+  .Total-Prod {
+    color: $secondary-color;
+  }
+
+  // Zahlungsmethoden
   .Zahlungsmöglichkeiten {
-    margin: 20px 15px;
-    
+    margin: $spacing-lg $spacing-md;
+
     p {
       display: flex;
       align-items: center;
       justify-content: space-between;
       background: rgba($primary-color, 0.4);
-      border-radius: 8px;
-      padding: 10px 15px;
-      margin-bottom: 10px;
-      
+      border-radius: $border-radius-sm;
+      padding: $spacing-md $spacing-md;
+      margin-bottom: $spacing-md;
+
       span {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        
+        @include flexcenter;
+
         svg {
           width: 40px;
           height: 25px;
           border-radius: 4px;
+          padding: 3px;
         }
       }
     }
-    
+
     .PayPal svg {
       background: linear-gradient(45deg, #003087, #009cde);
-      padding: 3px;
     }
-    
+
     .Mastercard svg {
       background: linear-gradient(45deg, #eb001b, #f79e1b);
-      padding: 3px;
     }
-    
+
     .Visa svg {
       background: linear-gradient(45deg, #1a1f71, #ffffff);
-      padding: 3px;
     }
-    
+
     .Rechnung svg {
       background: linear-gradient(45deg, $dark-color, $accent-color);
-      padding: 3px;
     }
-    
+
     .Nachname svg {
       background: linear-gradient(45deg, $dark-color, $secondary-color);
-      padding: 3px;
     }
   }
 
+  // Wenn der Warenkorb geöffnet ist
   &.OpenCart {
     display: block;
     transform: translateX(0);
     border-right: 1px solid rgba($light-color, 0.2);
-    .cart-item{
-      width: 90%;
-      margin: 0 auto
-    }
   }
 }
 
-// Der Footer-Button
-.Footer-btn {
-  @include button-style;
-  position: fixed;
-  bottom: max(20px, env(safe-area-inset-bottom));
-  right: max(20px, env(safe-area-inset-right));
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  z-index: 900;
-  font-size: 1.2rem;
-}
+// Animationen
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
 
-// Die Footer-Leiste
-.Footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: rgba($dark-color, 0.95);
-  padding: 20px;
-  padding-bottom: max(20px, env(safe-area-inset-bottom));
-  display: none;
-  z-index: 800;
-  
-  &.visible2 {
-    display: block;
-    animation: slideUpIn 0.3s ease forwards;
+  60% {
+    transform: scale(1.1);
+    opacity: 1;
   }
-  
-  .Social {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 20px;
-    
-    a {
-      color: $light-color;
-      font-size: 1.8rem;
-      transition: all 0.3s ease;
-      
-      &:hover {
-        color: $secondary-color;
-        transform: scale(1.2);
-      }
-    }
-  }
-  
-  .Datenschutz {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    
-    a {
-      color: $light-color;
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
-      padding: 5px 10px;
-      border-radius: 15px;
-      
-      &:hover {
-        background-color: rgba($secondary-color, 0.2);
-        color: $accent-color;
-      }
-    }
+
+  100% {
+    transform: scale(1);
   }
 }
 
@@ -669,6 +658,7 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15),
   from {
     transform: translateY(100%);
   }
+
   to {
     transform: translateY(0);
   }
@@ -679,27 +669,28 @@ $box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15),
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-// Unterstützung für dunklen Modus
+// Dark Mode-Einstellungen
 html.dark-mode {
   .search-input {
     background-color: rgba($dark-color, 0.8);
-    color: $light-color;
+    color: $dark-color;
     border-color: $primary-color;
-    
+
     &::placeholder {
-      color: rgb(0, 0, 0);
+      color: black;
     }
   }
-  
+
   .cart-item {
     background: linear-gradient(135deg, rgba($dark-color, 0.8), rgba($primary-color, 0.8));
-    
+
     span {
       color: $light-color;
     }

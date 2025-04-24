@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React, { Suspense } from "react";
-import "./main.scss";
 import Header from "./assets/layout/Header";
 import AppProvider from "./assets/layout/ContextAPI";
 import ProtectedRoute from "./assets/layout/ProtectedRoute";

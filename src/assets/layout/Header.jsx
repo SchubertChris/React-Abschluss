@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, { useContext, useState, useEffect, useRef, useCallback, memo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../layout/ContextAPI";
 import DiamondSVG from "../layout/PlaceholderSVG";
@@ -10,11 +10,6 @@ import {
   FaShoppingCart,
   FaMoon,
   FaSun,
-  FaArrowDown,
-  FaArrowUp,
-  FaGithub,
-  FaInstagram,
-  FaFacebook,
   FaTrash,
   FaUserCircle,
   FaSignInAlt,
@@ -25,103 +20,188 @@ import {
   FaMoneyCheckAlt,
 } from "react-icons/fa";
 
+// Konstante für LocalStorage-Schlüssel
+const CART_STORAGE_KEY = "cartItems";
+
+// Extrahierte Komponenten für bessere Lesbarkeit und Performance
+const CartItem = memo(({ item, onRemove }) => (
+  <div className="cart-item">
+    <DiamondSVG />
+    <span>{item.name}</span>
+    <span>Preis: €{item.price.toFixed(2)}</span>
+    <button onClick={() => onRemove(item.id)} className="remove-button">
+      <FaTrash />
+    </button>
+    <hr />
+    <p>Dieses Produkt ist vom Umtausch ausgeschlossen</p>
+  </div>
+));
+
+const PaymentMethods = () => (
+  <div className="Zahlungsmöglichkeiten">
+    <p>
+      PayPal
+      <span className="PayPal">
+        <FaPaypal />
+      </span>
+    </p>
+    <p>
+      Mastercard
+      <span className="Mastercard">
+        <FaCcMastercard />
+      </span>
+    </p>
+    <p>
+      Visa
+      <span className="Visa">
+        <FaCcVisa />
+      </span>
+    </p>
+    <p>
+      Auf Rechnung
+      <span className="Rechnung">
+        <FaFileInvoice />
+      </span>
+    </p>
+    <p>
+      Per Nachname
+      <span className="Nachname">
+        <FaMoneyCheckAlt />
+      </span>
+    </p>
+  </div>
+);
+
 const Header = () => {
   const { darkMode, setDarkMode, cartItems, setCartItems, user, logout } =
-  useContext(AppContext);
+    useContext(AppContext);
   const [footerVisible, setFooterVisible] = useState(false);
   const [cartVisible, setCartVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [UserSee, setUserSee] = useState(false);
+  const [userMenuVisible, setUserMenuVisible] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+
+  // Refs für Event-Handler
   const menuButtonRef = useRef(null);
   const cartButtonRef = useRef(null);
   const menuRef = useRef(null);
   const cartRef = useRef(null);
   const navigate = useNavigate();
 
-  // Laden von cartItems aus localStorage
+  // Memoized-Werte für Berechnungen
+  const totalAmount = cartItems.reduce((total, item) => total + item.price, 0);
+  const totalItems = cartItems.length;
+
+  // Warenkorb aus dem localStorage laden (nur einmal beim Laden)
   useEffect(() => {
-    const savedCartItems = localStorage.getItem("cartItems");
-    if (savedCartItems) {
-      try {
+    try {
+      const savedCartItems = localStorage.getItem(CART_STORAGE_KEY);
+      if (savedCartItems) {
         setCartItems(JSON.parse(savedCartItems));
-      } catch (error) {
-        console.error("Error loading cart items:", error);
       }
+    } catch (error) {
+      console.error("Error loading cart items:", error);
     }
   }, []);
 
-  // Speichern von cartItems in localStorage, wenn sie sich ändern
+  // Warenkorb in localStorage speichern (wenn sich cartItems ändert)
   useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  }, [cartItems]);
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
 
-  // Schließen des Warenkorbs, wenn er leer ist
-  useEffect(() => {
+    // Schließen des Warenkorbs, wenn er leer ist
     if (cartItems.length === 0) {
       setCartVisible(false);
     }
   }, [cartItems]);
 
-  // Behandlung von Klicks außerhalb des Menüs oder Warenkorbs
+  // Dark Mode-Umschaltung
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      // Für Navigationsmenü
-      if (
-        menuRef.current &&
-        !menuRef.current.contains(event.target) &&
-        !menuButtonRef.current.contains(event.target)
-      ) {
-        setMenuOpen(false);
-        document.querySelector(".nav-menu").classList.remove("open");
-      }
-
-      // Für Warenkorb
-      if (
-        cartRef.current &&
-        !cartRef.current.contains(event.target) &&
-        !cartButtonRef.current.contains(event.target)
-      ) {
-        setCartVisible(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  // Umschalten des Dark Modes
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark-mode");
-    } else {
-      document.documentElement.classList.remove("dark-mode");
-    }
+    document.documentElement.classList.toggle("dark-mode", darkMode);
   }, [darkMode]);
 
-  const OpenMenu = () => {
-    setMenuOpen(!menuOpen);
-    document.querySelector(".nav-menu").classList.toggle("open");
-  };
+  // Außerhalb-Klick-Handler mit useCallback für bessere Performance
+  const handleClickOutside = useCallback((event) => {
+    // Für Navigationsmenü
+    if (
+      menuRef.current &&
+      !menuRef.current.contains(event.target) &&
+      menuButtonRef.current &&
+      !menuButtonRef.current.contains(event.target)
+    ) {
+      setMenuOpen(false);
+      document.querySelector(".nav-menu")?.classList.remove("open");
+    }
 
-  const toggleFooter = () => {
-    setFooterVisible(!footerVisible);
-    document.querySelector(".Footer").classList.toggle("visible2");
-  };
+    // Für Warenkorb
+    if (
+      cartRef.current &&
+      !cartRef.current.contains(event.target) &&
+      cartButtonRef.current &&
+      !cartButtonRef.current.contains(event.target)
+    ) {
+      setCartVisible(false);
+    }
+  }, []);
 
-  const closeMenu = () => {
+  // Event-Listener für Klicks außerhalb registrieren
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [handleClickOutside]);
+
+  // Handler-Funktionen mit useCallback für bessere Performance
+  const toggleMenu = useCallback(() => {
+    setMenuOpen(prevState => {
+      const newState = !prevState;
+      document.querySelector(".nav-menu")?.classList.toggle("open", newState);
+      return newState;
+    });
+  }, []);
+
+  const toggleFooter = useCallback(() => {
+    setFooterVisible(prevState => {
+      const newState = !prevState;
+      document.querySelector(".Footer")?.classList.toggle("visible2", newState);
+      return newState;
+    });
+  }, []);
+
+  const closeMenu = useCallback(() => {
     setMenuOpen(false);
-    document.querySelector(".nav-menu").classList.remove("open");
-  };
+    document.querySelector(".nav-menu")?.classList.remove("open");
+  }, []);
 
-  const handleSearch = () => {
-    if (!searchTerm.trim()) return;
-    navigate(`/shop?search=${searchTerm}`);
-  };
+  const toggleUserMenu = useCallback(() => {
+    setUserMenuVisible(prevState => !prevState);
+  }, []);
 
-  /*  ------------------------------------------------------*/
-  const totalAmount = cartItems.reduce((total, item) => total + item.price, 0);
-  const totalItems = cartItems.length;
+  const toggleCart = useCallback(() => {
+    setCartVisible(prevState => !prevState);
+  }, []);
+
+  const toggleDarkMode = useCallback(() => {
+    setDarkMode(prevMode => !prevMode);
+  }, [setDarkMode]);
+
+  const handleSearch = useCallback(() => {
+    const trimmedTerm = searchTerm.trim();
+    if (!trimmedTerm) return;
+    navigate(`/shop?search=${encodeURIComponent(trimmedTerm)}`);
+  }, [searchTerm, navigate]);
+
+  const handleSearchKeyDown = useCallback((e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  }, [handleSearch]);
+
+  const handleSearchChange = useCallback((e) => {
+    setSearchTerm(e.target.value);
+  }, []);
+
+  const removeCartItem = useCallback((itemId) => {
+    setCartItems(prevItems => prevItems.filter(item => item.id !== itemId));
+  }, [setCartItems]);
 
   return (
     <header className="header">
@@ -131,8 +211,9 @@ const Header = () => {
             <img src={logo} alt="CandleScope Logo" className="logo" />
           </Link>
         </div>
-        <div className={`User-Status-Profil ${UserSee ? "visible" : ""}`}>
-          {user ? ( // Falls ein Benutzer eingeloggt ist
+
+        <div className={`User-Status-Profil ${userMenuVisible ? "visible" : ""}`}>
+          {user ? (
             <>
               <p className="User">
                 {user.name} <span>{user.email}</span>
@@ -149,24 +230,21 @@ const Header = () => {
         </div>
 
         <div className="button-group">
-          <button className="User-Icon" onClick={() => setUserSee(!UserSee)}>
+          <button className="User-Icon" onClick={toggleUserMenu}>
             <FaUserCircle />
           </button>
           <button
             ref={menuButtonRef}
-            onClick={OpenMenu}
+            onClick={toggleMenu}
             className="icon-button menu-button"
           >
             <FaBars />
           </button>
           <button
             ref={cartButtonRef}
-            className={`icon-button cart-button ${
-              cartItems.length > 0 ? "has-items" : ""
-            }`}
-            onClick={() => setCartVisible(!cartVisible)}
+            className={`icon-button cart-button ${cartItems.length > 0 ? "has-items" : ""}`}
+            onClick={toggleCart}
           >
-            {/* Warenkorb Btn */}
             <FaShoppingCart />
             {cartItems.length > 0 && (
               <span className="cart-count">{cartItems.length}</span>
@@ -174,7 +252,7 @@ const Header = () => {
           </button>
           <button
             className="btn-toggle"
-            onClick={() => setDarkMode(!darkMode)}
+            onClick={toggleDarkMode}
             style={{ color: darkMode ? "#fff" : "#000" }}
           >
             <span>{darkMode ? "Light" : "Dark"}</span>
@@ -197,7 +275,7 @@ const Header = () => {
           </li>
           <li>
             <Link to="/about-us" onClick={closeMenu}>
-              Über mich
+              Über Uns
             </Link>
           </li>
           <li>
@@ -224,8 +302,8 @@ const Header = () => {
           placeholder="Suche nach Produkten..."
           className="search-input"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+          onChange={handleSearchChange}
+          onKeyDown={handleSearchKeyDown}
         />
         <button className="search-button" onClick={handleSearch}>
           🔍
@@ -236,27 +314,13 @@ const Header = () => {
         ref={cartRef}
         className={`Cart-Sidebar ${cartVisible ? "OpenCart" : ""}`}
       >
-        <button className="close-cart" onClick={() => setCartVisible(false)}>
+        <button className="close-cart" onClick={toggleCart}>
           ✖
         </button>
         <h2>Warenkorb</h2>
         {cartItems.length > 0 ? (
           cartItems.map((item) => (
-            <div key={item.id} className="cart-item">
-              <DiamondSVG />
-              <span>{item.name}</span>
-              <span>Preis: €{item.price.toFixed(2)}</span>
-              <button
-                onClick={() =>
-                  setCartItems(cartItems.filter((p) => p.id !== item.id))
-                }
-                className="remove-button"
-              >
-                <FaTrash />
-              </button>
-              <hr />
-              <p>Dieses Produkt ist vom Umtausch ausgeschlossen</p>
-            </div>
+            <CartItem key={item.id} item={item} onRemove={removeCartItem} />
           ))
         ) : (
           <p>Der Warenkorb ist leer</p>
@@ -268,41 +332,10 @@ const Header = () => {
         <br />
         <hr />
         <p>Das sind unsere Zahlungsmöglichkeiten</p>
-        <div className="Zahlungsmöglichkeiten">
-          <p>
-            PayPal
-            <span className="PayPal">
-              <FaPaypal />
-            </span>
-          </p>
-          <p>
-            Mastercard
-            <span className="Mastercard">
-              <FaCcMastercard />
-            </span>
-          </p>
-          <p>
-            Visa
-            <span className="Visa">
-              <FaCcVisa />
-            </span>
-          </p>
-          <p>
-            Auf Rechnung
-            <span className="Rechnung">
-              <FaFileInvoice />
-            </span>
-          </p>
-          <p>
-            Per Nachname
-            <span className="Nachname">
-              <FaMoneyCheckAlt />
-            </span>
-          </p>
-        </div>
+        <PaymentMethods />
       </div>
     </header>
   );
 };
 
-export default Header;
+export default memo(Header);

@@ -14,9 +14,9 @@ const Shop = () => {
   useEffect(() => {
     // Scroll into view only on initial load or when search term changes
     if (productListRef.current) {
-      productListRef.current.scrollIntoView({ 
+      productListRef.current.scrollIntoView({
         behavior: "smooth",
-        block: "start" 
+        block: "start"
       });
     }
   }, [searchTerm]); // Dependency on searchTerm ensures scrolling occurs when search changes
@@ -30,21 +30,21 @@ const Shop = () => {
           Level zu bringen!
         </p>
       </header>
-      
+
       <hr className="shop-divider" />
-      
+
       {searchTerm && (
         <p className="search-results">
           Suchergebnisse für: <strong>{searchTerm}</strong>
         </p>
       )}
-      
+
       <div ref={productListRef} className="product-list-container">
         <ProductList searchTerm={searchTerm} />
       </div>
-      
+
       <hr className="shop-divider" />
-      
+
       <footer className="shop-footer">
         <p>
           Solltest du individuelle Anfragen haben oder suchst nach einem{" "}

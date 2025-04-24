@@ -1,143 +1,308 @@
+// Variablen
+$primary-color: #3a7bd5;
+$primary-gradient: linear-gradient(to right, #3a7bd5, #00d2ff);
+$secondary-color: #f8f9fa;
+$error-color: #ff4757;
+$success-color: #2ed573;
+$dark-bg: #121212;
+$card-bg: rgba(24, 24, 36, 0.85);
+$input-bg: rgba(255, 255, 255, 0.07);
+$text-light: #f8f9fa;
+$text-secondary: #b0b3b8;
+$input-radius: 12px;
+$card-radius: 16px;
+$shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+$transition: all 0.3s ease;
+
 // Mixins
-@mixin glass-effect {
-  background: rgba(180, 180, 180, 0.623);
-}
-
-@mixin flex-center {
+@mixin flex($direction: row, $justify: center, $align: center) {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
 }
 
-// Page Container
-.page-container {
-  width: 100vw;
+@mixin glass-effect {
+  background: $card-bg;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+// Reset und Basisstile
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $text-light;
+  overflow-x: hidden;
+}
+
+// Hauptcontainer
+.auth-page {
   min-height: 100vh;
+  width: 100vw;
+  @include flex(column);
+  background: $dark-bg;
+  position: relative;
   overflow: hidden;
-  position: fixed;
-  top: 0%;
-  background-color: #000000;
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url("https://www.marcoguglie.it/Codepen/AnimatedHeaderBg/demo-1/img/demo-1-bg.jpg");
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(58, 123, 213, 0.1) 0%, rgba(0, 0, 0, 0.3) 70%);
+    z-index: 1;
   }
 }
 
-// Canvas Background
-.background-canvas {
+// Canvas für Partikel
+#particles-canvas {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: 0;
 }
 
-// Content Container
-.content-container {
-  margin-top: 100px;
-  position: relative;
-  @include flex-center;
-  flex-direction: column;
-  min-height: 100vh !important;
-  z-index: 2;
-  bottom: 0px;
-}
-
-// Main Title
-.main-title {
-  color: #f9f1e9;
-  font-size: 4rem;
-  text-align: center;
-  margin-bottom: 2rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-
-  .thin {
-    font-weight: 300;
-  }
-}
-
-// Login Container
-.login-container {
-  display: flex;
-  flex-direction: column;
-  @include glass-effect;
+// Container für Authentifizierungskarte
+.auth-container {
   width: 100%;
-  max-width: 600px;
-  padding: 5rem;
-  background: rgba(0, 0, 0, 0.652);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  text-align: center;
+  max-width: 1200px;
+  padding: 2rem;
+  position: relative;
+  z-index: 2;
+  @include flex(column);
+  min-height: 100vh;
+}
 
-  .login-form {
-    display: flex;
-    flex-direction: column;
+// Authentifizierungskarte
+.auth-card {
+  width: 100%;
+  max-width: 480px;
+  @include glass-effect;
+  border-radius: $card-radius;
+  box-shadow: $shadow;
+  padding: 3rem;
+  overflow: hidden;
+  transition: $transition;
 
-    input {
-      margin-bottom: 1rem;
-      padding: 0.75rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 1rem;
-    }
-
-    .error {
-      color: red;
-      font-size: 0.875rem;
-      margin-bottom: 1rem;
-    }
-
-    button {
-      padding: 0.75rem;
-      border: none;
-      border-radius: 4px;
-      background: linear-gradient(45deg, #b7e99447, #b7e994);
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background-color 0.3s;
-
-      &:hover,
-      &:active {
-        background: linear-gradient(45deg, #b7e994, #b7e994);
-      }
-      &:focus,
-      &:active {
-        z-index: 500;
-      }
-    }
-  }
-
-  .toggle-button {
-    margin-top: 1rem;
-    background: none;
-    border: none;
-    color: #007bff;
-    cursor: pointer;
-    font-size: 1rem;
-    text-decoration: underline;
-
-    &:hover {
-      color: #0056b3;
-    }
+  @media (max-width: 576px) {
+    padding: 2rem;
+    max-width: 100%;
   }
 }
 
-.blende {
-  position: fixed;
-  bottom: 0px;
-  background-color: #000000;
-  width: 100vw;
-  min-height: 3vh;
-  z-index: 500;
+// Header mit Titel
+.auth-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    background: $primary-gradient;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+
+    @media (max-width: 576px) {
+      font-size: 1.75rem;
+    }
+  }
+
+  p {
+    color: $text-secondary;
+    font-size: 1rem;
+  }
+}
+
+// Formular
+.auth-form {
+  @include flex(column, flex-start, stretch);
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+// Gruppenelemente (Formularabschnitte)
+.form-group {
+  width: 100%;
+  position: relative;
+}
+
+// Zeile für Vor- und Nachname
+.name-row {
+  @include flex(row, space-between, flex-start);
+  gap: 1rem;
+
+  .form-group {
+    flex: 1;
+  }
+
+  @media (max-width: 576px) {
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+}
+
+// Icons in Eingabefeldern
+.input-with-icon {
+  position: relative;
+
+  .input-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $text-secondary;
+    font-size: 1rem;
+  }
+}
+
+// Eingabefelder
+input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  background: $input-bg;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: $input-radius;
+  color: $text-light;
+  font-size: 1rem;
+  transition: $transition;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 2px rgba(58, 123, 213, 0.2);
+  }
+
+  &.error-input {
+    border-color: $error-color;
+  }
+}
+
+// Fehlermeldungen
+.error-message {
+  display: block;
+  color: $error-color;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+// Statusmeldungen
+.status-message {
+  padding: 0.75rem 1rem;
+  border-radius: $input-radius;
+  font-size: 0.9rem;
+  text-align: center;
+
+  &.error {
+    background-color: rgba(255, 71, 87, 0.1);
+    color: $error-color;
+    border: 1px solid rgba(255, 71, 87, 0.2);
+  }
+
+  &.success {
+    background-color: rgba(46, 213, 115, 0.1);
+    color: $success-color;
+    border: 1px solid rgba(46, 213, 115, 0.2);
+  }
+}
+
+// Auth-Button (Login/Register)
+.auth-button {
+  width: 100%;
+  padding: 1rem;
+  background: $primary-gradient;
+  border: none;
+  border-radius: $input-radius;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: $transition;
+  @include flex(row, center, center);
+  gap: 0.5rem;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(58, 123, 213, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  svg {
+    font-size: 1.1rem;
+  }
+}
+
+// Loading-Spinner
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Switch-Bereich (Login/Register umschalten)
+.auth-switch {
+  text-align: center;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+  p {
+    color: $text-secondary;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+// Switch-Button
+.switch-button {
+  background: transparent;
+  border: none;
+  color: $primary-color;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: $transition;
+  padding: 0.25rem 0.5rem;
+
+  &:hover {
+    color: $secondary-color;
+  }
 }

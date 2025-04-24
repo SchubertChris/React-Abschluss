@@ -11,8 +11,8 @@ const ProductList = ({ searchTerm }) => {
 
   const filteredProducts = searchTerm // Filtern der Produkte nach dem Suchbegriff sicherstellung durch lowercase
     ? products.filter((product) =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
     : products;
 
   const addToCart = (product) => {

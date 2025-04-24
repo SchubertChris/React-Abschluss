@@ -29,12 +29,12 @@ $background-translucent: rgba(255, 255, 255, 0.08);
   font-weight: bold;
   transition: all 0.3s;
   box-shadow: 0 4px 15px rgba($start-color, 0.4);
-  
+
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba($start-color, 0.6);
   }
-  
+
   &:active {
     transform: translateY(1px);
     box-shadow: 0 2px 10px rgba($start-color, 0.4);
@@ -43,11 +43,11 @@ $background-translucent: rgba(255, 255, 255, 0.08);
 
 @mixin responsive-padding {
   padding: 50px 20px;
-  
+
   @media (max-width: 768px) {
     padding: 30px 15px;
   }
-  
+
   @media (max-width: 480px) {
     padding: 20px 10px;
   }
@@ -59,24 +59,22 @@ $background-translucent: rgba(255, 255, 255, 0.08);
   width: 100%;
   max-width: 1800px;
   margin: 0 auto;
-  background: url('../../images/Logo/CandleScopeLogo.png');
   background-position: center;
   background-size: cover;
   position: relative;
   min-height: 100vh;
   @include responsive-padding;
-  
+
   // Dark overlay
   &::before {
     content: "";
     position: absolute;
     inset: 0;
-    background-color: $background-dark;
     z-index: 1;
   }
-  
+
   // All direct children need to be above the overlay
-  > * {
+  >* {
     position: relative;
     z-index: 2;
     width: 100%;
@@ -87,52 +85,50 @@ $background-translucent: rgba(255, 255, 255, 0.08);
     .sort-select {
       background-color: rgba(0, 0, 0, 0.8);
     }
-    
+
     .product-item {
       background-color: rgba(20, 20, 20, 0.6);
     }
   }
-  
+
   // Shop header section
   .shop-header {
+    max-width: 800px;
+    background-color: #1a232d;
     margin-bottom: 2rem;
     color: $text-primary !important;
     padding: 1rem;
     @include flex-column;
-    
-    @media (min-width: 768px) {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
+    border-radius: 30px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+
     h1 {
       font-size: 2rem;
       margin-bottom: 1rem;
       text-align: center;
-      background: linear-gradient(90deg, #fff, #e0e0e0, #fff);
+      background: linear-gradient(90deg, #1a1a1d, #4e4e50, #c3073f);
       background-size: 200% auto;
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
       animation: shine 3s linear infinite;
-      
+
       @media (min-width: 768px) {
         margin-bottom: 0;
         text-align: left;
       }
-      
+
       @media (max-width: 480px) {
         font-size: 1.5rem;
       }
     }
-    
+
     .search-results {
       font-size: 1.1rem;
       color: $text-light;
       margin: 1rem 0;
       text-align: center;
-      
+
       strong {
         color: $accent-color;
       }
@@ -144,24 +140,24 @@ $background-translucent: rgba(255, 255, 255, 0.08);
     width: 100%;
     margin: 1rem 0;
   }
-  
+
   // Shop footer
   .shop-footer {
     margin-top: 2rem;
     text-align: center;
     color: $text-light;
-    
+
     p {
       margin-bottom: 0.5rem;
     }
-    
+
     .contact-email {
       color: $primary-color;
       text-decoration: none;
       position: relative;
       font-size: 1.1rem;
       transition: color 0.3s;
-      
+
       &::after {
         content: '';
         position: absolute;
@@ -174,10 +170,10 @@ $background-translucent: rgba(255, 255, 255, 0.08);
         transform-origin: bottom right;
         transition: transform 0.3s;
       }
-      
+
       &:hover {
         color: $secondary-color;
-        
+
         &::after {
           transform: scaleX(1);
           transform-origin: bottom left;
@@ -186,7 +182,7 @@ $background-translucent: rgba(255, 255, 255, 0.08);
       }
     }
   }
-  
+
   // Dividers
   .shop-divider {
     border: 0;
@@ -203,21 +199,21 @@ $background-translucent: rgba(255, 255, 255, 0.08);
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
   width: 100%;
-  
+
   @media (max-width: 768px) {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1rem;
   }
-  
+
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
   }
-  
+
   // Product item card
   .product-item {
     box-sizing: border-box;
     padding: 1.5rem;
-    background-color: $background-translucent;
+    background-color: rgb(0, 0, 0);
     backdrop-filter: blur(5px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     margin-bottom: 1rem;
@@ -231,15 +227,14 @@ $background-translucent: rgba(255, 255, 255, 0.08);
     border-radius: 15px;
     border: 1px solid rgba(221, 221, 221, 0.1);
     @include flex-column;
-    
+
     &:hover,
     &:active {
       transform: perspective(1000px) rotateY(0deg) scale(1.05);
       box-shadow: 0 0 30px rgba(255, 255, 255, 0.2),
         inset 0 0 20px rgba(255, 255, 255, 0.2);
-      background-color: rgba(255, 255, 255, 0.12);
     }
-    
+
     // Diamond pattern background
     &::before {
       content: "";
@@ -248,23 +243,21 @@ $background-translucent: rgba(255, 255, 255, 0.08);
       inset: -50%;
       width: 200%;
       height: 200%;
-      background-image: linear-gradient(
-        45deg,
-        rgba(255, 255, 255, 0.05) 25%,
-        transparent 25%,
-        transparent 50%,
-        rgba(255, 255, 255, 0.05) 50%,
-        rgba(255, 255, 255, 0.05) 75%,
-        transparent 75%,
-        transparent
-      );
+      background-image: linear-gradient(45deg,
+          rgba(255, 255, 255, 0.05) 25%,
+          transparent 25%,
+          transparent 50%,
+          rgba(255, 255, 255, 0.05) 50%,
+          rgba(255, 255, 255, 0.05) 75%,
+          transparent 75%,
+          transparent);
       background-size: 8px 8px;
       animation: diamondSparkle 12s linear infinite;
       opacity: 0.5;
       transform: rotate(45deg);
       z-index: -1;
     }
-    
+
     // Spotlight effect
     &::after {
       content: "";
@@ -272,24 +265,22 @@ $background-translucent: rgba(255, 255, 255, 0.08);
       inset: -50%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(
-        circle at center,
-        rgba(255, 255, 255, 0.2) 0%,
-        transparent 60%
-      );
+      background: radial-gradient(circle at center,
+          rgba(255, 255, 255, 0.2) 0%,
+          transparent 60%);
       transform: scale(0);
       opacity: 0;
       transition: transform 1s ease, opacity 1s ease;
       pointer-events: none;
       z-index: -1;
     }
-    
+
     &:hover::after {
       opacity: 1;
       transform: scale(1);
       animation: spotlight 4s infinite;
     }
-    
+
     // Product image
     .product-image {
       width: 140px;
@@ -300,18 +291,18 @@ $background-translucent: rgba(255, 255, 255, 0.08);
       transition: all 0.3s;
       border: 3px solid rgba(255, 255, 255, 0.1);
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      
+
       &:hover {
         transform: scale(1.1);
         box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
       }
-      
+
       @media (max-width: 768px) {
         width: 120px;
         height: 120px;
       }
     }
-    
+
     // Product name
     .product-name {
       font-size: 1.5rem;
@@ -320,12 +311,12 @@ $background-translucent: rgba(255, 255, 255, 0.08);
       text-align: center;
       font-weight: bold;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-      
+
       @media (max-width: 768px) {
         font-size: 1.3rem;
       }
     }
-    
+
     // Product description
     .product-description {
       font-size: 1rem;
@@ -333,12 +324,12 @@ $background-translucent: rgba(255, 255, 255, 0.08);
       color: $text-secondary;
       text-align: center;
       line-height: 1.5;
-      
+
       @media (max-width: 768px) {
         font-size: 0.9rem;
       }
     }
-    
+
     // Product price
     .product-price {
       font-size: 1.4rem;
@@ -348,8 +339,9 @@ $background-translucent: rgba(255, 255, 255, 0.08);
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
       position: relative;
       display: inline-block;
-      
-      &::before, &::after {
+
+      &::before,
+      &::after {
         content: "";
         position: absolute;
         height: 2px;
@@ -357,42 +349,43 @@ $background-translucent: rgba(255, 255, 255, 0.08);
         background: linear-gradient(to right, transparent, $accent-color, transparent);
         top: 50%;
       }
-      
+
       &::before {
         left: -40px;
       }
-      
+
       &::after {
         right: -40px;
       }
-      
+
       @media (max-width: 768px) {
         font-size: 1.2rem;
-        
-        &::before, &::after {
+
+        &::before,
+        &::after {
           width: 20px;
         }
-        
+
         &::before {
           left: -30px;
         }
-        
+
         &::after {
           right: -30px;
         }
       }
     }
-    
+
     // Add to cart button
     .add-to-cart-button {
       width: 100%;
       padding: 0.7rem 1.5rem;
       font-size: 0.8rem;
       letter-spacing: 0.5px;
-      @include gradient-button($primary-color, $secondary-color);
       position: relative;
       overflow: hidden;
-      
+      cursor: pointer;
+
       &::before {
         content: "";
         position: absolute;
@@ -400,20 +393,18 @@ $background-translucent: rgba(255, 255, 255, 0.08);
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(255, 255, 255, 0.3),
-          transparent
-        );
+        background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent);
         transition: all 0.5s;
       }
-      
+
       &:hover::before {
         left: 100%;
         transition: 0.7s;
       }
-      
+
       @media (max-width: 768px) {
         padding: 0.6rem 1.2rem;
         font-size: 0.9rem;
@@ -456,17 +447,17 @@ $background-translucent: rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
   gap: 8px;
-  
+
   &.show {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
   }
-  
+
   .notification-icon {
     color: #4CAF50;
     font-size: 1.2rem;
   }
-  
+
   .notification-text {
     font-size: 0.95rem;
   }
@@ -477,7 +468,7 @@ $background-translucent: rgba(255, 255, 255, 0.08);
   @include flex-center;
   height: 200px;
   width: 100%;
-  
+
   .spinner {
     width: 50px;
     height: 50px;
@@ -496,45 +487,45 @@ $background-translucent: rgba(255, 255, 255, 0.08);
   width: 100%;
   color: $text-primary;
   text-align: center;
-  
+
   .empty-icon {
     font-size: 4rem;
     margin-bottom: 1rem;
     opacity: 0.7;
   }
-  
+
   .empty-title {
     font-size: 1.8rem;
     margin-bottom: 1rem;
   }
-  
+
   .empty-message {
     font-size: 1.1rem;
     max-width: 500px;
     margin-bottom: 2rem;
     opacity: 0.8;
   }
-  
+
   .browse-button {
     padding: 0.8rem 2rem;
     font-size: 1.1rem;
     @include gradient-button(#3498db, #2ecc71);
-    
+
     @media (max-width: 768px) {
       padding: 0.7rem 1.5rem;
       font-size: 1rem;
     }
   }
-  
+
   @media (max-width: 768px) {
     .empty-icon {
       font-size: 3rem;
     }
-    
+
     .empty-title {
       font-size: 1.5rem;
     }
-    
+
     .empty-message {
       font-size: 1rem;
     }
@@ -556,15 +547,15 @@ $background-translucent: rgba(255, 255, 255, 0.08);
   z-index: 99;
   cursor: pointer;
   transition: all 0.3s;
-  
+
   &:hover {
     transform: scale(1.1);
   }
-  
+
   .filter-icon {
     font-size: 1.5rem;
   }
-  
+
   @media (min-width: 1024px) {
     display: none;
   }
@@ -575,16 +566,20 @@ $background-translucent: rgba(255, 255, 255, 0.08);
   0% {
     transform: translate(-90px, -100px) rotate(-70deg);
   }
+
   100% {
     transform: translate(-40px, 50px) rotate(-70deg);
   }
 }
 
 @keyframes spotlight {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.2;
     transform: scale(1) translate(0, 0);
   }
+
   50% {
     opacity: 0.1;
     transform: scale(1.1) translate(5%, 5%);
@@ -595,6 +590,7 @@ $background-translucent: rgba(255, 255, 255, 0.08);
   0% {
     background-position: -200% center;
   }
+
   100% {
     background-position: 200% center;
   }
@@ -604,9 +600,11 @@ $background-translucent: rgba(255, 255, 255, 0.08);
   0% {
     box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7);
   }
+
   70% {
     box-shadow: 0 0 0 10px rgba(255, 107, 107, 0);
   }
+
   100% {
     box-shadow: 0 0 0 0 rgba(255, 107, 107, 0);
   }

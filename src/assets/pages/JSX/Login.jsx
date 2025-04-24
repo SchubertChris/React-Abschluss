@@ -1,14 +1,14 @@
-import React, { useState, useContext, useEffect } from "react";
-import { AppContext } from "../../layout/ContextAPI";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/Login.scss";
-import { FaUser } from "react-icons/fa";
+import { motion } from "framer-motion"; // Animation-Bibliothek für moderne UI-Effekte
+import "../styles/Login.scss"; // CSS-Styles für die Login-Seite
+import { FaUser, FaLock, FaEnvelope, FaUserPlus } from "react-icons/fa";
 
 const LoginForm = () => {
   const [errors, setErrors] = useState({});
-  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState({ type: "", text: "" });
   const navigate = useNavigate();
-  const { login } = useContext(AppContext);
   const [isRegistering, setIsRegistering] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -18,252 +18,412 @@ const LoginForm = () => {
     confirmPassword: "",
   });
 
-  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^Meins^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
-  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
-  /* ---------------------------------------------------BACKGROUND */
+  // Partikel-Hintergrund-Effekt
   useEffect(() => {
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    let target = { x: width / 2, y: height / 2 };
-    let canvas = document.getElementById("demo-canvas");
-    let ctx;
-    let points = [];
-    let animateHeader = true;
+    let canvas = document.getElementById("particles-canvas");
+    if (!canvas) return;
 
-    const initHeader = () => {
-      if (!canvas) return;
-      ctx = canvas.getContext("2d");
-      canvas.width = width;
-      canvas.height = height;
+    let ctx = canvas.getContext("2d");
+    let particles = [];
+    let particleCount = 100;
 
-      for (let x = 0; x < width; x += width / 20) {
-        for (let y = 0; y < height; y += height / 20) {
-          let px = x + (Math.random() * width) / 20;
-          let py = y + (Math.random() * height) / 20;
-          points.push({
-            x: px,
-            originX: px,
-            y: py,
-            originY: py,
-            active: 0.3,
-          });
+    // Canvas-Größe an Fenster anpassen
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Partikel erstellen
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = Math.random() * 2 - 1;
+        this.speedY = Math.random() * 2 - 1;
+        this.color = `rgba(255, 255, 255, ${Math.random() * 0.5 + 0.2})`;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        // Grenzen prüfen
+        if (this.x > canvas.width || this.x < 0) {
+          this.speedX = -this.speedX;
+        }
+        if (this.y > canvas.height || this.y < 0) {
+          this.speedY = -this.speedY;
         }
       }
 
-      points.forEach((point) => {
-        let closest = [];
-        points.forEach((p2) => {
-          if (point !== p2) closest.push(p2);
-        });
-        closest.sort((a, b) => getDistance(point, a) - getDistance(point, b));
-        point.closest = closest.slice(0, 5);
-      });
+      draw() {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
 
-      points.forEach((point) => {
-        shiftPoint(point);
-      });
-      animate();
+    // Partikel initialisieren
+    const init = () => {
+      particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
     };
 
-    const animate = () => {
-      if (!ctx || !animateHeader) return;
-      ctx.clearRect(0, 0, width, height);
+    // Partikel verbinden
+    const connectParticles = () => {
+      const maxDistance = 150;
+      for (let a = 0; a < particles.length; a++) {
+        for (let b = a; b < particles.length; b++) {
+          const dx = particles[a].x - particles[b].x;
+          const dy = particles[a].y - particles[b].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
 
-      points.forEach((point) => {
-        if (getDistance(target, point) < 4000) {
-          point.active = 1;
-          point.circle = 20;
-        } else {
-          point.active = 0;
-          point.circle = 0;
+          if (distance < maxDistance) {
+            const opacity = 1 - (distance / maxDistance);
+            ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.2})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(particles[a].x, particles[a].y);
+            ctx.lineTo(particles[b].x, particles[b].y);
+            ctx.stroke();
+          }
         }
+      }
+    };
 
-        drawLines(point);
-        drawCircle(point);
-      });
+    // Animation
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+      }
+
+      connectParticles();
       requestAnimationFrame(animate);
     };
 
-    const shiftPoint = (point) => {
-      const duration = 1 + Math.random();
-      const newX = point.originX - 50 + Math.random() * 100;
-      const newY = point.originY - 50 + Math.random() * 100;
-
-      point.x += (newX - point.x) / duration;
-      point.y += (newY - point.y) / duration;
-
-      setTimeout(() => shiftPoint(point), duration * 1000);
-    };
-
-    const drawLines = (p) => {
-      if (!p.active || !ctx) return;
-      p.closest.forEach((closest) => {
-        ctx.beginPath();
-        ctx.moveTo(p.x, p.y);
-        ctx.lineTo(closest.x, closest.y);
-        ctx.strokeStyle = `rgba(156,217,249,${p.active})`;
-        ctx.stroke();
-      });
-    };
-
-    const drawCircle = (p) => {
-      if (!p.active || !ctx) return;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, 2, 0, 2 * Math.PI, false);
-      ctx.fillStyle = `rgba(156,217,249,${p.active})`;
-      ctx.fill();
-    };
-
-    const getDistance = (p1, p2) => {
-      return Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2);
-    };
-
-    const onMouseMove = (e) => {
-      target.x = e.clientX;
-      target.y = e.clientY;
-    };
-
-    initHeader();
-    window.addEventListener("mousemove", onMouseMove);
+    init();
+    animate();
 
     return () => {
-      animateHeader = false;
-      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener('resize', resizeCanvas);
     };
   }, []);
-  /* ---------------------------------------------------BACKGROUND */
-  /* °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°___MEINS°°° */
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
-    setErrors({});
-    setFeedbackMessage("");
+    // Fehler zurücksetzen beim Tippen
+    if (errors[name]) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
   };
 
+  // Form-Validierung
   const validate = () => {
-    let errors = {};
+    let tempErrors = {};
+
+    // Registrierungsfelder prüfen
     if (isRegistering) {
-      if (
-        !formData.firstName ||
-        formData.firstName.length < 2 ||
-        formData.firstName.length > 25
-      ) {
-        errors.firstName = "Vorname muss zwischen 2 und 25 Zeichen lang sein";
+      if (!formData.firstName.trim()) {
+        tempErrors.firstName = "Vorname wird benötigt";
+      } else if (formData.firstName.length < 2 || formData.firstName.length > 25) {
+        tempErrors.firstName = "Vorname muss zwischen 2 und 25 Zeichen lang sein";
       }
-      if (
-        !formData.lastName ||
-        formData.lastName.length < 2 ||
-        formData.lastName.length > 25
-      ) {
-        errors.lastName = "Nachname muss zwischen 2 und 25 Zeichen lang sein";
+
+      if (!formData.lastName.trim()) {
+        tempErrors.lastName = "Nachname wird benötigt";
+      } else if (formData.lastName.length < 2 || formData.lastName.length > 25) {
+        tempErrors.lastName = "Nachname muss zwischen 2 und 25 Zeichen lang sein";
+      }
+
+      if (formData.password !== formData.confirmPassword) {
+        tempErrors.confirmPassword = "Passwörter stimmen nicht überein";
       }
     }
-    if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = "E-Mail ist ungültig";
+
+    // Allgemeine Felder prüfen
+    if (!formData.email.trim()) {
+      tempErrors.email = "E-Mail wird benötigt";
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      tempErrors.email = "E-Mail ist ungültig";
     }
-    if (!formData.password || formData.password.length < 6) {
-      errors.password = "Passwort muss mindestens 6 Zeichen lang sein";
+
+    if (!formData.password) {
+      tempErrors.password = "Passwort wird benötigt";
+    } else if (formData.password.length < 6) {
+      tempErrors.password = "Passwort muss mindestens 6 Zeichen lang sein";
     }
-    if (isRegistering && formData.password !== formData.confirmPassword) {
-      errors.confirmPassword = "Passwörter stimmen nicht überein";
-    }
-    return errors;
+
+    return tempErrors;
   };
 
-  const handleSubmit = (e) => {
+  // API-Anfrage zum Backend senden
+  const sendAuthRequest = async (endpoint, data) => {
+    try {
+      const response = await fetch(`/api/auth/${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Ein Fehler ist aufgetreten');
+      }
+
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validierung ausführen
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
-    login(formData.email, formData.password, navigate);
+
+    setLoading(true);
+    setStatusMessage({ type: "", text: "" });
+
+    try {
+      if (isRegistering) {
+        // Registrierungsanfrage
+        const { firstName, lastName, email, password } = formData;
+        const registerData = { firstName, lastName, email, password };
+
+        const result = await sendAuthRequest('register', registerData);
+
+        setStatusMessage({
+          type: "success",
+          text: "Registrierung erfolgreich! Sie können sich jetzt anmelden."
+        });
+
+        // Nach erfolgreicher Registrierung zum Login wechseln
+        setIsRegistering(false);
+      } else {
+        // Login-Anfrage
+        const { email, password } = formData;
+        const loginData = { email, password };
+
+        const result = await sendAuthRequest('login', loginData);
+
+        // Token im localStorage speichern
+        localStorage.setItem('authToken', result.token);
+        localStorage.setItem('userId', result.userId);
+
+        // Zur Hauptseite navigieren
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      console.error('Auth error:', error);
+      setStatusMessage({
+        type: "error",
+        text: error.message || "Ein Fehler ist aufgetreten"
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
-  /* 
-  -----------------------------------------------------RETURN----------------------
-  -----------------------------------------------------RETURN----------------------
-  -----------------------------------------------------RETURN----------------------
-  -----------------------------------------------------RETURN----------------------
-  */
+  const switchMode = () => {
+    setIsRegistering(!isRegistering);
+    setErrors({});
+    setStatusMessage({ type: "", text: "" });
+    // Formular zurücksetzen
+    setFormData({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
+  };
 
   return (
-    <div className="page-container">
-      <canvas id="demo-canvas" className="background-canvas"></canvas>
+    <div className="auth-page">
+      <canvas id="particles-canvas"></canvas>
 
-      <div className="content-container">
-        <h1 className="main-title">
-          <FaUser /> {isRegistering ? "Registrieren" : "Anmelden"}
-        </h1>
+      <div className="auth-container">
+        <motion.div
+          className="auth-card"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="auth-header">
+            <h1>{isRegistering ? "Konto erstellen" : "Willkommen zurück"}</h1>
+            <p>{isRegistering
+              ? "Erstellen Sie ein neues Konto, um fortzufahren"
+              : "Melden Sie sich mit Ihren Zugangsdaten an"}
+            </p>
+          </div>
 
-        <div className="login-container">
-          <form className="login-form" onSubmit={handleSubmit}>
+          <form className="auth-form" onSubmit={handleSubmit}>
+            {/* Registrierungsfelder */}
             {isRegistering && (
-              <>
-                <input
-                  type="text"
-                  name="firstName"
-                  placeholder="Vorname"
-                  value={formData.firstName}
-                  onChange={handleInputChange}
-                  autoFocus
-                />
-                {errors.firstName && (
-                  <p className="error">{errors.firstName}</p>
-                )}
+              <motion.div
+                className="form-row name-row"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="form-group">
+                  <div className="input-with-icon">
+                    <FaUser className="input-icon" />
+                    <input
+                      type="text"
+                      name="firstName"
+                      placeholder="Vorname"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
+                      className={errors.firstName ? "error-input" : ""}
+                    />
+                  </div>
+                  {errors.firstName && <span className="error-message">{errors.firstName}</span>}
+                </div>
 
-                <input
-                  type="text"
-                  name="lastName"
-                  placeholder="Nachname"
-                  value={formData.lastName}
-                  onChange={handleInputChange}
-                />
-                {errors.lastName && <p className="error">{errors.lastName}</p>}
-              </>
+                <div className="form-group">
+                  <div className="input-with-icon">
+                    <FaUser className="input-icon" />
+                    <input
+                      type="text"
+                      name="lastName"
+                      placeholder="Nachname"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      className={errors.lastName ? "error-input" : ""}
+                    />
+                  </div>
+                  {errors.lastName && <span className="error-message">{errors.lastName}</span>}
+                </div>
+              </motion.div>
             )}
 
-            <input
-              type="email"
-              name="email"
-              placeholder="E-Mail"
-              value={formData.email}
-              onChange={handleInputChange}
-              autoFocus
-            />
-            {errors.email && <p className="error">{errors.email}</p>}
+            {/* E-Mail */}
+            <div className="form-group">
+              <div className="input-with-icon">
+                <FaEnvelope className="input-icon" />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="E-Mail-Adresse"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className={errors.email ? "error-input" : ""}
+                />
+              </div>
+              {errors.email && <span className="error-message">{errors.email}</span>}
+            </div>
 
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-            />
-            {errors.password && <p className="error">{errors.password}</p>}
+            {/* Passwort */}
+            <div className="form-group">
+              <div className="input-with-icon">
+                <FaLock className="input-icon" />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Passwort"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  className={errors.password ? "error-input" : ""}
+                />
+              </div>
+              {errors.password && <span className="error-message">{errors.password}</span>}
+            </div>
 
-            <button type="submit">
-              {isRegistering ? "Registrieren" : "Anmelden"}
+            {/* Passwort bestätigen (nur bei Registrierung) */}
+            {isRegistering && (
+              <motion.div
+                className="form-group"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="input-with-icon">
+                  <FaLock className="input-icon" />
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    placeholder="Passwort bestätigen"
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                    className={errors.confirmPassword ? "error-input" : ""}
+                  />
+                </div>
+                {errors.confirmPassword && (
+                  <span className="error-message">{errors.confirmPassword}</span>
+                )}
+              </motion.div>
+            )}
+
+            {/* Statusmeldung anzeigen */}
+            {statusMessage.text && (
+              <div className={`status-message ${statusMessage.type}`}>
+                {statusMessage.text}
+              </div>
+            )}
+
+            {/* Submit-Button */}
+            <button
+              type="submit"
+              className="auth-button"
+              disabled={loading}
+            >
+              {loading ? (
+                <span className="loading-spinner"></span>
+              ) : isRegistering ? (
+                <>
+                  <FaUserPlus /> Registrieren
+                </>
+              ) : (
+                <>
+                  <FaUser /> Anmelden
+                </>
+              )}
             </button>
           </form>
 
-          <button
-            onClick={() => {
-              setIsRegistering(!isRegistering);
-              setErrors({});
-              setFeedbackMessage("");
-            }}
-            className="toggle-button"
-          >
-            {isRegistering
-              ? "Bereits ein Konto? Anmelden"
-              : "Konto benötigt? Registrieren"}
-          </button>
-        </div>
-        <div className="blende"></div>
+          {/* Modus wechseln (Login/Register) */}
+          <div className="auth-switch">
+            <p>
+              {isRegistering
+                ? "Bereits ein Konto?"
+                : "Noch kein Konto?"}
+            </p>
+            <button
+              type="button"
+              className="switch-button"
+              onClick={switchMode}
+            >
+              {isRegistering ? "Anmelden" : "Registrieren"}
+            </button>
+          </div>
+        </motion.div>
       </div>
     </div>
   );
